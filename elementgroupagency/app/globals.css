@@ -1,0 +1,299 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* { box-sizing: border-box; }
+
+/* ── Acento da marca (sapphire por defeito). Cada página de serviço pode
+   sobrepor estas variáveis no <main> → todos os efeitos re-tematizam por herança,
+   sem mexer no layout. O resto do site mantém o sapphire. ── */
+:root {
+  --accent-rgb: 127 168 217;   /* canais p/ rgb(var(--accent-rgb) / α) */
+  --accent: #7FA8D9;           /* sólido */
+  --accent-deep: #2f4f7a;      /* sombra do gradiente */
+  --accent-mid: #4f7fb8;       /* meio (fim do gradiente dos ícones) */
+  --accent-light: #bcd6f0;     /* brilho do gradiente */
+}
+
+h1 { font-family: var(--font-inter-tight), sans-serif; font-size: clamp(36px, 7.5vw, 70px); letter-spacing: clamp(-0.8px, -0.12vw, -1.4px); font-weight: 500; }
+h2 { font-family: var(--font-inter-tight), sans-serif; font-size: clamp(28px, 5vw, 48px); letter-spacing: clamp(-0.56px, -0.1vw, -0.96px); font-weight: 500; }
+h3 { font-family: var(--font-instrument), sans-serif; font-size: clamp(24px, 4vw, 40px); letter-spacing: clamp(-0.48px, -0.08vw, -0.80px); font-weight: 500; }
+h4 { font-family: var(--font-inter-tight), sans-serif; font-size: clamp(18px, 2.5vw, 24px); letter-spacing: clamp(-0.36px, -0.06vw, -0.48px); font-weight: 500; }
+
+/* Exact "Send Code" secondary-button shadow lifted from the live Framer site:
+   nine stacked layers — drop shadows + a greenish bottom inset that gives the
+   physical, raised key-cap feel. This is one of the site's signature details. */
+.shadow-send-code {
+  box-shadow:
+    rgba(0, 0, 0, 0.49) 0px 1px 2px 0px,
+    rgba(0, 0, 0, 0.43) 1px 3px 4px 0px,
+    rgba(0, 0, 0, 0.25) 3px 7px 5px 0px,
+    rgba(0, 0, 0, 0.07) 5px 13px 6px 0px,
+    rgba(0, 0, 0, 0.01) 8px 21px 6px 0px,
+    rgb(255, 255, 255) 0px -3px 0px 0px inset,
+    rgb(192, 192, 151) 0px -2px 0px 0px inset,
+    rgb(255, 255, 255) 0px 1px 0px 0px inset,
+    rgba(0, 0, 0, 0.15) 10px 34px 24px 0px;
+}
+
+/* Night-sky hero: twinkling city lights on the planet horizon + stars */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; }
+  50%      { opacity: 1; }
+}
+.twinkle { animation: twinkle 3.6s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .twinkle { animation: none; opacity: 0.85; }
+}
+
+/* ── Nova glow button ─────────────────────────────────────────────
+   A pill with a continuously rotating conic-gradient border + halo +
+   a shine sweep on hover. Adapted to our steel-blue palette.
+   Pure CSS: the angle is animated via @property (no JS rAF). */
+@property --nova-ang {
+  syntax: '<angle>';
+  inherits: true;
+  initial-value: 0deg;
+}
+@keyframes nova-spin { to { --nova-ang: 360deg; } }
+
+.nova-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 30px;
+  border-radius: 999px;
+  background: #0a0e16;
+  color: #fff;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1;
+  isolation: isolate;
+  animation: nova-spin 6s linear infinite;
+  transition: transform 0.22s ease;
+}
+.nova-btn:hover { transform: scale(1.02); }
+.nova-btn:focus-visible { outline: 2px solid var(--accent-light); outline-offset: 3px; }
+
+/* rotating border ring (gradient masked to the 2px edge) */
+.nova-btn__ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  padding: 2px;
+  background: conic-gradient(from var(--nova-ang),
+    var(--accent-deep) 0deg, var(--accent) 70deg, var(--accent-light) 135deg, transparent 190deg, var(--accent-deep) 260deg, var(--accent) 360deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+  z-index: 1;
+}
+/* blurred outer halo */
+.nova-btn__glow {
+  position: absolute;
+  inset: -16px;
+  border-radius: 999px;
+  background: conic-gradient(from var(--nova-ang),
+    transparent 0deg, var(--accent) 72deg, var(--accent-light) 135deg, transparent 210deg, var(--accent-deep) 290deg, transparent 360deg);
+  filter: blur(16px);
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 0.22s ease;
+}
+.nova-btn:hover .nova-btn__glow { opacity: 0.9; }
+/* shine sweep */
+.nova-btn__shine {
+  position: absolute;
+  inset: 2px;
+  border-radius: 999px;
+  background: linear-gradient(110deg, transparent 0%, rgba(255,255,255,0.03) 35%, rgba(255,255,255,0.13) 50%, rgba(255,255,255,0.03) 65%, transparent 100%);
+  transform: translateX(-38%);
+  opacity: 0.45;
+  pointer-events: none;
+  z-index: 2;
+  transition: transform 0.65s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.22s ease;
+}
+.nova-btn:hover .nova-btn__shine { transform: translateX(38%); opacity: 1; }
+.nova-btn__label { position: relative; z-index: 3; }
+
+@media (prefers-reduced-motion: reduce) {
+  .nova-btn, .nova-btn:hover { animation: none; transform: none; }
+  .nova-btn__shine { transition: none; }
+}
+
+/* ── Connected flow: pulses travelling along the connector lines ──
+   pathLength is normalised to 100, so a short dash sweeps the whole path. */
+@keyframes flow-pulse { to { stroke-dashoffset: -100; } }
+.flow-line {
+  stroke-dasharray: 8 92;
+  stroke-dashoffset: 0;
+  animation: flow-pulse 2.6s linear infinite;
+}
+/* fluxo de pontos a percorrer um caminho (resultados): vários pontos em stream */
+.flow-dots {
+  stroke-dasharray: 1.6 7;
+  stroke-linecap: round;
+  animation: flow-pulse 2.4s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .flow-dots { animation: none; opacity: 0.5; }
+}
+
+/* vertical variant for the mobile stacked layout */
+@keyframes flow-down {
+  0%   { transform: translateY(-120%); }
+  100% { transform: translateY(1000%); }
+}
+.flow-line-vert { animation: flow-down 2.8s linear infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .flow-line { animation: none; stroke-dasharray: none; opacity: 0.45; }
+  .flow-line-vert { animation: none; opacity: 0; }
+}
+
+/* ── Glow card: borda em gradiente cónico a percorrer o card (reusa --nova-ang / nova-spin) ── */
+.glow-card {
+  position: relative;
+  border-radius: 22px;
+  background: #0f1216;
+  isolation: isolate;
+  animation: nova-spin 7s linear infinite;
+}
+.glow-card__ring {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(from var(--nova-ang),
+    var(--accent-deep) 0deg, var(--accent) 80deg, var(--accent-light) 140deg, transparent 220deg, var(--accent-deep) 320deg, var(--accent) 360deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+  z-index: 1;
+}
+.glow-card__glow {
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  z-index: 0;
+  background: conic-gradient(from var(--nova-ang),
+    transparent 0deg, var(--accent) 80deg, var(--accent-light) 140deg, transparent 220deg, var(--accent-deep) 320deg, transparent 360deg);
+  filter: blur(14px);
+  opacity: 0.45;
+  pointer-events: none;
+}
+.glow-card__content { position: relative; z-index: 2; }
+
+/* Variante: sem halo exterior — interior fica o mais escuro, com uma onda subtil a mover-se */
+.glow-card__wave {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(140% 90% at 25% 120%, rgb(var(--accent-rgb) / 0.12), transparent 55%),
+    radial-gradient(120% 80% at 80% -10%, rgb(var(--accent-rgb) / 0.08), transparent 55%);
+  animation: gc-wave 9s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+@keyframes gc-wave {
+  0%, 100% { transform: translate3d(-5px, 6px, 0); opacity: 0.55; }
+  50%      { transform: translate3d(5px, -5px, 0); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .glow-card__wave { animation: none; opacity: 0.6; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glow-card { animation: none; }
+  .glow-card__ring { background: linear-gradient(120deg, var(--accent-deep), var(--accent), var(--accent-deep)); }
+  .glow-card__glow { display: none; }
+}
+
+/* ── Secção da dor: barra de alerta que pulsa + palavra-chave sublinhada ── */
+@keyframes pain-bar {
+  0%, 100% { opacity: 0.25; transform: scaleY(0.55); }
+  50%      { opacity: 0.95; transform: scaleY(1); }
+}
+.pain-bar {
+  animation: pain-bar 2.4s ease-in-out infinite;
+  transform-origin: center;
+  will-change: opacity, transform;
+}
+
+.pain-word { position: relative; white-space: nowrap; color: #fff; }
+.pain-word::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: -3px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #d8554a, transparent);
+  animation: pain-underline 2.6s ease-in-out infinite;
+}
+@keyframes pain-underline { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .pain-bar { animation: none; opacity: 0.75; transform: none; }
+  .pain-word::after { animation: none; opacity: 0.75; }
+}
+
+/* ── Globo de inclusões: wireframe 3D (meridianos/paralelos) tema sapphire ── */
+.globe-scene { perspective: 1100px; }
+.globe-3d { transform-style: preserve-3d; will-change: transform; }
+.globe-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid rgb(var(--accent-rgb) / 0.16);
+}
+.globe-idle { animation: globe-spin 32s linear infinite; }
+@keyframes globe-spin { from { transform: rotateY(0deg); } to { transform: rotateY(360deg); } }
+
+/* nó de cristal facetado */
+.crystal {
+  width: 100%;
+  height: 100%;
+  border-radius: 30%;
+  background: linear-gradient(135deg, var(--accent-light) 0%, var(--accent) 45%, var(--accent-deep) 100%);
+  box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.6);
+  transform: rotate(45deg);
+}
+.node-glow {
+  position: absolute;
+  inset: -130%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(var(--accent-rgb) / 0.85), transparent 60%);
+  opacity: 0.4;
+}
+.node-glow.is-active { animation: node-pulse 2.2s ease-in-out infinite; }
+@keyframes node-pulse {
+  0%, 100% { transform: scale(0.85); opacity: 0.5; }
+  50%      { transform: scale(1.3); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .globe-idle { animation: none; }
+  .node-glow.is-active { animation: none; opacity: 0.85; }
+}
+
+/* ── Ambient glow orbs: deriva + pulsação lenta (só transform/opacity → GPU) ── */
+@keyframes glow-drift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1);    opacity: 0.5; }
+  50%      { transform: translate3d(42px, -34px, 0) scale(1.18); opacity: 0.9; }
+}
+@keyframes glow-drift-2 {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1.12); opacity: 0.45; }
+  50%      { transform: translate3d(-48px, 32px, 0) scale(1); opacity: 0.8; }
+}
+.glow-drift   { animation: glow-drift 16s ease-in-out infinite; will-change: transform, opacity; }
+.glow-drift-2 { animation: glow-drift-2 20s ease-in-out infinite; will-change: transform, opacity; }
+
+@media (prefers-reduced-motion: reduce) {
+  .glow-drift, .glow-drift-2 { animation: none; }
+}
