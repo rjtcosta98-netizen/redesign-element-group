@@ -8,7 +8,7 @@ import PainPoints from '@/components/servicos/PainPoints'
 import DeviceShowcase from '@/components/portfolio/DeviceShowcase'
 import ResultsFlow from '@/components/servicos/ResultsFlow'
 import JsonLd from '@/components/JsonLd'
-import { caseStudySchema, breadcrumbSchema } from '@/lib/seo'
+import { caseStudySchema, breadcrumbSchema, itemPageSchema } from '@/lib/seo'
 import { PROJECTS, ACCENTS, getProject, ProjectCover } from '../projects'
 
 export function generateStaticParams() {
@@ -20,15 +20,39 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const p = getProject(slug)
   if (!p) return { title: 'Projeto não encontrado — Element Group' }
   const ogImage = p.showcase?.desktop ?? p.cover.src
+  const description = p.resultLine ?? p.summary
+  const title = `${p.client} — ${p.category} | Element Group`
+  const keywords = [
+    p.client,
+    p.category,
+    ...(p.servicesUsed?.map((s) => s.label) ?? []),
+    p.snapshot?.industria ?? '',
+    'Element Group',
+    'agência digital Portugal',
+    'caso de estudo',
+    ...(p.seoKeywords ?? []),
+  ].filter(Boolean)
+
   return {
-    title: `${p.client} — ${p.category} | Element Group`,
-    description: p.resultLine ?? p.summary,
+    title,
+    description,
+    keywords,
     alternates: { canonical: `/portfolio/${p.slug}` },
+    robots: { index: true, follow: true },
     openGraph: {
       title: `${p.client} — ${p.category}`,
-      description: p.resultLine ?? p.summary,
+      description,
       url: `/portfolio/${p.slug}`,
-      ...(ogImage ? { images: [{ url: ogImage }] } : {}),
+      type: 'article',
+      locale: 'pt_PT',
+      siteName: 'Element Group',
+      ...(ogImage ? { images: [{ url: ogImage, alt: `${p.client} — ${p.category}` }] } : {}),
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      ...(ogImage ? { images: [ogImage] } : {}),
     },
   }
 }
@@ -50,10 +74,25 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   const related = PROJECTS.filter((p) => p.slug !== project.slug).slice(0, 2)
   const schemaImage = project.showcase?.desktop ?? project.cover.src
 
+  // When showcase is mobile-only (no desktop) and every gallery item is a phone,
+  // merge them into a unified 3-up row instead of 1 big centered phone + smaller 2-col grid.
+  const showcaseMobileOnly = !!(project.showcase && !project.showcase.desktop && project.showcase.mobile)
+  const galleryAllPhones = !!(project.gallery && project.gallery.length > 0 && project.gallery.every(g => g.frame === 'phone'))
+  const mergeShowcaseIntoGallery = showcaseMobileOnly && galleryAllPhones
+  const galleryItems = mergeShowcaseIntoGallery
+    ? [{ src: project.showcase!.mobile!, alt: `${project.client} — app`, frame: 'phone' as const }, ...(project.gallery ?? [])]
+    : (project.gallery ?? [])
+
   return (
     <main style={ACCENTS[project.accent]}>
       <JsonLd
         data={[
+          itemPageSchema({
+            slug: project.slug,
+            name: `${project.client} — ${project.category}`,
+            description: resultLine,
+            image: schemaImage,
+          }),
           caseStudySchema({
             slug: project.slug,
             client: project.client,
@@ -61,6 +100,16 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             description: resultLine,
             year: project.year,
             image: schemaImage,
+            keywords: [
+              project.client,
+              project.category,
+              ...(project.servicesUsed?.map((s) => s.label) ?? []),
+              project.snapshot?.industria ?? '',
+              'Element Group',
+              'agência digital Portugal',
+              'portfolio',
+              ...(project.seoKeywords ?? []),
+            ].filter(Boolean),
           }),
           breadcrumbSchema([
             { name: 'Início', path: '/' },
@@ -74,49 +123,139 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         <div aria-hidden className="absolute top-0 right-0 w-[640px] h-[640px] pointer-events-none" style={{ background: 'radial-gradient(circle at 70% 25%, rgb(var(--accent-rgb) / 0.16), transparent 60%)' }} />
 
         <div className="relative max-w-[1100px] mx-auto">
-          <Link href="/portfolio" className="inline-flex items-center gap-1.5 text-sm text-muted hover:text-white transition-colors mb-10">
+          <Link href="/portfolio" className="inline-flex items-center gap-1.5 min-h-[44px] text-sm text-muted hover:text-white transition-colors mb-10">
             <span aria-hidden>←</span> Portefólio
           </Link>
 
-          <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-            {/* Copy + métricas */}
-            <AnimateOnScroll direction="left">
-              <p className="text-[11px] uppercase tracking-[0.2em] text-accent/90 mb-4">{project.category} · {project.year}</p>
-              <h1 className="text-white tracking-[-0.03em] leading-[1.06]">{resultLine}</h1>
-              <p className="mt-5 text-muted leading-relaxed max-w-xl">{project.intro}</p>
-
-              {/* Métricas-chave em destaque — 3 numa linha, cards com glow na borda */}
-              <div className="mt-9 grid grid-cols-3 gap-2.5 sm:gap-4">
-                {project.highlights.map((h) => (
-                  <div
-                    key={h.label}
-                    className="relative overflow-hidden rounded-2xl border border-accent/25 bg-accent/[0.05] p-3 sm:p-5
-                               shadow-[0_0_30px_-12px_rgb(var(--accent-rgb)/0.6)]"
-                  >
-                    <span aria-hidden className="absolute inset-x-0 top-0 h-px" style={{ background: 'linear-gradient(90deg, transparent, rgb(var(--accent-rgb) / 0.6), transparent)' }} />
-                    <div className="font-heading text-lg sm:text-2xl md:text-3xl font-medium text-white leading-none tabular-nums">{h.metric}</div>
-                    <p className="mt-2 text-[10px] sm:text-[12px] text-muted leading-snug">{h.label}</p>
+          {project.cover.frame === 'phone' ? (
+            /* ── Phone-first hero: app móvel como protagonista ────────────────
+               Mobile:  [H1 + summary] → [iPhone grande centrado] → [métricas] → [URL]
+               Desktop: [H1 + summary + métricas + URL]  |  [iPhone proporcional livre]
+            ─────────────────────────────────────────────────────────────────── */
+            <>
+              <div className="lg:grid lg:grid-cols-[1fr_auto] lg:gap-20 lg:items-center">
+                {/* Coluna copy */}
+                <AnimateOnScroll direction="left">
+                  <p className="text-xs uppercase tracking-[0.2em] text-accent/90 mb-4">{project.category} · {project.year}</p>
+                  <h1 className="text-white tracking-[-0.03em] leading-[1.06]">{resultLine}</h1>
+                  <p className="mt-5 text-muted leading-relaxed max-w-xl">{project.intro}</p>
+                  {/* Métricas — desktop only; no mobile surgem abaixo do iPhone */}
+                  <div className="hidden lg:grid grid-cols-3 gap-3 mt-9">
+                    {project.highlights.map((h) => (
+                      <div key={h.label} className="relative overflow-hidden rounded-2xl border border-accent/25 bg-accent/[0.05] p-4 shadow-[0_0_30px_-12px_rgb(var(--accent-rgb)/0.6)]">
+                        <span aria-hidden className="absolute inset-x-0 top-0 h-px" style={{ background: 'linear-gradient(90deg, transparent, rgb(var(--accent-rgb) / 0.6), transparent)' }} />
+                        <div className="font-heading text-2xl md:text-3xl font-medium text-white leading-none tabular-nums">{h.metric}</div>
+                        <p className="mt-2 text-xs text-muted leading-snug">{h.label}</p>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-            </AnimateOnScroll>
+                  {project.url && (
+                    <div className="hidden lg:block mt-8">
+                      <a href={project.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 min-h-[44px] text-sm text-accent hover:text-white transition-colors">
+                        {project.urlLabel ?? 'Ver app ao vivo'}
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M7 17 17 7M9 7h8v8" /></svg>
+                      </a>
+                    </div>
+                  )}
+                </AnimateOnScroll>
 
-            {/* Visual forte */}
-            <AnimateOnScroll direction="right">
-              <div className="relative h-[300px] sm:h-[380px] overflow-hidden rounded-[28px] border border-white/10 bg-gradient-to-br from-[#1a1d24] via-[#131417] to-[#0F0F0E]">
-                <div aria-hidden className="absolute -top-24 left-1/2 -translate-x-1/2 w-[460px] h-[460px] pointer-events-none" style={{ background: 'radial-gradient(circle, rgb(var(--accent-rgb) / 0.18), transparent 65%)' }} />
-                <ProjectCover project={project} priority />
+                {/* iPhone 17 Pro Max — proporções livres, sem container com altura fixa */}
+                <AnimateOnScroll direction="right">
+                  <div className="relative overflow-hidden flex justify-center py-10 lg:py-0">
+                    <div aria-hidden className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[440px] h-[440px] rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle at 50% 50%, rgb(var(--accent-rgb) / 0.18), transparent 60%)' }} />
+                    <div className="relative w-[210px] sm:w-[230px]" style={{ aspectRatio: '9/19.5' }}>
+                      {/* rim titanium proporcional a ~220px de largura */}
+                      <div className="absolute inset-0 rounded-[2.65rem]" style={{ background: 'linear-gradient(160deg, rgba(255,255,255,0.22) 0%, rgba(180,182,192,0.07) 20%, rgba(255,255,255,0.04) 50%, rgba(195,197,207,0.06) 78%, rgba(255,255,255,0.21) 100%)', boxShadow: '0 44px 96px rgba(0,0,0,0.94), 0 0 0 1px rgba(255,255,255,0.05), inset 0 1px 0 rgba(255,255,255,0.10)' }} />
+                      {/* corpo */}
+                      <div className="absolute rounded-[2.5rem] bg-[#0e0f13]" style={{ inset: '2px' }}>
+                        {/* Dynamic Island */}
+                        <div className="absolute top-[1.8%] left-1/2 -translate-x-1/2 z-20 flex items-center justify-center rounded-full" style={{ width: '28%', height: '2.7%', background: '#050507', gap: '12%' }}>
+                          <div style={{ width: '14%', aspectRatio: '1', borderRadius: '50%', background: 'rgba(20,22,32,0.9)', boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.05)' }} />
+                          <div style={{ width: '8%', aspectRatio: '1', borderRadius: '50%', background: 'rgba(12,14,20,0.8)' }} />
+                        </div>
+                        {/* ecrã */}
+                        <div className="absolute overflow-hidden rounded-[2.3rem]" style={{ inset: '4px' }}>
+                          {project.cover.src && (
+                            <Image src={project.cover.src} alt={project.cover.alt} fill sizes="(max-width: 640px) 210px, 230px" className="object-cover object-top" priority />
+                          )}
+                          <div className="absolute inset-0 pointer-events-none z-10" style={{ background: 'linear-gradient(148deg, rgba(255,255,255,0.055) 0%, rgba(255,255,255,0.018) 28%, transparent 50%)' }} />
+                        </div>
+                      </div>
+                      {/* Action Button */}
+                      <div className="absolute left-0 top-[11%]" style={{ translate: '-2px', width: '3.5px', height: '5%', background: 'linear-gradient(to left, rgba(255,255,255,0.05), rgba(255,255,255,0.19))', borderRadius: '3px 0 0 3px' }} />
+                      {/* Volume Up */}
+                      <div className="absolute left-0 top-[19%]" style={{ translate: '-2px', width: '3.5px', height: '8.5%', background: 'linear-gradient(to left, rgba(255,255,255,0.05), rgba(255,255,255,0.15))', borderRadius: '3px 0 0 3px' }} />
+                      {/* Volume Down */}
+                      <div className="absolute left-0 top-[29.5%]" style={{ translate: '-2px', width: '3.5px', height: '8.5%', background: 'linear-gradient(to left, rgba(255,255,255,0.05), rgba(255,255,255,0.15))', borderRadius: '3px 0 0 3px' }} />
+                      {/* Power */}
+                      <div className="absolute right-0 top-[20%]" style={{ translate: '2px', width: '3.5px', height: '11%', background: 'linear-gradient(to right, rgba(255,255,255,0.05), rgba(255,255,255,0.19))', borderRadius: '0 3px 3px 0' }} />
+                      {/* Camera Control */}
+                      <div className="absolute right-0 top-[37%]" style={{ translate: '2px', width: '3.5px', height: '7%', background: 'linear-gradient(to right, rgba(255,255,255,0.04), rgba(255,255,255,0.13))', borderRadius: '0 3px 3px 0' }} />
+                      <div className="absolute inset-0 rounded-[2.65rem] pointer-events-none" style={{ boxShadow: '0 26px 72px -30px rgb(var(--accent-rgb) / 0.52)' }} />
+                    </div>
+                  </div>
+                </AnimateOnScroll>
               </div>
-            </AnimateOnScroll>
-          </div>
 
-          {project.url && (
-            <div className="mt-8 lg:mt-10">
-              <a href={project.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 min-h-[44px] text-sm text-accent hover:text-white transition-colors">
-                {project.urlLabel ?? 'Ver site ao vivo'}
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M7 17 17 7M9 7h8v8" /></svg>
-              </a>
-            </div>
+              {/* Métricas + URL — mobile only, aparecem sob o iPhone */}
+              <div className="lg:hidden mt-4">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+                  {project.highlights.map((h) => (
+                    <div key={h.label} className="relative overflow-hidden rounded-2xl border border-accent/25 bg-accent/[0.05] p-3 shadow-[0_0_30px_-12px_rgb(var(--accent-rgb)/0.6)]">
+                      <span aria-hidden className="absolute inset-x-0 top-0 h-px" style={{ background: 'linear-gradient(90deg, transparent, rgb(var(--accent-rgb) / 0.6), transparent)' }} />
+                      <div className="font-heading text-lg font-medium text-white leading-none tabular-nums">{h.metric}</div>
+                      <p className="mt-2 text-xs text-muted leading-snug">{h.label}</p>
+                    </div>
+                  ))}
+                </div>
+                {project.url && (
+                  <div className="mt-6">
+                    <a href={project.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 min-h-[44px] text-sm text-accent hover:text-white transition-colors">
+                      {project.urlLabel ?? 'Ver app ao vivo'}
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M7 17 17 7M9 7h8v8" /></svg>
+                    </a>
+                  </div>
+                )}
+              </div>
+            </>
+          ) : (
+            /* ── Default hero — projetos web/desktop ───────────────────────── */
+            <>
+              <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+                {/* Copy + métricas */}
+                <AnimateOnScroll direction="left">
+                  <p className="text-xs uppercase tracking-[0.2em] text-accent/90 mb-4">{project.category} · {project.year}</p>
+                  <h1 className="text-white tracking-[-0.03em] leading-[1.06]">{resultLine}</h1>
+                  <p className="mt-5 text-muted leading-relaxed max-w-xl">{project.intro}</p>
+                  <div className="mt-9 grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-4">
+                    {project.highlights.map((h) => (
+                      <div key={h.label} className="relative overflow-hidden rounded-2xl border border-accent/25 bg-accent/[0.05] p-3 sm:p-5 shadow-[0_0_30px_-12px_rgb(var(--accent-rgb)/0.6)]">
+                        <span aria-hidden className="absolute inset-x-0 top-0 h-px" style={{ background: 'linear-gradient(90deg, transparent, rgb(var(--accent-rgb) / 0.6), transparent)' }} />
+                        <div className="font-heading text-lg sm:text-2xl md:text-3xl font-medium text-white leading-none tabular-nums">{h.metric}</div>
+                        <p className="mt-2 text-xs sm:text-[12px] text-muted leading-snug">{h.label}</p>
+                      </div>
+                    ))}
+                  </div>
+                </AnimateOnScroll>
+
+                {/* Visual forte */}
+                <AnimateOnScroll direction="right">
+                  <div className="relative h-[300px] sm:h-[380px] lg:h-[480px] overflow-hidden rounded-[28px] border border-white/10 bg-gradient-to-br from-[#1a1d24] via-[#131417] to-[#0F0F0E]">
+                    <div aria-hidden className="absolute -top-24 left-1/2 -translate-x-1/2 w-[460px] h-[460px] pointer-events-none" style={{ background: 'radial-gradient(circle, rgb(var(--accent-rgb) / 0.18), transparent 65%)' }} />
+                    <ProjectCover project={project} priority />
+                  </div>
+                </AnimateOnScroll>
+              </div>
+
+              {project.url && (
+                <div className="mt-8 lg:mt-10">
+                  <a href={project.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 min-h-[44px] text-sm text-accent hover:text-white transition-colors">
+                    {project.urlLabel ?? 'Ver site ao vivo'}
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M7 17 17 7M9 7h8v8" /></svg>
+                  </a>
+                </div>
+              )}
+            </>
           )}
         </div>
       </section>
@@ -144,7 +283,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
               { k: 'Ano', v: project.year },
             ].map((row) => (
               <div key={row.k} className="px-4 sm:px-7 py-6">
-                <dt className="text-[10px] uppercase tracking-[0.18em] text-dark mb-2">{row.k}</dt>
+                <dt className="text-xs uppercase tracking-[0.18em] text-dark mb-2">{row.k}</dt>
                 <dd className="text-sm text-white/90 leading-snug">{row.v}</dd>
               </div>
             ))}
@@ -164,7 +303,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         <section className="bg-bg border-t border-white/10 py-20 px-6">
           <div className="max-w-[820px] mx-auto">
             <AnimateOnScroll>
-              <p className="text-[11px] uppercase tracking-[0.2em] text-dark mb-4">O ponto de partida</p>
+              <p className="text-xs uppercase tracking-[0.2em] text-dark mb-4">O ponto de partida</p>
               <h2 className="text-white">O desafio</h2>
               <p className="mt-6 text-white/85 text-lg leading-relaxed">{project.challenge}</p>
             </AnimateOnScroll>
@@ -176,14 +315,14 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       <section className="bg-bg border-t border-white/10 py-20 px-6">
         <div className="max-w-[1000px] mx-auto">
           <AnimateOnScroll className="max-w-[640px] mb-12">
-            <p className="text-[11px] uppercase tracking-[0.2em] text-accent mb-4">A abordagem</p>
+            <p className="text-xs uppercase tracking-[0.2em] text-accent mb-4">A abordagem</p>
             <h2 className="text-white">O que fizemos</h2>
             <p className="mt-6 text-white/85 leading-relaxed">{project.solution}</p>
           </AnimateOnScroll>
 
           {/* Frentes de ataque — glow-cards de borda animada (ação → problema resolvido) */}
           {project.approach && project.approach.length > 0 && (
-            <div className="grid md:grid-cols-3 gap-5">
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-5">
               {project.approach.map((a, i) => (
                 <AnimateOnScroll key={a.title} delay={i * 0.08}>
                   <div className="glow-card h-full">
@@ -202,7 +341,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
           {/* Entregue neste projeto — detalhe completo (chips) */}
           <AnimateOnScroll className="mt-9">
-            <p className="text-[11px] uppercase tracking-[0.2em] text-dark mb-4">Entregue neste projeto</p>
+            <p className="text-xs uppercase tracking-[0.2em] text-dark mb-4">Entregue neste projeto</p>
             <ul className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3">
               {project.scope.map((s) => (
                 <li key={s} className="flex items-center gap-2 rounded-2xl border border-white/10 bg-bg-card px-4 py-3 text-[13px] text-white/80">
@@ -220,12 +359,12 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         <section className="relative overflow-hidden bg-bg border-t border-white/10 py-20 px-6">
           <div className="max-w-[1100px] mx-auto">
             <AnimateOnScroll className="mb-12">
-              <p className="text-[11px] uppercase tracking-[0.2em] text-dark mb-3">Destaques visuais</p>
+              <p className="text-xs uppercase tracking-[0.2em] text-dark mb-3">Destaques visuais</p>
               <h2 className="text-white">Por dentro do projeto</h2>
             </AnimateOnScroll>
 
             {/* Mockups desktop + telemóvel */}
-            {project.showcase && (
+            {project.showcase && !mergeShowcaseIntoGallery && (
               <AnimateOnScroll className="mb-14">
                 <DeviceShowcase
                   desktop={project.showcase.desktop}
@@ -237,13 +376,54 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             )}
 
             {/* Galeria */}
-            {project.gallery && project.gallery.length > 0 && (
-            <div className="grid sm:grid-cols-2 gap-6 max-w-[1000px] mx-auto">
-              {project.gallery.map((g, i) => (
-                <AnimateOnScroll key={g.src} delay={(i % 2) * 0.1}>
-                  <figure className="overflow-hidden rounded-2xl border border-white/10 bg-[#101216] shadow-[0_24px_50px_rgba(0,0,0,0.5)]">
-                    {g.frame === 'plain' ? (
-                      /* moldura branded — assets de marca, sem cromo de browser */
+            {(project.gallery && project.gallery.length > 0 || mergeShowcaseIntoGallery) && (
+            <div className={`grid gap-6 mx-auto ${
+              galleryAllPhones
+                ? mergeShowcaseIntoGallery
+                  ? 'grid-cols-1 sm:grid-cols-3 max-w-[900px]'
+                  : 'grid-cols-2 max-w-[600px]'
+                : 'sm:grid-cols-2 max-w-[1000px]'
+            }`}>
+              {galleryItems.map((g, i) => (
+                <AnimateOnScroll key={g.src} delay={i * 0.08}>
+                  {g.frame === 'phone' ? (
+                    /* iPhone 17 Pro Max mockup — mobile screenshots. radius proporcional à largura (~140px) */
+                    <figure className="overflow-hidden rounded-2xl bg-[#0b0c0f] shadow-[0_24px_50px_rgba(0,0,0,0.6)] flex flex-col">
+                      <div className="relative flex justify-center items-center py-10 flex-1">
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 rounded-full blur-[50px] opacity-[0.15] pointer-events-none" aria-hidden style={{ background: 'rgb(var(--accent-rgb))' }} />
+                        <div className={`relative ${mergeShowcaseIntoGallery ? 'w-[160px] sm:w-[200px]' : 'w-[130px] sm:w-[150px]'}`} style={{ aspectRatio: '9/19.5' }}>
+                          {/* rim titanium */}
+                          <div className="absolute inset-0 rounded-[1.6rem]" style={{ background: 'linear-gradient(160deg, rgba(255,255,255,0.22) 0%, rgba(180,182,192,0.07) 22%, rgba(255,255,255,0.05) 50%, rgba(195,197,207,0.06) 75%, rgba(255,255,255,0.20) 100%)', boxShadow: '0 20px 52px rgba(0,0,0,0.92), 0 0 0 1px rgba(255,255,255,0.04), inset 0 1px 0 rgba(255,255,255,0.09)' }} />
+                          <div className="absolute rounded-[1.45rem] bg-[#0e0f13]" style={{ inset: '1.5px' }}>
+                            {/* Dynamic Island */}
+                            <div className="absolute top-[1.8%] left-1/2 -translate-x-1/2 z-20 flex items-center justify-center rounded-full" style={{ width: '28%', height: '2.7%', background: '#050507', gap: '12%' }}>
+                              <div style={{ width: '14%', aspectRatio: '1', borderRadius: '50%', background: 'rgba(20,22,32,0.9)' }} />
+                              <div style={{ width: '8%', aspectRatio: '1', borderRadius: '50%', background: 'rgba(12,14,20,0.8)' }} />
+                            </div>
+                            {/* ecrã */}
+                            <div className="absolute overflow-hidden rounded-[1.3rem]" style={{ inset: '4px' }}>
+                              <Image src={g.src} alt={g.alt} fill sizes={mergeShowcaseIntoGallery ? '(max-width: 640px) 90vw, 210px' : '160px'} className="object-cover object-top" />
+                              <div className="absolute inset-0 pointer-events-none z-10" style={{ background: 'linear-gradient(148deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.016) 28%, transparent 48%)' }} />
+                            </div>
+                          </div>
+                          {/* Action Button */}
+                          <div className="absolute left-0 top-[11%]" style={{ translate: '-1.5px', width: '2.5px', height: '5%', background: 'linear-gradient(to left, rgba(255,255,255,0.05), rgba(255,255,255,0.18))', borderRadius: '3px 0 0 3px' }} />
+                          {/* Volume Up */}
+                          <div className="absolute left-0 top-[19%]" style={{ translate: '-1.5px', width: '2.5px', height: '8%', background: 'linear-gradient(to left, rgba(255,255,255,0.05), rgba(255,255,255,0.15))', borderRadius: '3px 0 0 3px' }} />
+                          {/* Volume Down */}
+                          <div className="absolute left-0 top-[29%]" style={{ translate: '-1.5px', width: '2.5px', height: '8%', background: 'linear-gradient(to left, rgba(255,255,255,0.05), rgba(255,255,255,0.15))', borderRadius: '3px 0 0 3px' }} />
+                          {/* Power */}
+                          <div className="absolute right-0 top-[20%]" style={{ translate: '1.5px', width: '2.5px', height: '11%', background: 'linear-gradient(to right, rgba(255,255,255,0.05), rgba(255,255,255,0.18))', borderRadius: '0 3px 3px 0' }} />
+                          {/* Camera Control */}
+                          <div className="absolute right-0 top-[37%]" style={{ translate: '1.5px', width: '2.5px', height: '7%', background: 'linear-gradient(to right, rgba(255,255,255,0.04), rgba(255,255,255,0.13))', borderRadius: '0 3px 3px 0' }} />
+                          <div className="absolute inset-0 rounded-[1.6rem] pointer-events-none" style={{ boxShadow: '0 14px 40px -16px rgb(var(--accent-rgb) / 0.42)' }} />
+                        </div>
+                      </div>
+                      <figcaption className="px-4 py-3 text-[12px] text-muted text-center border-t border-white/[0.06]">{g.alt}</figcaption>
+                    </figure>
+                  ) : g.frame === 'plain' ? (
+                    /* moldura branded — assets de marca */
+                    <figure className="overflow-hidden rounded-2xl border border-white/10 bg-[#101216] shadow-[0_24px_50px_rgba(0,0,0,0.5)]">
                       <div className="relative w-full aspect-[16/10]">
                         <span aria-hidden className="absolute top-2.5 left-2.5 z-10 w-3.5 h-3.5 border-l border-t border-white/25" />
                         <span aria-hidden className="absolute top-2.5 right-2.5 z-10 w-3.5 h-3.5 border-r border-t border-white/25" />
@@ -251,20 +431,22 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                         <span aria-hidden className="absolute bottom-2.5 right-2.5 z-10 w-3.5 h-3.5 border-r border-b border-white/25" />
                         <Image src={g.src} alt={g.alt} fill sizes="(max-width: 768px) 90vw, 480px" className="object-contain object-center p-6" />
                       </div>
-                    ) : (
-                      <>
-                        <div className="flex items-center gap-1.5 px-3 py-2.5 border-b border-white/10 bg-white/[0.03]">
-                          <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]/80" />
-                          <span className="w-2.5 h-2.5 rounded-full bg-[#febc2e]/80" />
-                          <span className="w-2.5 h-2.5 rounded-full bg-[#28c840]/80" />
-                        </div>
-                        <div className="relative w-full aspect-[16/10]">
-                          <Image src={g.src} alt={g.alt} fill sizes="(max-width: 768px) 90vw, 480px" className="object-cover object-top" />
-                        </div>
-                      </>
-                    )}
-                    <figcaption className="px-4 py-3 text-[12px] text-muted">{g.alt}</figcaption>
-                  </figure>
+                      <figcaption className="px-4 py-3 text-[12px] text-muted">{g.alt}</figcaption>
+                    </figure>
+                  ) : (
+                    /* janela de browser — sites/lojas */
+                    <figure className="overflow-hidden rounded-2xl border border-white/10 bg-[#101216] shadow-[0_24px_50px_rgba(0,0,0,0.5)]">
+                      <div className="flex items-center gap-1.5 px-3 py-2.5 border-b border-white/10 bg-white/[0.03]">
+                        <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]/80" />
+                        <span className="w-2.5 h-2.5 rounded-full bg-[#febc2e]/80" />
+                        <span className="w-2.5 h-2.5 rounded-full bg-[#28c840]/80" />
+                      </div>
+                      <div className="relative w-full aspect-[16/10]">
+                        <Image src={g.src} alt={g.alt} fill sizes="(max-width: 768px) 90vw, 480px" className="object-cover object-top" />
+                      </div>
+                      <figcaption className="px-4 py-3 text-[12px] text-muted">{g.alt}</figcaption>
+                    </figure>
+                  )}
                 </AnimateOnScroll>
               ))}
             </div>
@@ -291,7 +473,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           /* Fallback: cards de métrica */
           <div className="relative max-w-[1000px] mx-auto px-6">
             <AnimateOnScroll className="text-center mb-12 max-w-[640px] mx-auto">
-              <p className="text-[11px] uppercase tracking-[0.2em] text-accent mb-4">Resultados</p>
+              <p className="text-xs uppercase tracking-[0.2em] text-accent mb-4">Resultados</p>
               <h2 className="text-white">O que mudou</h2>
               {project.snapshot?.resultado && (
                 <p className="mt-5 text-muted leading-relaxed">{project.snapshot.resultado}.</p>
@@ -319,10 +501,10 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             /* Vários testemunhos — grelha de cards */
             <div className="max-w-[1100px] mx-auto">
               <AnimateOnScroll className="mb-10 text-center max-w-[640px] mx-auto">
-                <p className="text-[11px] uppercase tracking-[0.2em] text-accent mb-3">Testemunhos</p>
+                <p className="text-xs uppercase tracking-[0.2em] text-accent mb-3">Testemunhos</p>
                 <h2 className="text-white">O que dizem sobre o projeto</h2>
               </AnimateOnScroll>
-              <div className="grid md:grid-cols-3 gap-5">
+              <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-5">
                 {project.quotes.map((q, i) => (
                   <AnimateOnScroll key={q.author} delay={i * 0.08}>
                     <figure className="relative h-full flex flex-col overflow-hidden rounded-[22px] border border-white/10
@@ -343,7 +525,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                           <span className="block text-muted text-[12px] leading-tight">{q.role}</span>
                         </span>
                         {q.url && (
-                          <a href={q.url} target="_blank" rel="noopener noreferrer" aria-label="Ver avaliação no Google" className="shrink-0 grid place-items-center w-9 h-9 rounded-full text-accent hover:text-white transition-colors">
+                          <a href={q.url} target="_blank" rel="noopener noreferrer" aria-label="Ver avaliação no Google" className="shrink-0 grid place-items-center w-11 h-11 rounded-full text-accent hover:text-white transition-colors">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden><path d="M12 11v2.9h4.1c-.18 1.07-1.27 3.14-4.1 3.14A4.54 4.54 0 0 1 12 7.5c1.28 0 2.14.55 2.63 1.02l1.9-1.83A6.9 6.9 0 0 0 12 4.6a7.4 7.4 0 1 0 0 14.8c4.27 0 7.1-3 7.1-7.23 0-.49-.05-.86-.12-1.23L12 11Z" /></svg>
                           </a>
                         )}
@@ -401,7 +583,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       {project.servicesUsed && project.servicesUsed.length > 0 && (
         <section className="bg-bg border-t border-white/10 py-16 px-6">
           <div className="max-w-[1000px] mx-auto">
-            <p className="text-[11px] uppercase tracking-[0.2em] text-dark mb-5 text-center">Serviços usados neste projeto</p>
+            <p className="text-xs uppercase tracking-[0.2em] text-dark mb-5 text-center">Serviços usados neste projeto</p>
             <div className="flex flex-wrap justify-center gap-3">
               {project.servicesUsed.map((s) => (
                 <Link
@@ -423,16 +605,16 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         <div aria-hidden className="absolute left-1/2 -translate-x-1/2 bottom-0 w-[760px] h-[420px] pointer-events-none" style={{ background: 'radial-gradient(circle at 50% 100%, rgb(var(--accent-rgb) / 0.20), transparent 70%)' }} />
         <div className="relative max-w-2xl mx-auto text-center">
           <AnimateOnScroll>
-            <p className="text-[11px] uppercase tracking-[0.22em] text-dark mb-5">O próximo passo</p>
+            <p className="text-xs uppercase tracking-[0.22em] text-dark mb-5">O próximo passo</p>
             <h2 className="text-white">Tens um desafio parecido? Vamos falar.</h2>
             <p className="mt-5 text-muted leading-relaxed max-w-xl mx-auto">
               Conta-me o que precisas — respondo pessoalmente em menos de 2 horas, sem compromisso.
             </p>
             <div className="mt-10 flex flex-col items-center gap-5">
               <GlowButton href="/contacto">Pedir orçamento grátis</GlowButton>
-              <Link href="mailto:info@elementgroup.pt" className="text-sm text-white/70 hover:text-white transition-colors">
+              <a href="mailto:info@elementgroup.pt" className="inline-flex items-center min-h-[44px] text-sm text-white/70 hover:text-white transition-colors">
                 ou escreve-me para <span className="text-white/90 underline underline-offset-4">info@elementgroup.pt</span>
-              </Link>
+              </a>
             </div>
           </AnimateOnScroll>
         </div>
@@ -442,7 +624,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       {related.length > 0 && (
         <section className="bg-bg border-t border-white/10 py-20 px-6">
           <div className="max-w-[1100px] mx-auto">
-            <p className="text-[11px] uppercase tracking-[0.2em] text-dark mb-8">Mais casos</p>
+            <p className="text-xs uppercase tracking-[0.2em] text-dark mb-8">Mais casos</p>
             <div className="grid sm:grid-cols-2 gap-6">
               {related.map((p) => (
                 <Link
@@ -454,7 +636,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                              focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
                 >
                   <div>
-                    <p className="text-[11px] uppercase tracking-[0.16em] text-accent/90 mb-1.5">{p.category}</p>
+                    <p className="text-xs uppercase tracking-[0.16em] text-accent/90 mb-1.5">{p.category}</p>
                     <h3 className="text-white font-heading text-xl font-medium tracking-[-0.01em]">{p.client}</h3>
                     <p className="mt-2 text-muted text-sm leading-relaxed max-w-xs">{p.summary}</p>
                   </div>

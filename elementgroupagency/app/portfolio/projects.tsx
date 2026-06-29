@@ -36,9 +36,10 @@ export type Project = {
   quote?: { text: string; author: string; role: string; url?: string; avatar?: string }   // citação real do cliente
   quotes?: { text: string; author: string; role: string; url?: string; avatar?: string }[] // vários testemunhos (grelha)
   googleCard?: { query: string; brandInitial: string; domain: string; title: string; desc: string; rank?: string }  // capa "resultado Google" (SEO), data-driven
-  cover: { src?: string; alt: string; frame?: 'browser' | 'plain' }   // sem src e sem googleCard → capa branded (placeholder); frame 'plain' = sem cromo de browser (projetos de marca)
-  showcase?: { desktop: string; mobile?: string }   // mockups desktop + telemóvel ("Por dentro do projeto")
-  gallery?: { src: string; alt: string; frame?: 'browser' | 'plain' }[]   // frame 'plain' = moldura branded, sem semáforo (assets de marca)
+  cover: { src?: string; alt: string; frame?: 'browser' | 'plain' | 'phone' }   // sem src e sem googleCard → capa branded (placeholder); frame 'plain' = sem cromo; frame 'phone' = moldura de telemóvel (apps mobile-first)
+  showcase?: { desktop?: string; mobile?: string }   // mockups desktop + telemóvel ("Por dentro do projeto"); desktop omitido → só telemóvel (apps mobile-first)
+  gallery?: { src: string; alt: string; frame?: 'browser' | 'plain' | 'phone' }[]   // frame 'plain' = moldura branded; frame 'phone' = iPhone mockup (mobile screenshots)
+  seoKeywords?: string[]   // termos extra para meta keywords + schema — específicos ao nicho/caso (ex: "criar loja online Portugal")
 }
 
 // Acentos por categoria — o mesmo sistema das páginas de serviço.
@@ -396,6 +397,158 @@ export const PROJECTS: Project[] = [
     showcase: { desktop: '/Projetos/adsr/adsrweb.png', mobile: '/Projetos/adsr/adsrmob.png' },
   },
   {
+    slug: 'bella-essencia-perfumaria',
+    client: 'Bella Essência Perfumaria',
+    category: 'Website & Loja Online',
+    kind: 'store',
+    accent: 'gold',
+    year: '2026',
+    url: 'https://bellaessenciaperfumaria.pt',
+    urlLabel: 'bellaessenciaperfumaria.pt',
+    summary: 'De loja física sem presença online a uma perfumaria com catálogo e encomendas em todo o país.',
+    intro:
+      'Uma perfumaria com produtos de qualidade e clientes fiéis — mas sem qualquer presença digital. O ponto de partida: abrir a loja ao país inteiro, com uma montra online à altura da experiência em loja.',
+    challenge:
+      'Ter um espaço físico cuidado e produtos selecionados não chega quando o cliente procura no Google e não encontra nada. A Bella Essência não tinha site nem loja online — cada cliente que pesquisava por perfumes ficava num concorrente digital.',
+    challengeHeadline: 'Uma perfumaria com alma — que não existia no mundo digital.',
+    challengePoints: [
+      { pain: 'Sem site e sem loja online, era invisível para quem pesquisava perfumes fora da loja física.', cost: 'Vendas limitadas aos clientes que apareciam presencialmente.' },
+      { pain: 'O catálogo de produtos não estava acessível online — ninguém sabia o que a loja tinha.', cost: 'Oportunidades de venda perdidas a cada pesquisa.' },
+      { pain: 'Sem canal digital, a comunicação de promoções e lançamentos dependia apenas do passa-palavra.', cost: 'O crescimento estava limitado à zona local.' },
+    ],
+    solution:
+      'Criámos um website à medida com loja online integrada — catálogo de perfumes, carrinho e checkout simples — com um design premium que transmite a experiência da loja física. Site ultra-rápido (PageSpeed 95+) e otimizado para o Google, para ser encontrado por quem procura perfumes online.',
+    approach: [
+      { title: 'Loja online premium', desc: 'Catálogo, carrinho e checkout pensados para vender 24/7 — com uma experiência visual à altura dos produtos. Resolveu a falta total de canal de vendas digital.' },
+      { title: 'Design à altura da marca', desc: 'Uma estética premium que transmite a atmosfera da perfumaria física — para que o cliente sinta a qualidade antes de chegar à loja.' },
+      { title: 'SEO & velocidade', desc: 'Site ultra-rápido (PageSpeed 95+) e otimizado para o Google — para ser encontrado por quem procura perfumes, dentro e fora da zona.' },
+    ],
+    scope: [
+      'Website institucional à medida',
+      'Loja online (e-commerce)',
+      'Catálogo, carrinho e checkout',
+      'Design premium',
+      'SEO técnico base',
+      'Design 100% responsivo',
+    ],
+    highlights: [
+      { metric: 'Nacional', label: 'de só loja física a encomendas em todo o país' },
+      { metric: '24/7', label: 'loja aberta sem depender de horário físico' },
+      { metric: '0%', label: 'comissões — a loja é 100% dela' },
+    ],
+    before: [
+      { label: 'Sem loja online', icon: (<><path d="M3 3h18v5H3z" /><path d="M5 8v12h14V8" /><path d="m3 3 18 18" /></>) },
+      { label: 'Invisível no Google', icon: (<><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z" /><circle cx="12" cy="12" r="3" /><path d="m3 3 18 18" /></>) },
+      { label: 'Só clientes presenciais', icon: (<><path d="M12 21s-7-6.3-7-11a7 7 0 1 1 14 0c0 4.7-7 11-7 11Z" /><circle cx="12" cy="10" r="2.5" /></>) },
+    ],
+    engineChips: ['Loja online', 'Design premium', 'SEO'],
+    resultLine: 'Como a Bella Essência Perfumaria abriu ao país inteiro com uma loja online à medida',
+    servicesUsed: [
+      { label: 'Criação de Websites & Lojas Online', href: '/servicos/web' },
+      { label: 'SEO técnico', href: '/servicos/seo' },
+    ],
+    snapshot: {
+      industria: 'Perfumaria · E-commerce',
+      desafio: 'Sem presença online, só vendas em loja física',
+      resultado: 'Passou de zero presença digital a uma loja online premium com encomendas em todo o país, disponível 24/7 e sem comissões de marketplace',
+    },
+    quote: {
+      text: 'Element Group, foi quem criou o meu website, mais concretamente o menino Ricardo, uma pessoa fantástica, simpático e muito profissional, que eu recomendo os seus serviços vivamente. Ele é muito atento aos pormenores, empenhado nas suas atividades e com bom gosto. O meu website está magnífico com classe e elegância. O meu muito obrigada ao Ricardo pelo empenho e ajuda.',
+      author: 'Ana Bela',
+      role: 'Fundadora · Bella Essência Perfumaria',
+      url: 'https://share.google/gtHHJby1ZmWw2IOKa',
+      avatar: 'https://zkxmotwtrblluqcahnpc.supabase.co/storage/v1/object/public/Avatars%20Reviews/ana-bela.jpg',
+    },
+    seoKeywords: [
+      'criar loja online Portugal',
+      'loja online artesanato Portugal',
+      'e-commerce pequena empresa Portugal',
+      'website perfumaria online',
+      'loja online sem comissões',
+      'loja online 24 horas',
+      'agência web PME Portugal',
+      'criação loja online Seia',
+      'website artesanato gesso',
+      'e-commerce decoração feita à mão',
+    ],
+    cover: { src: '/Projetos/bellaessencia/bella-hero.png', alt: 'Homepage da loja online Bella Essência Perfumaria — Gesso. Textura. Cuidado.' },
+    showcase: { desktop: '/Projetos/bellaessencia/bella-hero.png', mobile: '/Projetos/bellaessencia/bella-mob-hero.png' },
+    gallery: [
+      { src: '/Projetos/bellaessencia/bella-loja.png',          alt: 'Loja online Bella Essência — 37 produtos artesanais com filtro por categoria e preço', frame: 'browser' as const },
+      { src: '/Projetos/bellaessencia/bella-mob-loja.png',      alt: 'Experiência de compra no telemóvel — loja Bella Essência otimizada para mobile', frame: 'phone' as const },
+      { src: '/Projetos/bellaessencia/bella-sobre.png',         alt: 'Página Sobre Nós — Feito à mão. Entregue com alma. com foto da fundadora', frame: 'browser' as const },
+      { src: '/Projetos/bellaessencia/bella-mob-categorias.png', alt: 'Navegação por coleções no mobile — Essências, Gesso, Scrapbook e Boticário', frame: 'phone' as const },
+    ],
+  },
+  {
+    slug: 'adsr-cup-app',
+    client: 'AD São Romão',
+    category: 'App Web · Resultados ao Vivo',
+    kind: 'web',
+    accent: 'sapphire',
+    year: '2025',
+    url: 'https://adsr-cup-2026.vercel.app',
+    urlLabel: 'adsr-cup-2026.vercel.app',
+    summary: 'App de resultados ao vivo para a ADSR CUP — classificações, marcadores e jogos em tempo real.',
+    intro:
+      'A AD São Romão organiza a ADSR CUP, um torneio de futebol com vários escalões. Os resultados chegavam por WhatsApp e posts dispersos no Facebook — sem um lugar central, atualizado e acessível a todos em tempo real.',
+    challenge:
+      'Organizar um torneio é uma operação complexa: jogos em simultâneo, resultados a atualizar, classificações a recalcular e adeptos à espera de novidades. Sem uma plataforma própria, tudo passava por mensagens manuais e posts no Facebook que rapidamente se perdiam no feed.',
+    challengeHeadline: 'Um torneio ao vivo — com resultados à velocidade do WhatsApp.',
+    challengePoints: [
+      { pain: 'Resultados partilhados manualmente por WhatsApp e posts no Facebook, sem centralização.', cost: 'Informação dispersa e difícil de acompanhar para adeptos e participantes.' },
+      { pain: 'Classificações calculadas à mão — demoradas e sujeitas a erro.', cost: 'Atualização lenta e pouco credível para os participantes.' },
+      { pain: 'Sem uma plataforma própria, a imagem do torneio ficava presa a plataformas de terceiros.', cost: 'O torneio não tinha identidade digital própria.' },
+    ],
+    solution:
+      'Criámos uma web app de resultados ao vivo para a ADSR CUP: jogos, resultados, classificações por grupo, marcadores e fases do torneio — tudo atualizado em tempo real e acessível a qualquer pessoa, no telemóvel ou no computador, sem instalar nada.',
+    approach: [
+      { title: 'Resultados ao vivo', desc: 'Resultados de todos os jogos atualizados em tempo real — acessíveis a adeptos, jogadores e organização num só lugar.' },
+      { title: 'Classificações & marcadores automáticos', desc: 'Tabelas de classificação por grupo, lista de marcadores e fases do torneio calculadas automaticamente — sem trabalho manual nem erros.' },
+      { title: 'App web sem instalação', desc: 'Acesso direto pelo browser em qualquer dispositivo — sem app store, sem instalação, partilhável por link.' },
+    ],
+    scope: [
+      'Web app de resultados ao vivo',
+      'Tabelas de classificação por grupo',
+      'Lista de marcadores',
+      'Fases e eliminatórias',
+      'Painel de gestão do torneio',
+      'Design 100% responsivo',
+    ],
+    highlights: [
+      { metric: '5 escalões', label: 'Sub-8, Sub-10, Sub-12, Sub-14 e Sub-16 em tempo real' },
+      { metric: 'Ao vivo', label: 'Live Match Center com marcador e eventos por jogo' },
+      { metric: 'Sem app', label: 'web app acessível por qualquer browser, sem instalação' },
+    ],
+    before: [
+      { label: 'Resultados por WhatsApp', icon: (<><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.7A8.38 8.38 0 0 1 4 11.5 8.5 8.5 0 0 1 12.5 3 8.38 8.38 0 0 1 21 11.5Z" /></>) },
+      { label: 'Classificações manuais', icon: (<><path d="M9 11V6a3 3 0 0 1 6 0v5" /><path d="M5 11h14l-1 9H6l-1-9Z" /></>) },
+      { label: 'Informação dispersa', icon: (<><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></>) },
+    ],
+    engineChips: ['Web app', 'Resultados ao vivo', 'Classificações automáticas'],
+    resultLine: 'Como a ADSR CUP ganhou uma plataforma de resultados ao vivo — do WhatsApp à web app',
+    servicesUsed: [
+      { label: 'Criação de Websites', href: '/servicos/web' },
+    ],
+    snapshot: {
+      industria: 'Futebol · Torneio · Clube',
+      desafio: 'Resultados manuais por WhatsApp, sem plataforma central',
+      resultado: 'O torneio passou a ter uma web app com resultados ao vivo, classificações automáticas e marcadores — acessível a qualquer pessoa pelo browser, em tempo real',
+    },
+    quote: {
+      text: 'Reitero em meu nome e em nome da ADSR um enorme agradecimento, bem como a recomendação da Element Group, na pessoa do Ricardo Costa, pela competência e profissionalismo demonstrados na conceção deste projeto.',
+      author: 'Rafael Figueiredo',
+      role: 'Presidente · AD São Romão',
+      avatar: 'https://zkxmotwtrblluqcahnpc.supabase.co/storage/v1/object/public/Avatars%20Reviews/presi.png',
+    },
+    cover: { src: '/Projetos/adsrapp/adsr1.jpeg', alt: 'Live Match Center da ADSR CUP 2026 — resultados ao vivo', frame: 'phone' },
+    showcase: { mobile: '/Projetos/adsrapp/adsr4.jpeg' },
+    gallery: [
+      { src: '/Projetos/adsrapp/adsr2.jpeg', alt: 'Melhores Marcadores por escalão — ADSR CUP 2026', frame: 'phone' as const },
+      { src: '/Projetos/adsrapp/adsr5.jpeg', alt: 'Prémios individuais por escalão — ADSR CUP 2026', frame: 'phone' as const },
+    ],
+  },
+  {
     slug: 'estrela-detail-wash',
     client: 'Estrela Detail Wash',
     category: 'Design & Branding',
@@ -531,7 +684,67 @@ export function ProjectCover({ project, priority = false, variant = 'detail' }: 
       )
     }
 
-    // c) Default → janela de browser macOS uniforme (sites/lojas)
+    // c) Phone — iPhone 17 Pro Max (rim titanium brushed, Action Button, Camera Control, Dynamic Island, reflexo vidro)
+    if (project.cover.frame === 'phone') {
+      const phoneImg = project.cover.src ?? project.showcase?.mobile
+      const initials = project.client.trim().split(/\s+/).slice(0, 2).map((w) => w[0]).join('').toUpperCase()
+      return (
+        <div className="absolute inset-0 grid place-items-center bg-[#0b0c0f]">
+          <div className="absolute inset-0 pointer-events-none" aria-hidden>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-36 h-36 rounded-full blur-[60px] opacity-[0.16]" style={{ background: 'rgb(var(--accent-rgb))' }} />
+          </div>
+          <div className="relative" style={{ height: '90%', aspectRatio: '9/19.5' }}>
+            {/* rim titanium — multi-stop, aço brushed a apanhar luz */}
+            <div
+              className="absolute inset-0 rounded-[1.8rem]"
+              style={{
+                background: 'linear-gradient(160deg, rgba(255,255,255,0.22) 0%, rgba(180,182,192,0.07) 22%, rgba(255,255,255,0.05) 50%, rgba(195,197,207,0.06) 75%, rgba(255,255,255,0.20) 100%)',
+                boxShadow: '0 26px 64px rgba(0,0,0,0.92), 0 0 0 1px rgba(255,255,255,0.04), inset 0 1px 0 rgba(255,255,255,0.09)',
+              }}
+            />
+            {/* corpo — 1.5px inset do rim */}
+            <div className="absolute rounded-[1.65rem] bg-[#0e0f13]" style={{ inset: '1.5px' }}>
+              {/* Dynamic Island — pill com camera dot + sensor IR */}
+              <div
+                className="absolute top-[1.8%] left-1/2 -translate-x-1/2 z-20 flex items-center justify-center rounded-full"
+                style={{ width: '28%', height: '2.7%', background: '#050507', gap: '12%' }}
+              >
+                <div style={{ width: '14%', aspectRatio: '1', borderRadius: '50%', background: 'rgba(20,22,32,0.9)', boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.04)' }} />
+                <div style={{ width: '8%', aspectRatio: '1', borderRadius: '50%', background: 'rgba(12,14,20,0.8)' }} />
+              </div>
+              {/* ecrã */}
+              <div className="absolute overflow-hidden rounded-[1.5rem]" style={{ inset: '4px' }}>
+                {phoneImg ? (
+                  <Image src={phoneImg} alt={project.cover.alt} fill sizes="220px" className="object-cover object-top" priority={priority} />
+                ) : (
+                  <div className="absolute inset-0 grid place-items-center" aria-hidden>
+                    <span className="grid place-items-center w-10 h-10 rounded-[12px] border border-accent/30 bg-accent/10 text-accent font-heading text-lg font-semibold shadow-[0_0_24px_-6px_rgb(var(--accent-rgb)/0.6)]">
+                      {initials}
+                    </span>
+                  </div>
+                )}
+                {/* reflexo de vidro diagonal */}
+                <div className="absolute inset-0 pointer-events-none z-10" style={{ background: 'linear-gradient(148deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.016) 28%, transparent 48%)' }} />
+              </div>
+            </div>
+            {/* Action Button — esquerda topo (iPhone 16/17 Pro) */}
+            <div className="absolute left-0 top-[11%]" style={{ translate: '-1.5px', width: '3px', height: '5%', background: 'linear-gradient(to left, rgba(255,255,255,0.05), rgba(255,255,255,0.19))', borderRadius: '3px 0 0 3px' }} />
+            {/* Volume Up */}
+            <div className="absolute left-0 top-[19%]" style={{ translate: '-1.5px', width: '3px', height: '8%', background: 'linear-gradient(to left, rgba(255,255,255,0.05), rgba(255,255,255,0.15))', borderRadius: '3px 0 0 3px' }} />
+            {/* Volume Down */}
+            <div className="absolute left-0 top-[29%]" style={{ translate: '-1.5px', width: '3px', height: '8%', background: 'linear-gradient(to left, rgba(255,255,255,0.05), rgba(255,255,255,0.15))', borderRadius: '3px 0 0 3px' }} />
+            {/* Power / Side button */}
+            <div className="absolute right-0 top-[20%]" style={{ translate: '1.5px', width: '3px', height: '11%', background: 'linear-gradient(to right, rgba(255,255,255,0.05), rgba(255,255,255,0.19))', borderRadius: '0 3px 3px 0' }} />
+            {/* Camera Control — direita abaixo do power (iPhone 16/17 Pro) */}
+            <div className="absolute right-0 top-[37%]" style={{ translate: '1.5px', width: '3px', height: '7%', background: 'linear-gradient(to right, rgba(255,255,255,0.04), rgba(255,255,255,0.13))', borderRadius: '0 3px 3px 0' }} />
+            {/* accent glow */}
+            <div className="absolute inset-0 rounded-[1.8rem] pointer-events-none" style={{ boxShadow: '0 18px 52px -20px rgb(var(--accent-rgb) / 0.44)' }} />
+          </div>
+        </div>
+      )
+    }
+
+    // d) Default → janela de browser macOS uniforme (sites/lojas)
     const img = project.cover.src ?? project.showcase?.desktop
     const initials = project.client.trim().split(/\s+/).slice(0, 2).map((w) => w[0]).join('').toUpperCase()
     return (
@@ -606,8 +819,81 @@ export function ProjectCover({ project, priority = false, variant = 'detail' }: 
     )
   }
 
-  // 2 · Capa com captura real do site (janela de browser macOS) OU moldura branded
+  // 2 · Capa com captura real do site (janela de browser macOS) OU moldura especial
   if (project.cover.src) {
+    // 2a · Phone — iPhone 17 Pro Max (rim titanium brushed, Action Button, Camera Control, Dynamic Island, reflexo vidro)
+    if (project.cover.frame === 'phone') {
+      return (
+        <div className="absolute inset-0 grid place-items-center bg-[#0b0c0f]">
+          <div className="absolute inset-0 pointer-events-none" aria-hidden>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-56 h-56 rounded-full blur-[72px] opacity-[0.20]" style={{ background: 'rgb(var(--accent-rgb))' }} />
+          </div>
+          <div className="relative" style={{ height: '84%', aspectRatio: '9/19.5' }}>
+            {/* rim titanium — multi-stop brushed. radius proporcional à largura do dispositivo (~147px) */}
+            <div
+              className="absolute inset-0 rounded-[1.7rem]"
+              style={{
+                background: 'linear-gradient(160deg, rgba(255,255,255,0.22) 0%, rgba(180,182,192,0.07) 22%, rgba(255,255,255,0.05) 50%, rgba(195,197,207,0.06) 75%, rgba(255,255,255,0.21) 100%)',
+                boxShadow: '0 36px 84px rgba(0,0,0,0.93), 0 0 0 1px rgba(255,255,255,0.05), inset 0 1px 0 rgba(255,255,255,0.10)',
+              }}
+            />
+            {/* corpo — 1.5px inset do rim */}
+            <div className="absolute rounded-[1.55rem] bg-[#0e0f13]" style={{ inset: '1.5px' }}>
+              {/* Dynamic Island — pill com camera dot + sensor IR */}
+              <div
+                className="absolute top-[1.8%] left-1/2 -translate-x-1/2 z-20 flex items-center justify-center rounded-full"
+                style={{ width: '28%', height: '2.7%', background: '#050507', gap: '12%' }}
+              >
+                <div style={{ width: '14%', aspectRatio: '1', borderRadius: '50%', background: 'rgba(20,22,32,0.9)', boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.04)' }} />
+                <div style={{ width: '8%', aspectRatio: '1', borderRadius: '50%', background: 'rgba(12,14,20,0.8)' }} />
+              </div>
+              {/* Action Button — esquerda topo (iPhone 16/17 Pro) */}
+              <div
+                className="absolute left-0 top-[11%]"
+                style={{ translate: '-1.5px', width: '3px', height: '5%', background: 'linear-gradient(to left, rgba(255,255,255,0.05), rgba(255,255,255,0.19))', borderRadius: '3px 0 0 3px' }}
+              />
+              {/* Power / Side button */}
+              <div
+                className="absolute right-0 top-[20%]"
+                style={{ translate: '1.5px', width: '3px', height: '11%', background: 'linear-gradient(to right, rgba(255,255,255,0.05), rgba(255,255,255,0.19))', borderRadius: '0 3px 3px 0' }}
+              />
+              {/* Camera Control — direita abaixo power (iPhone 16/17 Pro) */}
+              <div
+                className="absolute right-0 top-[37%]"
+                style={{ translate: '1.5px', width: '3px', height: '7%', background: 'linear-gradient(to right, rgba(255,255,255,0.04), rgba(255,255,255,0.13))', borderRadius: '0 3px 3px 0' }}
+              />
+              {/* Volume Up */}
+              <div
+                className="absolute left-0 top-[19%]"
+                style={{ translate: '-1.5px', width: '3px', height: '8.5%', background: 'linear-gradient(to left, rgba(255,255,255,0.05), rgba(255,255,255,0.15))', borderRadius: '3px 0 0 3px' }}
+              />
+              {/* Volume Down */}
+              <div
+                className="absolute left-0 top-[29.5%]"
+                style={{ translate: '-1.5px', width: '3px', height: '8.5%', background: 'linear-gradient(to left, rgba(255,255,255,0.05), rgba(255,255,255,0.15))', borderRadius: '3px 0 0 3px' }}
+              />
+              {/* ecrã com profundidade */}
+              <div className="absolute overflow-hidden rounded-[1.4rem]" style={{ inset: '4px' }}>
+                <Image
+                  src={project.cover.src}
+                  alt={project.cover.alt}
+                  fill
+                  sizes="(max-width: 768px) 55vw, 340px"
+                  className="object-cover object-top"
+                  priority={priority}
+                />
+                {/* reflexo de vidro diagonal */}
+                <div className="absolute inset-0 pointer-events-none z-10" style={{ background: 'linear-gradient(145deg, rgba(255,255,255,0.045) 0%, transparent 38%)' }} />
+              </div>
+            </div>
+            {/* accent glow por baixo */}
+            <div className="absolute inset-0 rounded-[1.7rem] pointer-events-none" style={{ boxShadow: '0 22px 64px -24px rgb(var(--accent-rgb) / 0.48)' }} />
+          </div>
+          <span className="absolute bottom-5 text-[10px] uppercase tracking-[0.18em] text-accent/60">App móvel · Resultados ao vivo</span>
+        </div>
+      )
+    }
+
     // 2b · Moldura branded — projetos de marca/identidade (sem cromo de browser).
     //      Um logótipo dentro de uma janela de Safari fica errado; aqui usamos
     //      marcas de registo ("ficha técnica"), a mesma linguagem da ficha rápida.

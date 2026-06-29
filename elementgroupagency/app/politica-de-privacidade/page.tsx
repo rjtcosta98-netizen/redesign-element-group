@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   alternates: { canonical: '/politica-de-privacidade' },
   title: 'Política de Privacidade — Element Group',
   description: 'Como a Element Group trata e protege os teus dados pessoais, em conformidade com o RGPD.',
-  robots: { index: true, follow: false },
+  robots: { index: false, follow: false },
 }
 
 export default function PrivacidadePage() {

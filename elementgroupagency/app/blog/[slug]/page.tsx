@@ -17,13 +17,24 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   return {
     title: `${post.title} — Element Group`,
     description: post.excerpt,
+    keywords: [post.category, 'Element Group', 'marketing digital Portugal', 'PME Portugal', 'dicas negócio online'],
     alternates: { canonical: `/blog/${post.slug}` },
+    robots: { index: true, follow: true },
     openGraph: {
       title: post.title,
       description: post.excerpt,
       type: 'article',
       url: `/blog/${post.slug}`,
       publishedTime: post.date,
+      locale: 'pt_PT',
+      siteName: 'Element Group',
+      images: [{ url: `${SITE.url}/opengraph-image`, width: 1200, height: 630, alt: post.title }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.excerpt,
+      images: [`${SITE.url}/opengraph-image`],
     },
   }
 }
@@ -36,15 +47,16 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
+    '@id': `${SITE.url}/blog/${post.slug}#article`,
     headline: post.title,
     description: post.excerpt,
     datePublished: post.date,
     dateModified: post.date,
     inLanguage: 'pt-PT',
     url: `${SITE.url}/blog/${post.slug}`,
-    mainEntityOfPage: { '@type': 'WebPage', '@id': `${SITE.url}/blog/${post.slug}` },
-    image: `${SITE.url}/opengraph-image`,
-    author: { '@type': 'Person', name: 'Ricardo Jorge', url: `${SITE.url}/sobre` },
+    mainEntityOfPage: { '@id': `${SITE.url}/blog/${post.slug}#webpage` },
+    isPartOf: { '@id': `${SITE.url}/#website` },
+    author: { '@type': 'Person', '@id': `${SITE.url}/sobre#author`, name: 'Ricardo Jorge', url: `${SITE.url}/sobre` },
     publisher: { '@id': `${SITE.url}/#business` },
   }
   const breadcrumb = breadcrumbSchema([

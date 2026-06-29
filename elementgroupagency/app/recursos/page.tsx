@@ -21,6 +21,23 @@ export const metadata: Metadata = {
   title: 'Recursos gratuitos — Element Group',
   description:
     'Biblioteca de guias, checklists, templates e ferramentas gratuitas para tirares mais do teu site, SEO e redes sociais. Para PMEs em Portugal.',
+  keywords: ['recursos gratuitos marketing digital', 'guias SEO Portugal', 'checklists website PME', 'templates gratuitos', 'Element Group recursos'],
+  robots: { index: true, follow: true },
+  openGraph: {
+    type: 'website',
+    title: 'Recursos gratuitos — Element Group',
+    description: 'Guias, checklists, templates e ferramentas gratuitas para melhorares o teu site, SEO e redes sociais.',
+    url: '/recursos',
+    locale: 'pt_PT',
+    siteName: 'Element Group',
+    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'Recursos Gratuitos Element Group' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Recursos gratuitos — Element Group',
+    description: 'Guias, checklists e ferramentas gratuitas para o teu site, SEO e redes sociais.',
+    images: ['/opengraph-image'],
+  },
 }
 
 export default function RecursosPage() {

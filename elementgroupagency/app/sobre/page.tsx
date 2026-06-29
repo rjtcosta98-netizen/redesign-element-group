@@ -8,6 +8,8 @@ import CountUp from '@/components/ui/CountUp'
 import Quotes from '@/components/sections/Quotes'
 import ValuesStack from '@/components/about/ValuesStack'
 import { getReviews } from '@/lib/reviews'
+import JsonLd from '@/components/JsonLd'
+import { SITE, breadcrumbSchema } from '@/lib/seo'
 
 // Caveat (assinatura manuscrita) só é usada nesta página — carregada aqui em vez
 // de globalmente, para sair do payload de fontes de todas as outras páginas.
@@ -18,13 +20,46 @@ export const metadata: Metadata = {
   alternates: { canonical: '/sobre' },
   title: 'Sobre nós — Element Group | Ricardo Jorge',
   description:
-    'A história da Element Group: um estúdio digital fundado por Ricardo Jorge em 2026 para dar às PMEs em Portugal websites, lojas online, SEO e marketing — com a atenção de quem fala sempre diretamente contigo.',
+    'Ricardo Jorge e a Element Group: websites, lojas online, SEO e marketing digital para PMEs em Portugal. Atenção pessoal, sem intermediários, resultados reais.',
+  keywords: ['Element Group', 'Ricardo Jorge', 'agência digital Seia', 'marketing digital PME Portugal', 'quem somos', 'estúdio digital Portugal'],
+  robots: { index: true, follow: true },
+  openGraph: {
+    type: 'website',
+    title: 'Sobre nós — Element Group | Ricardo Jorge',
+    description: 'Ricardo Jorge e a Element Group: websites, lojas online, SEO e marketing para PMEs em Portugal. Atenção pessoal, resultados reais.',
+    url: '/sobre',
+    locale: 'pt_PT',
+    siteName: 'Element Group',
+    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'Element Group — Ricardo Jorge' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Sobre nós — Element Group | Ricardo Jorge',
+    description: 'Websites, lojas online, SEO e marketing para PMEs em Portugal. Atenção pessoal, resultados reais.',
+    images: ['/opengraph-image'],
+  },
 }
 
 export default async function About() {
   const reviews = await getReviews()
+
+  const personSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    '@id': `${SITE.url}/sobre#author`,
+    name: 'Ricardo Jorge',
+    jobTitle: 'Fundador',
+    url: `${SITE.url}/sobre`,
+    worksFor: { '@id': `${SITE.url}/#business` },
+    sameAs: [
+      'https://www.instagram.com/elementgrouppt',
+      'https://www.facebook.com/elementgroupdigital/',
+    ],
+  }
+
   return (
     <main className={caveat.variable}>
+      <JsonLd data={[personSchema, breadcrumbSchema([{ name: 'Início', path: '/' }, { name: 'Sobre', path: '/sobre' }])]} />
       <section className="relative overflow-hidden bg-bg pt-36 pb-24 px-6">
         {/* Soft steel glow behind the portrait — subtle cosmic continuity with the home hero */}
         <div
@@ -422,7 +457,7 @@ const FLOW = [
 // Real stats — concrete weight for the story (animated count-up).
 const STATS = [
   { value: 7,    suffix: '+', label: 'Projetos entregues',     sub: 'desde 2026' },
-  { value: 5.0,  decimals: 1, suffix: '★', label: 'Avaliação no Google', sub: '7 avaliações' },
+  { value: 5.0,  decimals: 1, suffix: '★', label: 'Avaliação no Google', sub: '9 avaliações' },
   { value: 2026, from: 2010, grouping: false, label: 'Ano de fundação',  sub: 'o primeiro dia' },
   { value: 3.2,  decimals: 1, suffix: '×', label: 'Mais tráfego orgânico', sub: 'média dos projetos SEO' },
 ]

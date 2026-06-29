@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   alternates: { canonical: '/termos-e-condicoes' },
   title: 'Termos e Condições — Element Group',
   description: 'Termos e condições de utilização do site e de prestação de serviços da Element Group.',
-  robots: { index: true, follow: false },
+  robots: { index: false, follow: false },
 }
 
 export default function TermosPage() {

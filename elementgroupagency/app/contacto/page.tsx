@@ -2,18 +2,50 @@ import type { Metadata } from 'next'
 import AnimateOnScroll from '@/components/ui/AnimateOnScroll'
 import ContactForm from '@/components/contact/ContactForm'
 import { COMPANY } from '@/lib/company'
+import JsonLd from '@/components/JsonLd'
+import { SITE, breadcrumbSchema } from '@/lib/seo'
 
 export const metadata: Metadata = {
   alternates: { canonical: '/contacto' },
-  title: 'Contacto — Element Group',
+  title: 'Pedir Orçamento Grátis — Contacto | Element Group',
   description:
     'Vamos conversar sobre o teu projeto. Respondo em menos de 2 horas, sem compromisso. Element Group — Seia, Serra da Estrela, para PMEs em todo o Portugal.',
+  keywords: ['orçamento website Portugal', 'contacto agência digital', 'pedido orçamento SEO', 'Element Group contacto', 'agência web Seia'],
+  robots: { index: true, follow: true },
+  openGraph: {
+    type: 'website',
+    title: 'Pedir Orçamento Grátis — Contacto | Element Group',
+    description: 'Fala comigo sobre o teu projeto. Respondo em menos de 2 horas, sem compromisso.',
+    url: '/contacto',
+    locale: 'pt_PT',
+    siteName: 'Element Group',
+    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'Contacto Element Group' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Pedir Orçamento Grátis — Contacto | Element Group',
+    description: 'Fala comigo sobre o teu projeto. Respondo em menos de 2 horas, sem compromisso.',
+    images: ['/opengraph-image'],
+  },
 }
 
 export default function Contact({ searchParams }: { searchParams: { servico?: string } }) {
   const initialService = typeof searchParams?.servico === 'string' ? searchParams.servico : ''
+
+  const contactPageSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ContactPage',
+    '@id': `${SITE.url}/contacto#webpage`,
+    name: 'Pedir Orçamento Grátis — Element Group',
+    url: `${SITE.url}/contacto`,
+    isPartOf: { '@id': `${SITE.url}/#website` },
+    inLanguage: 'pt-PT',
+    description: 'Formulário de contacto para pedir orçamento gratuito de website, SEO ou marketing digital para PMEs em Portugal.',
+  }
+
   return (
     <main>
+      <JsonLd data={[contactPageSchema, breadcrumbSchema([{ name: 'Início', path: '/' }, { name: 'Contacto', path: '/contacto' }])]} />
       <section className="relative overflow-hidden bg-bg pt-36 pb-24 px-6">
         <div aria-hidden className="absolute top-10 left-1/2 -translate-x-1/2 w-[700px] h-[460px] pointer-events-none" style={{ background: 'radial-gradient(circle at 50% 30%, rgba(127,168,217,0.15), transparent 62%)' }} />
 
@@ -99,11 +131,40 @@ export default function Contact({ searchParams }: { searchParams: { servico?: st
                   <span className="grid place-items-center w-9 h-9 shrink-0 rounded-lg bg-white/[0.06] text-accent">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"><path d="M12 21s-7-6.3-7-11a7 7 0 1 1 14 0c0 4.7-7 11-7 11Z" /><circle cx="12" cy="10" r="2.5" /></svg>
                   </span>
-                  <p className="text-sm text-muted"><span className="text-white">Seia · Serra da Estrela.</span> Trabalho com PMEs em todo o Portugal, presencial ou à distância.</p>
+                  <p className="text-sm text-muted"><span className="text-white">Seia · Serra da Estrela.</span> Trabalho com empresas em todo o Portugal, presencial ou à distância.</p>
                 </div>
               </div>
             </AnimateOnScroll>
           </div>
+        </div>
+      </section>
+
+      {/* Localização — Maps embed */}
+      <section className="bg-bg px-6 pb-24">
+        <div className="max-w-[1000px] mx-auto">
+          <div className="rounded-[24px] overflow-hidden border border-white/10" style={{ height: '360px' }}>
+            <iframe
+              src="https://maps.google.com/maps?q=Element+Group+Seia+Portugal&output=embed"
+              width="100%"
+              height="100%"
+              style={{ border: 0, filter: 'invert(92%) hue-rotate(180deg) saturate(0.85)' }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Localização Element Group — Seia, Serra da Estrela"
+            />
+          </div>
+          <p className="mt-3 text-center text-[11px] text-dark">
+            Seia, Serra da Estrela · Portugal ·{' '}
+            <a
+              href="https://maps.app.goo.gl/1fk3WM9AXPJGD7YK9"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-accent hover:underline"
+            >
+              Abrir no Google Maps →
+            </a>
+          </p>
         </div>
       </section>
     </main>

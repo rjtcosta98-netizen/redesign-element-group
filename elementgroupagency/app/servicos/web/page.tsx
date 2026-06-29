@@ -17,8 +17,25 @@ const CTA = `/contacto?servico=${encodeURIComponent('Websites & Lojas Online')}`
 export const metadata: Metadata = {
   title: 'Criação de Websites e Lojas Online — Element Group',
   description:
-    'Sites institucionais e lojas online (e-commerce) à medida do teu negócio — ultra-rápidos (PageSpeed 95+), responsivos e otimizados para SEO e conversão. Do design ao alojamento, tratamos de tudo. A partir de 297€.',
+    'Sites e lojas online à medida: ultra-rápidos (PageSpeed 95+), responsivos e prontos para vender. Do design ao alojamento, tratamos de tudo. A partir de 297€.',
+  keywords: ['criação de websites Portugal', 'lojas online PME', 'website profissional', 'e-commerce Portugal', 'agência web Seia', 'Element Group websites'],
   alternates: { canonical: '/servicos/web' },
+  robots: { index: true, follow: true },
+  openGraph: {
+    type: 'website',
+    title: 'Criação de Websites e Lojas Online — Element Group',
+    description: 'Sites e lojas online à medida: ultra-rápidos, responsivos e prontos para vender. Do design ao alojamento, tratamos de tudo.',
+    url: '/servicos/web',
+    locale: 'pt_PT',
+    siteName: 'Element Group',
+    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'Criação de Websites — Element Group' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Criação de Websites e Lojas Online — Element Group',
+    description: 'Sites e lojas online à medida: ultra-rápidos, responsivos e prontos para vender.',
+    images: ['/opengraph-image'],
+  },
 }
 
 export default function WebsitesPage() {
@@ -30,7 +47,7 @@ export default function WebsitesPage() {
             name: 'Criação de Websites e Lojas Online',
             serviceType: 'Criação de websites e lojas online',
             description:
-              'Criação de sites institucionais e lojas online (e-commerce) à medida para PMEs em Portugal — rápidos, responsivos e otimizados para SEO e conversão.',
+              'Criação de sites institucionais e lojas online (e-commerce) à medida para empresas em Portugal — rápidos, responsivos e otimizados para SEO e conversão.',
             path: '/servicos/web',
           }),
           breadcrumbSchema([
@@ -52,10 +69,10 @@ export default function WebsitesPage() {
           <AnimateOnScroll direction="left">
             <p className="text-[11px] uppercase tracking-[0.22em] text-accent/90 mb-5">Categoria 01 · Websites &amp; Lojas Online</p>
             <h1 className="text-white tracking-[-0.03em] leading-[1.04]">
-              Criação de sites que transformam <span className="text-accent">visitantes em clientes</span>.
+              Websites em Portugal que transformam <span className="text-accent">visitantes em clientes</span>.
             </h1>
             <p className="mt-7 text-muted leading-relaxed max-w-xl">
-              Sites e lojas online à medida para PMEs em Portugal que querem ser levadas a sério —
+              Sites e lojas online à medida para empresas em Portugal que querem ser levadas a sério —
               ultra-rápidos (PageSpeed 95+), bonitos e pensados para vender. Do design ao alojamento,
               trato de tudo.
             </p>
@@ -117,7 +134,7 @@ export default function WebsitesPage() {
       {/* O problema / dor — make the reader recognise themselves */}
       <PainPoints
         title={<>O teu site pode estar a <span className="pain-word">afastar clientes</span> — sem dares por isso.</>}
-        intro="A maioria das PMEs não perde clientes por falta de qualidade, mas porque online não mostra o valor que tem. Reconheces-te nalgum destes?"
+        intro="A maioria das empresas não perde clientes por falta de qualidade, mas porque online não mostra o valor que tem. Reconheces-te nalgum destes?"
         items={[
           { pain: 'Tens um negócio de confiança, mas o site não passa essa imagem — ou nem tens site.', cost: 'Quem te procura escolhe quem parece mais profissional.' },
           { pain: 'É lento ou parece mal no telemóvel, e as pessoas saem antes de ver o que ofereces.', cost: 'Cada segundo a carregar é um cliente que desiste.' },
@@ -161,7 +178,7 @@ export default function WebsitesPage() {
                 </p>
                 <ul className="flex flex-col gap-3">
                   {[
-                    'Tens uma PME ou negócio local e queres uma presença online profissional.',
+                    'Tens uma empresa ou negócio local e queres uma presença online profissional.',
                     'Queres um site que traga clientes — não só “estar online”.',
                     'Valorizas falar diretamente com quem faz, sem intermediários.',
                     'Queres preço justo e fixo, sem surpresas.',

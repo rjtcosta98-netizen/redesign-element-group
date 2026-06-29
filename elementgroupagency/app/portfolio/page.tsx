@@ -12,10 +12,35 @@ export const metadata: Metadata = {
   title: 'Portefólio — Trabalhos reais | Element Group',
   description:
     'Websites, lojas online e projetos de SEO entregues pela Element Group a PMEs em Portugal. Vê cada caso em detalhe: o que foi feito e os resultados reais.',
+  keywords: [
+    'portefólio agência digital',
+    'casos de estudo website',
+    'exemplos de websites PME Portugal',
+    'lojas online criadas',
+    'SEO resultados reais',
+    'Element Group trabalhos',
+    'projetos web Portugal',
+  ],
+  robots: { index: true, follow: true },
+  openGraph: {
+    title: 'Portefólio — Trabalhos reais | Element Group',
+    description: 'Websites, lojas online e projetos de SEO entregues pela Element Group a PMEs em Portugal. Resultados reais, casos detalhados.',
+    url: '/portfolio',
+    type: 'website',
+    locale: 'pt_PT',
+    siteName: 'Element Group',
+    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'Portefólio Element Group' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Portefólio — Trabalhos reais | Element Group',
+    description: 'Websites, lojas online e SEO para PMEs em Portugal. Casos reais com resultados.',
+    images: ['/opengraph-image'],
+  },
 }
 
 const STATS = [
-  { v: '5,0★', l: 'Avaliação no Google', s: '7 avaliações' },
+  { v: '5,0★', l: 'Avaliação no Google', s: '9 avaliações' },
   { v: '95+', l: 'PageSpeed médio', s: 'nos sites entregues' },
   { v: '3,2×', l: 'Tráfego médio (SEO)', s: 'média dos projetos' },
   { v: '< 2h', l: 'Tempo de resposta', s: 'em dias úteis' },
@@ -27,6 +52,7 @@ export default function PortfolioPage() {
   const collectionSchema = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
+    '@id': `${SITE.url}/portfolio#collection`,
     name: 'Portefólio — Element Group',
     description: 'Casos de estudo reais de websites, lojas online e SEO entregues pela Element Group a PMEs em Portugal.',
     url: `${SITE.url}/portfolio`,
@@ -37,7 +63,7 @@ export default function PortfolioPage() {
       itemListElement: PROJECTS.map((p, i) => ({
         '@type': 'ListItem',
         position: i + 1,
-        url: `${SITE.url}/portfolio/${p.slug}`,
+        item: `${SITE.url}/portfolio/${p.slug}`,
         name: `${p.client} — ${p.category}`,
       })),
     },

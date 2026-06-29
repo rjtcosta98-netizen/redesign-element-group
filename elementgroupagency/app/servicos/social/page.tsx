@@ -18,8 +18,25 @@ const CTA = `/contacto?servico=${encodeURIComponent('Social Media')}`
 export const metadata: Metadata = {
   title: 'Gestão de Redes Sociais e Conteúdo — Element Group',
   description:
-    'Gestão de redes sociais e criação de conteúdo para PMEs em Portugal: posts com design, copy e vídeos verticais (Reels/TikTok/Shorts). Presença consistente e profissional, sem te roubar tempo.',
+    'Gestão de redes sociais para empresas: posts com design, copy e vídeos verticais (Reels/TikTok/Shorts). Presença consistente e profissional, sem te roubar tempo.',
+  keywords: ['gestão redes sociais Portugal', 'conteúdo Instagram PME', 'Reels TikTok negócio', 'marketing redes sociais', 'agência social media Portugal', 'Element Group redes sociais'],
   alternates: { canonical: '/servicos/social' },
+  robots: { index: true, follow: true },
+  openGraph: {
+    type: 'website',
+    title: 'Gestão de Redes Sociais e Conteúdo — Element Group',
+    description: 'Gestão de redes sociais para empresas: posts com design, copy e vídeos verticais. Presença consistente, sem te roubar tempo.',
+    url: '/servicos/social',
+    locale: 'pt_PT',
+    siteName: 'Element Group',
+    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'Redes Sociais — Element Group' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Gestão de Redes Sociais e Conteúdo — Element Group',
+    description: 'Gestão de redes sociais para empresas: posts com design, copy e vídeos verticais.',
+    images: ['/opengraph-image'],
+  },
 }
 
 // Acento da categoria Social Media: lilás (criatividade / comunidade / energia).
@@ -40,7 +57,7 @@ export default function SocialMediaPage() {
             name: 'Gestão de Redes Sociais e Conteúdo',
             serviceType: 'Gestão de redes sociais e criação de conteúdo',
             description:
-              'Gestão de redes sociais e criação de conteúdo para PMEs em Portugal: posts com design, copy e vídeos verticais (Reels, TikTok, Shorts).',
+              'Gestão de redes sociais e criação de conteúdo para empresas em Portugal: posts com design, copy e vídeos verticais (Reels, TikTok, Shorts).',
             path: '/servicos/social',
           }),
           breadcrumbSchema([
@@ -57,10 +74,10 @@ export default function SocialMediaPage() {
           <AnimateOnScroll direction="left">
             <p className="text-[11px] uppercase tracking-[0.22em] text-accent/90 mb-5">Categoria 03 · Social Media &amp; Conteúdo</p>
             <h1 className="text-white tracking-[-0.03em] leading-[1.04]">
-              Gestão de redes sociais que <span className="text-accent">te poupa tempo</span>.
+              Gestão de redes sociais em Portugal que <span className="text-accent">te poupa tempo</span>.
             </h1>
             <p className="mt-7 text-muted leading-relaxed max-w-xl">
-              Gestão de redes e conteúdo para PMEs em Portugal que querem estar presentes e profissionais —
+              Gestão de redes e conteúdo para empresas em Portugal que querem estar presentes e profissionais —
               sem passar o dia a criar posts. Um complemento ao que faz o teu negócio crescer.
             </p>
 

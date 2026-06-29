@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   alternates: { canonical: '/resolucao-de-litigios' },
   title: 'Resolução de Litígios — Element Group',
   description: 'Informação sobre resolução alternativa de litígios de consumo (RAL), Livro de Reclamações e plataforma europeia ODR da Element Group.',
-  robots: { index: true, follow: false },
+  robots: { index: false, follow: false },
 }
 
 export default function ResolucaoLitigiosPage() {

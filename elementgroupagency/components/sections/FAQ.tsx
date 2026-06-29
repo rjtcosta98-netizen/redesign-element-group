@@ -4,60 +4,13 @@ import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import AnimateOnScroll from '@/components/ui/AnimateOnScroll'
 import GlowButton from '@/components/ui/GlowButton'
-
-
-// Objection-busting, SEO-aware PT-PT FAQ. Só factos reais:
-// desde 297€, preço fixo, PageSpeed 95+, domínio/alojamento incluídos,
-// PMEs em todo o Portugal, planos mensais, resposta <2h.
-const FAQS = [
-  {
-    q: 'Quanto custa um website?',
-    a: 'Os nossos websites começam em 297€, com preço fixo definido à cabeça — sem custos escondidos. O valor final depende do que precisas (site institucional, loja online, número de páginas) e dizemos-te tudo na proposta gratuita, antes de avançares.',
-  },
-  {
-    q: 'Quanto tempo demora a ter o meu site pronto?',
-    a: 'Depende da dimensão do projeto: um site institucional fica normalmente pronto mais depressa do que uma loja online completa. Depois de conversarmos, indicamos um prazo concreto na proposta — e cumprimo-lo.',
-  },
-  {
-    q: 'Preciso de perceber de tecnologia ou tratar do domínio e alojamento?',
-    a: 'Não. Tratamos de tudo por ti — design, desenvolvimento, domínio e alojamento. Só precisas de nos dizer o que queres para o teu negócio; a parte técnica é connosco.',
-  },
-  {
-    q: 'Já tenho um site. Conseguem melhorá-lo?',
-    a: 'Sim. Podemos redesenhar, acelerar (PageSpeed 95+) e otimizar para SEO o teu site atual, ou criar um novo de raiz — o que fizer mais sentido para os teus objetivos e orçamento.',
-  },
-  {
-    q: 'Trabalham com o meu setor e com a minha zona?',
-    a: 'Trabalhamos com PMEs de praticamente qualquer setor, em todo o Portugal — presencialmente ou à distância. Especializamo-nos em pequenos e médios negócios, não em grandes multinacionais.',
-  },
-  {
-    q: 'O que acontece depois do site estar online?',
-    a: 'Não desaparecemos. Temos planos mensais de manutenção, SEO e gestão de redes para o teu negócio continuar a crescer — mas sem obrigação: o site é teu e continuas connosco só se quiseres.',
-  },
-]
-
-// Structured data (FAQPage) — ajuda o Google a mostrar as respostas em destaque.
-const FAQ_SCHEMA = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: FAQS.map((f) => ({
-    '@type': 'Question',
-    name: f.q,
-    acceptedAnswer: { '@type': 'Answer', text: f.a },
-  })),
-}
+import { FAQS } from '@/lib/faq-home'
 
 export default function FAQ() {
   const [open, setOpen] = useState<number | null>(0)
 
   return (
     <section className="bg-bg py-24 px-6 border-t border-white/10" aria-labelledby="faq">
-      {/* SEO: FAQ rich-result schema */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(FAQ_SCHEMA) }}
-      />
-
       <div className="max-w-[1100px] mx-auto">
         <div className="grid md:grid-cols-[0.85fr_1.15fr] gap-12 lg:gap-20 items-start">
           {/* Support card — sticky, converts the "still unsure" reader */}

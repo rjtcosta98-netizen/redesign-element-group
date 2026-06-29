@@ -21,13 +21,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: url('/blog'),                      changeFrequency: 'weekly',  priority: 0.7 },
   ]
 
-  const legal: MetadataRoute.Sitemap = [
-    '/politica-de-privacidade',
-    '/politica-de-cookies',
-    '/termos-e-condicoes',
-    '/resolucao-de-litigios',
-  ].map((p) => ({ url: url(p), changeFrequency: 'yearly', priority: 0.2 }))
-
   const posts: MetadataRoute.Sitemap = POSTS.map((post) => ({
     url: url(`/blog/${post.slug}`),
     lastModified: post.date,
@@ -37,9 +30,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const projects: MetadataRoute.Sitemap = PROJECTS.map((p) => ({
     url: url(`/portfolio/${p.slug}`),
+    lastModified: p.year ? new Date(`${p.year}-06-01`) : undefined,
     changeFrequency: 'yearly',
-    priority: 0.5,
+    priority: 0.7,
   }))
 
-  return [...core, ...posts, ...projects, ...legal]
+  return [...core, ...posts, ...projects]
 }

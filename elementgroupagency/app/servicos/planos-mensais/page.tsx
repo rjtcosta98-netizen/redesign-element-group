@@ -18,8 +18,25 @@ const CTA = `/contacto?servico=${encodeURIComponent('Planos Mensais')}`
 export const metadata: Metadata = {
   title: 'Manutenção de Sites e Planos Mensais — Element Group',
   description:
-    'Planos mensais para PMEs em Portugal: manutenção de sites, backups, SEO contínuo, conteúdo e relatórios. O teu site sempre seguro, atualizado e a crescer — sem fidelização. Desde 97€/mês.',
+    'Planos mensais para empresas: manutenção, backups, SEO contínuo, conteúdo e relatórios mensais. Site sempre seguro e a crescer — sem fidelização. Desde 97€/mês.',
+  keywords: ['manutenção website mensal', 'plano digital PME', 'SEO mensal Portugal', 'suporte website', 'manutenção loja online', 'Element Group planos'],
   alternates: { canonical: '/servicos/planos-mensais' },
+  robots: { index: true, follow: true },
+  openGraph: {
+    type: 'website',
+    title: 'Manutenção de Sites e Planos Mensais — Element Group',
+    description: 'Planos mensais para empresas: manutenção, backups, SEO contínuo e relatórios. Site sempre seguro — sem fidelização. Desde 97€/mês.',
+    url: '/servicos/planos-mensais',
+    locale: 'pt_PT',
+    siteName: 'Element Group',
+    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'Planos Mensais — Element Group' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Manutenção de Sites e Planos Mensais — Element Group',
+    description: 'Planos mensais para empresas: manutenção, backups, SEO contínuo e relatórios.',
+    images: ['/opengraph-image'],
+  },
 }
 
 // Acento da categoria Planos Mensais: champanhe (continuidade / parceria / valor premium).
@@ -40,7 +57,7 @@ export default function PlanosMensaisPage() {
             name: 'Planos Mensais de Manutenção e Marketing Digital',
             serviceType: 'Manutenção de sites e marketing digital mensal',
             description:
-              'Planos mensais para PMEs em Portugal: manutenção de sites, backups, SEO contínuo, conteúdo e relatórios. Sem fidelização, desde 97€/mês.',
+              'Planos mensais para empresas em Portugal: manutenção de sites, backups, SEO contínuo, conteúdo e relatórios. Sem fidelização, desde 97€/mês.',
             path: '/servicos/planos-mensais',
           }),
           breadcrumbSchema([
@@ -57,10 +74,10 @@ export default function PlanosMensaisPage() {
           <AnimateOnScroll direction="left">
             <p className="text-[11px] uppercase tracking-[0.22em] text-accent/90 mb-5">Categoria 04 · Planos Mensais</p>
             <h1 className="text-white tracking-[-0.03em] leading-[1.04]">
-              Manutenção de sites e marketing digital, <span className="text-accent">mês após mês</span>.
+              Manutenção digital em Portugal, <span className="text-accent">mês após mês</span>.
             </h1>
             <p className="mt-7 text-muted leading-relaxed max-w-xl">
-              Planos mensais de manutenção, SEO e conteúdo para PMEs que não querem um site parado no
+              Planos mensais de manutenção, SEO e conteúdo para empresas que não querem um site parado no
               tempo — querem um parceiro digital sempre a trabalhar por elas. Site protegido, presença
               a crescer, zero preocupações técnicas.
             </p>

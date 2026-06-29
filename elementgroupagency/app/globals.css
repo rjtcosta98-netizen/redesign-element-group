@@ -64,11 +64,12 @@ h4 { font-family: var(--font-inter-tight), sans-serif; font-size: clamp(18px, 2.
   align-items: center;
   justify-content: center;
   padding: 14px 30px;
+  min-height: 44px;
   border-radius: 999px;
   background: #0a0e16;
   color: #fff;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1;
   isolation: isolate;
   animation: nova-spin 6s linear infinite;

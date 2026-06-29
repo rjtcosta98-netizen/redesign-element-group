@@ -5,27 +5,65 @@ import CoverArt from '@/components/blog/CoverArt'
 import BlogList from '@/components/blog/BlogList'
 import NewsletterSignup from '@/components/blog/NewsletterSignup'
 import { POSTS, CATEGORIES, formatDate } from '@/lib/posts'
+import JsonLd from '@/components/JsonLd'
+import { SITE, breadcrumbSchema } from '@/lib/seo'
 
 export const metadata: Metadata = {
   alternates: { canonical: '/blog' },
   title: 'Blog de Websites, SEO e Marketing Digital — Element Group',
   description:
     'Artigos práticos sobre websites, SEO, redes sociais e marketing digital — escritos para donos de PMEs em Portugal, sem jargão.',
+  keywords: ['blog marketing digital', 'artigos SEO Portugal', 'dicas websites PME', 'marketing digital PME', 'Element Group blog'],
+  robots: { index: true, follow: true },
+  openGraph: {
+    type: 'website',
+    title: 'Blog de Websites, SEO e Marketing Digital — Element Group',
+    description: 'Artigos práticos sobre websites, SEO e marketing digital para donos de PMEs em Portugal.',
+    url: '/blog',
+    locale: 'pt_PT',
+    siteName: 'Element Group',
+    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'Blog Element Group' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Blog de Websites, SEO e Marketing Digital — Element Group',
+    description: 'Artigos práticos sobre websites, SEO e marketing digital para donos de PMEs em Portugal.',
+    images: ['/opengraph-image'],
+  },
 }
 
 export default function BlogIndex() {
   const [featured, ...rest] = POSTS
   const cards = rest.map(({ slug, title, excerpt, category, date, readingMinutes }) => ({ slug, title, excerpt, category, date, readingMinutes }))
 
+  const blogSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Blog',
+    '@id': `${SITE.url}/blog#collection`,
+    name: 'Blog de Marketing Digital, SEO e Websites para PMEs — Element Group',
+    description: 'Artigos práticos sobre websites, SEO, redes sociais e marketing digital para donos de PMEs em Portugal.',
+    url: `${SITE.url}/blog`,
+    inLanguage: 'pt-PT',
+    isPartOf: { '@id': `${SITE.url}/#website` },
+    publisher: { '@id': `${SITE.url}/#business` },
+    blogPost: POSTS.map((p) => ({
+      '@type': 'BlogPosting',
+      '@id': `${SITE.url}/blog/${p.slug}#article`,
+      headline: p.title,
+      url: `${SITE.url}/blog/${p.slug}`,
+    })),
+  }
+
   return (
     <main>
+      <JsonLd data={[blogSchema, breadcrumbSchema([{ name: 'Início', path: '/' }, { name: 'Blog', path: '/blog' }])]} />
       {/* Header */}
       <section className="relative overflow-hidden bg-bg pt-36 pb-12 px-6">
         <div aria-hidden className="absolute top-10 left-1/2 -translate-x-1/2 w-[680px] h-[480px] pointer-events-none" style={{ background: 'radial-gradient(circle at 50% 30%, rgba(127,168,217,0.15), transparent 62%)' }} />
         <div className="relative max-w-[760px] mx-auto text-center">
           <AnimateOnScroll>
             <p className="text-[11px] uppercase tracking-[0.22em] text-dark mb-4">Blog</p>
-            <h1 className="text-white tracking-[-0.03em] leading-[1.04]">Ideias para o teu negócio crescer online</h1>
+            <h1 className="text-white tracking-[-0.03em] leading-[1.04]">Blog de Marketing Digital, SEO e Websites para PMEs</h1>
             <p className="mt-5 text-muted leading-relaxed">
               Artigos práticos sobre websites, SEO, redes sociais e marketing digital — para donos de PMEs, sem jargão.
             </p>

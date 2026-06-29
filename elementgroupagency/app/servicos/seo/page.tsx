@@ -18,8 +18,25 @@ const CTA = `/contacto?servico=${encodeURIComponent('SEO & Otimização')}`
 export const metadata: Metadata = {
   title: 'Serviços de SEO e Otimização Google — Element Group',
   description:
-    'SEO para PMEs em Portugal: SEO técnico, SEO local (Top 3 no Google Maps) e conteúdo otimizado para apareceres quando procuram o teu serviço. Em média, 3,2× mais tráfego orgânico. Diagnóstico gratuito.',
+    'SEO para empresas em Portugal: técnico, local (Top 3 Google Maps) e conteúdo otimizado. Em média, 3,2× mais tráfego orgânico. Diagnóstico gratuito.',
+  keywords: ['SEO Portugal PME', 'SEO local Google Maps', 'otimização Google', 'tráfego orgânico', 'agência SEO Portugal', 'Element Group SEO'],
   alternates: { canonical: '/servicos/seo' },
+  robots: { index: true, follow: true },
+  openGraph: {
+    type: 'website',
+    title: 'Serviços de SEO e Otimização Google — Element Group',
+    description: 'SEO para empresas em Portugal: técnico, local (Top 3 Google Maps) e conteúdo otimizado. Diagnóstico gratuito.',
+    url: '/servicos/seo',
+    locale: 'pt_PT',
+    siteName: 'Element Group',
+    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'SEO e Otimização Google — Element Group' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Serviços de SEO e Otimização Google — Element Group',
+    description: 'SEO para empresas em Portugal: técnico, local (Top 3 Google Maps) e conteúdo otimizado.',
+    images: ['/opengraph-image'],
+  },
 }
 
 // Acento da categoria SEO: verde-eucalipto (crescimento / tráfego a subir).
@@ -40,7 +57,7 @@ export default function SeoPage() {
             name: 'SEO e Otimização para o Google',
             serviceType: 'Otimização para motores de busca (SEO)',
             description:
-              'Serviços de SEO para PMEs em Portugal: SEO técnico, SEO local (Top 3 no Google Maps) e conteúdo otimizado para aparecer no Google.',
+              'Serviços de SEO para empresas em Portugal: SEO técnico, SEO local (Top 3 no Google Maps) e conteúdo otimizado para aparecer no Google.',
             path: '/servicos/seo',
           }),
           breadcrumbSchema([
@@ -61,10 +78,10 @@ export default function SeoPage() {
           <AnimateOnScroll direction="left">
             <p className="text-[11px] uppercase tracking-[0.22em] text-accent/90 mb-5">Categoria 02 · Visibilidade &amp; SEO</p>
             <h1 className="text-white tracking-[-0.03em] leading-[1.04]">
-              SEO que transforma pesquisas no Google <span className="text-accent">em clientes</span>.
+              SEO em Portugal que transforma pesquisas no Google <span className="text-accent">em clientes</span>.
             </h1>
             <p className="mt-7 text-muted leading-relaxed max-w-xl">
-              Otimização para motores de busca para PMEs em Portugal que querem ser encontradas —
+              Otimização para motores de busca para empresas em Portugal que querem ser encontradas —
               SEO técnico, SEO local (Top 3 no Google Maps) e conteúdo que posiciona. Em média,
               os meus projetos geram 3,2× mais tráfego orgânico.
             </p>

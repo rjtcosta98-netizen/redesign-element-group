@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   alternates: { canonical: '/politica-de-cookies' },
   title: 'Política de Cookies — Element Group',
   description: 'Que cookies o site da Element Group utiliza, para quê, e como podes geri-las.',
-  robots: { index: true, follow: false },
+  robots: { index: false, follow: false },
 }
 
 export default function CookiesPage() {
