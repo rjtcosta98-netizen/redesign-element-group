@@ -247,7 +247,7 @@ export const PROJECTS: Project[] = [
       desafio: 'Dependente de plataformas, invisível no Google',
       resultado: 'Subiu a ocupação média de 20% para 55% por alojamento, chegou ao Top 3 do Google para «alojamentos Serra da Estrela» e passou a 40% de reservas diretas (eram 0%)',
     },
-    cover: { alt: 'Website Matias Nature — alojamentos na Serra da Estrela' },
+    cover: { src: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/30/c0/79/3c/piscina-partilhada.jpg?w=900&h=-1&s=1', alt: 'Matias Nature — piscina partilhada nos alojamentos da Serra da Estrela', frame: 'plain' },
   },
   {
     slug: 'football-nation-store',
