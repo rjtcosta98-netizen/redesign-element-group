@@ -170,13 +170,12 @@ export default function Contact({ searchParams }: { searchParams: { servico?: st
         <div className="max-w-[1000px] mx-auto">
           <div className="rounded-[24px] overflow-hidden border border-white/10" style={{ height: '360px' }}>
             <iframe
-              src="https://maps.google.com/maps?q=Element+Group+Seia+Portugal&output=embed"
+              src="https://www.openstreetmap.org/export/embed.html?bbox=-7.7307%2C40.3999%2C-7.6707%2C40.4399&layer=mapnik&marker=40.4199%2C-7.7007"
               width="100%"
               height="100%"
               style={{ border: 0, filter: 'invert(92%) hue-rotate(180deg) saturate(0.85)' }}
               allowFullScreen
               loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
               title="Localização Element Group — Seia, Serra da Estrela"
             />
           </div>
