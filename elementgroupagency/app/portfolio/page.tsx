@@ -29,13 +29,13 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'pt_PT',
     siteName: 'Element Group',
-    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'Portefólio Element Group' }],
+    images: [{ url: '/og/07-portfolio.png', width: 1200, height: 630, alt: 'Portefólio Element Group' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Portefólio — Trabalhos reais | Element Group',
     description: 'Websites, lojas online e SEO para PMEs em Portugal. Casos reais com resultados.',
-    images: ['/opengraph-image'],
+    images: ['/og/07-portfolio.png'],
   },
 }
 
@@ -101,21 +101,21 @@ export default function PortfolioPage() {
 
           {/* Faixa de provas reais — cards "glassy" elevados (factos agregados, nada inventado) */}
           <AnimateOnScroll delay={0.1}>
-            <dl className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
+            <ul className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
               {STATS.map((s, i) => (
-                <div key={s.l} className="glow-card p-6 md:p-7 text-center" style={{ animationDelay: `${-i * 1.6}s` }}>
+                <li key={s.l} className="glow-card p-6 md:p-7 text-center" style={{ animationDelay: `${-i * 1.6}s` }}>
                   <span className="glow-card__glow" aria-hidden />
                   <span className="glow-card__ring" aria-hidden />
                   <div className="glow-card__content">
-                    <dt className="font-heading text-3xl md:text-4xl font-medium text-white leading-none tabular-nums">{s.v}</dt>
-                    <dd className="mt-3">
+                    <p className="font-heading text-3xl md:text-4xl font-medium text-white leading-none tabular-nums">{s.v}</p>
+                    <div className="mt-3">
                       <span className="block text-sm text-white font-medium">{s.l}</span>
                       <span className="block mt-1 text-[12px] text-dark">{s.s}</span>
-                    </dd>
+                    </div>
                   </div>
-                </div>
+                </li>
               ))}
-            </dl>
+            </ul>
           </AnimateOnScroll>
         </div>
       </section>

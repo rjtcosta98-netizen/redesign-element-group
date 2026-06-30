@@ -11,9 +11,12 @@ import { getReviews } from '@/lib/reviews'
 import JsonLd from '@/components/JsonLd'
 import { SITE, breadcrumbSchema } from '@/lib/seo'
 
+// Reviews são cacheadas 1h no servidor — página regenera no máximo de hora a hora.
+export const revalidate = 3600
+
 // Caveat (assinatura manuscrita) só é usada nesta página — carregada aqui em vez
 // de globalmente, para sair do payload de fontes de todas as outras páginas.
-const caveat = Caveat({ subsets: ['latin'], weight: ['600', '700'], variable: '--font-signature' })
+const caveat = Caveat({ subsets: ['latin'], weight: ['600', '700'], variable: '--font-signature', display: 'optional' })
 
 
 export const metadata: Metadata = {
@@ -30,13 +33,13 @@ export const metadata: Metadata = {
     url: '/sobre',
     locale: 'pt_PT',
     siteName: 'Element Group',
-    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'Element Group — Ricardo Jorge' }],
+    images: [{ url: '/og/06-sobre.png', width: 1200, height: 630, alt: 'Element Group — Ricardo Jorge' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Sobre nós — Element Group | Ricardo Jorge',
     description: 'Websites, lojas online, SEO e marketing para PMEs em Portugal. Atenção pessoal, resultados reais.',
-    images: ['/opengraph-image'],
+    images: ['/og/06-sobre.png'],
   },
 }
 
@@ -218,6 +221,7 @@ export default async function About() {
                   alt="Ricardo Jorge no escritório da Element Group"
                   fill
                   sizes="(max-width: 768px) 100vw, 550px"
+                  priority
                   className="object-cover object-center"
                 />
                 {/* Blend the photo's left edge into the panel */}
@@ -414,12 +418,10 @@ export default async function About() {
 
             <div className="mt-10 flex flex-col items-center gap-5">
               <GlowButton href="/contacto">Vamos conversar</GlowButton>
-              <Link
-                href="mailto:info@elementgroup.pt"
-                className="text-sm text-white/70 hover:text-white transition-colors"
-              >
-                ou escreve-me para <span className="text-white/90 underline underline-offset-4">info@elementgroup.pt</span>
-              </Link>
+              <span className="text-sm text-white/70">
+                ou escreve-me para{' '}
+                <Link href="mailto:info@elementgroup.pt" className="text-white/90 underline underline-offset-4 hover:text-white transition-colors">info@elementgroup.pt</Link>
+              </span>
             </div>
 
             {/* Personal sign-off — Ricardo's face bookends the page */}

@@ -30,13 +30,13 @@ export const metadata: Metadata = {
     url: '/recursos',
     locale: 'pt_PT',
     siteName: 'Element Group',
-    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'Recursos Gratuitos Element Group' }],
+    images: [{ url: '/og/09-recursos.png', width: 1200, height: 630, alt: 'Recursos Gratuitos Element Group' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Recursos gratuitos — Element Group',
     description: 'Guias, checklists e ferramentas gratuitas para o teu site, SEO e redes sociais.',
-    images: ['/opengraph-image'],
+    images: ['/og/09-recursos.png'],
   },
 }
 

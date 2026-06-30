@@ -51,13 +51,13 @@ export const metadata: Metadata = {
     url: SITE.url,
     title: DEFAULT_TITLE,
     description: DEFAULT_DESC,
-    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'Element Group — Websites & Marketing Digital para PMEs' }],
+    images: [{ url: '/og/01-home.png', width: 1200, height: 630, alt: 'Element Group — Websites & Marketing Digital para PMEs' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: DEFAULT_TITLE,
     description: DEFAULT_DESC,
-    images: ['/opengraph-image'],
+    images: ['/og/01-home.png'],
   },
   alternates: { languages: { 'pt-PT': 'https://elementgroup.pt', 'x-default': 'https://elementgroup.pt' } },
   robots: {

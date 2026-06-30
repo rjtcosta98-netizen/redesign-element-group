@@ -8,6 +8,8 @@ import { POSTS, CATEGORIES, formatDate } from '@/lib/posts'
 import JsonLd from '@/components/JsonLd'
 import { SITE, breadcrumbSchema } from '@/lib/seo'
 
+export const dynamic = 'force-static'
+
 export const metadata: Metadata = {
   alternates: { canonical: '/blog' },
   title: 'Blog de Websites, SEO e Marketing Digital — Element Group',
@@ -22,13 +24,13 @@ export const metadata: Metadata = {
     url: '/blog',
     locale: 'pt_PT',
     siteName: 'Element Group',
-    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'Blog Element Group' }],
+    images: [{ url: '/og/08-blog.png', width: 1200, height: 630, alt: 'Blog Element Group' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Blog de Websites, SEO e Marketing Digital — Element Group',
     description: 'Artigos práticos sobre websites, SEO e marketing digital para donos de PMEs em Portugal.',
-    images: ['/opengraph-image'],
+    images: ['/og/08-blog.png'],
   },
 }
 
@@ -67,6 +69,29 @@ export default function BlogIndex() {
             <p className="mt-5 text-muted leading-relaxed">
               Artigos práticos sobre websites, SEO, redes sociais e marketing digital — para donos de PMEs, sem jargão.
             </p>
+          </AnimateOnScroll>
+        </div>
+      </section>
+
+      {/* Intro temas */}
+      <section className="bg-bg px-6 pb-10">
+        <div className="max-w-[760px] mx-auto">
+          <AnimateOnScroll>
+            <p className="text-sm text-muted leading-relaxed text-center">
+              Neste blog escrevo sobre <strong className="text-white/90">criação de websites profissionais</strong>,{' '}
+              <strong className="text-white/90">SEO local e nacional</strong>,{' '}
+              <strong className="text-white/90">gestão de redes sociais</strong> e{' '}
+              <strong className="text-white/90">estratégias de marketing digital</strong> pensadas para pequenas e médias
+              empresas em Portugal. Sem teoria desnecessária — apenas o que funciona na prática para fazer crescer
+              um negócio online. Cada artigo nasce de experiência real com clientes reais.
+            </p>
+            <div className="mt-8 flex flex-wrap justify-center gap-2">
+              {CATEGORIES.map((cat) => (
+                <span key={cat} className="rounded-full border border-white/10 px-3 py-1 text-[11px] uppercase tracking-[0.12em] text-muted">
+                  {cat}
+                </span>
+              ))}
+            </div>
           </AnimateOnScroll>
         </div>
       </section>

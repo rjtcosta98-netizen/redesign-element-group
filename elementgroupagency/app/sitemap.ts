@@ -19,6 +19,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: url('/recursos'),                  changeFrequency: 'monthly', priority: 0.6 },
     { url: url('/parcerias'),                 changeFrequency: 'yearly',  priority: 0.6 },
     { url: url('/blog'),                      changeFrequency: 'weekly',  priority: 0.7 },
+    { url: url('/politica-de-privacidade'),   changeFrequency: 'yearly',  priority: 0.2 },
+    { url: url('/politica-de-cookies'),       changeFrequency: 'yearly',  priority: 0.2 },
+    { url: url('/subprocessadores'),          changeFrequency: 'yearly',  priority: 0.2 },
   ]
 
   const posts: MetadataRoute.Sitemap = POSTS.map((post) => ({

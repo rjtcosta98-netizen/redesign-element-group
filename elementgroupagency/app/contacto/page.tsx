@@ -19,13 +19,13 @@ export const metadata: Metadata = {
     url: '/contacto',
     locale: 'pt_PT',
     siteName: 'Element Group',
-    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'Contacto Element Group' }],
+    images: [{ url: '/og/11-contacto.png', width: 1200, height: 630, alt: 'Contacto Element Group' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Pedir Orçamento Grátis — Contacto | Element Group',
     description: 'Fala comigo sobre o teu projeto. Respondo em menos de 2 horas, sem compromisso.',
-    images: ['/opengraph-image'],
+    images: ['/og/11-contacto.png'],
   },
 }
 
@@ -77,26 +77,26 @@ export default function Contact({ searchParams }: { searchParams: { servico?: st
             <AnimateOnScroll direction="right" className="flex flex-col gap-4">
               <p className="text-[11px] uppercase tracking-[0.18em] text-dark">Preferes outra forma?</p>
 
-              <a href={`mailto:${COMPANY.email}`} className="group flex items-center gap-4 rounded-2xl border border-white/10 bg-bg-card p-5 hover:border-white/25 transition-colors">
+              <div className="group flex items-center gap-4 rounded-2xl border border-white/10 bg-bg-card p-5 hover:border-white/25 transition-colors">
                 <span className="grid place-items-center w-11 h-11 shrink-0 rounded-xl bg-gradient-to-br from-accent to-[#4f7fb8] text-black">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 7 9 6 9-6" /></svg>
                 </span>
                 <span>
                   <span className="block text-white text-sm font-medium">Email</span>
-                  <span className="block text-muted text-sm">{COMPANY.email}</span>
+                  <a href={`mailto:${COMPANY.email}`} className="block text-muted text-sm hover:text-white transition-colors">{COMPANY.email}</a>
                 </span>
-              </a>
+              </div>
 
-              <a href={`tel:${COMPANY.phoneTel}`} className="group flex items-center gap-4 rounded-2xl border border-white/10 bg-bg-card p-5 hover:border-white/25 transition-colors">
+              <div className="group flex items-center gap-4 rounded-2xl border border-white/10 bg-bg-card p-5 hover:border-white/25 transition-colors">
                 <span className="grid place-items-center w-11 h-11 shrink-0 rounded-xl bg-gradient-to-br from-accent to-[#4f7fb8] text-black">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z" /></svg>
                 </span>
                 <span>
                   <span className="block text-white text-sm font-medium">Telefone</span>
-                  <span className="block text-muted text-sm">{COMPANY.phone}</span>
+                  <a href={`tel:${COMPANY.phoneTel}`} className="block text-muted text-sm hover:text-white transition-colors">{COMPANY.phone}</a>
                   <span className="block text-[11px] text-dark">{COMPANY.phoneCost}</span>
                 </span>
-              </a>
+              </div>
 
               <a href={COMPANY.whatsapp} target="_blank" rel="noopener noreferrer" className="group flex items-center gap-4 rounded-2xl border border-white/10 bg-bg-card p-5 hover:border-white/25 transition-colors">
                 <span className="grid place-items-center w-11 h-11 shrink-0 rounded-xl bg-gradient-to-br from-accent to-[#4f7fb8] text-black">
@@ -135,6 +135,32 @@ export default function Contact({ searchParams }: { searchParams: { servico?: st
                 </div>
               </div>
             </AnimateOnScroll>
+          </div>
+        </div>
+      </section>
+
+      {/* Como funciona */}
+      <section className="bg-bg px-6 pb-16">
+        <div className="max-w-[1000px] mx-auto">
+          <AnimateOnScroll className="text-center mb-10">
+            <p className="text-[11px] uppercase tracking-[0.22em] text-dark mb-3">Processo</p>
+            <h2 className="text-white text-2xl font-medium tracking-[-0.02em]">Como funciona</h2>
+            <p className="mt-3 text-muted text-sm leading-relaxed max-w-lg mx-auto">
+              Desde o primeiro contacto até à entrega do projeto, mantenho tudo transparente e sem surpresas.
+            </p>
+          </AnimateOnScroll>
+          <div className="grid md:grid-cols-3 gap-5">
+            {([
+              { n: '01', title: 'Envias a mensagem', desc: 'Preenche o formulário ou contacta-me diretamente por email, telefone ou WhatsApp. Explica o teu projeto em poucas palavras — quanto mais detalhes deres, mais precisa fica a proposta.' },
+              { n: '02', title: 'Respondo em menos de 2h', desc: 'Analiso o pedido e respondo pessoalmente. Se precisar de mais informação, pergunto diretamente. Sem chatbots, sem respostas automáticas genéricas — falas sempre com o Ricardo.' },
+              { n: '03', title: 'Orçamento claro e sem surpresas', desc: 'Envio uma proposta detalhada com prazos, preços e tudo o que está incluído. Só avançamos quando estiveres totalmente satisfeito com o plano. Sem custos escondidos.' },
+            ] as const).map(({ n, title, desc }) => (
+              <div key={n} className="rounded-[20px] border border-white/10 bg-bg-card p-6">
+                <span className="block text-accent text-xs tracking-widest font-mono mb-3">{n}.</span>
+                <h3 className="text-white font-medium mb-2">{title}</h3>
+                <p className="text-muted text-sm leading-relaxed">{desc}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>

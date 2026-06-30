@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   alternates: { canonical: '/politica-de-privacidade' },
   title: 'Política de Privacidade — Element Group',
   description: 'Como a Element Group trata e protege os teus dados pessoais, em conformidade com o RGPD.',
-  robots: { index: false, follow: false },
+  openGraph: { url: '/politica-de-privacidade' },
 }
 
 export default function PrivacidadePage() {
@@ -54,6 +54,8 @@ export default function PrivacidadePage() {
         <LI>Fornecedor de alojamento e de envio de email.</LI>
       </UL>
       <P>
+        A lista completa de subprocessadores, com informação sobre localização e finalidade, está disponível
+        na nossa <a href="/subprocessadores" className="text-white underline underline-offset-4 hover:text-accent">página de Subprocessadores de Dados</a>.
         Alguns destes fornecedores podem tratar dados fora do Espaço Económico Europeu, caso em que são
         aplicadas as salvaguardas previstas no RGPD (ex.: cláusulas contratuais-tipo da Comissão Europeia).
         Não vendemos nem cedemos os teus dados a terceiros para fins de marketing.

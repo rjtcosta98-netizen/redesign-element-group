@@ -15,10 +15,12 @@ import RelatedServices from '@/components/servicos/RelatedServices'
 
 const CTA = `/contacto?servico=${encodeURIComponent('Social Media')}`
 
+export const dynamic = 'force-static'
+
 export const metadata: Metadata = {
   title: 'Gestão de Redes Sociais e Conteúdo — Element Group',
   description:
-    'Gestão de redes sociais para empresas: posts com design, copy e vídeos verticais (Reels/TikTok/Shorts). Presença consistente e profissional, sem te roubar tempo.',
+    'Gestão de redes sociais para empresas: posts com design, copy e vídeos verticais (Reels/TikTok/Shorts). Presença consistente, sem te roubar tempo.',
   keywords: ['gestão redes sociais Portugal', 'conteúdo Instagram PME', 'Reels TikTok negócio', 'marketing redes sociais', 'agência social media Portugal', 'Element Group redes sociais'],
   alternates: { canonical: '/servicos/social' },
   robots: { index: true, follow: true },
@@ -29,13 +31,13 @@ export const metadata: Metadata = {
     url: '/servicos/social',
     locale: 'pt_PT',
     siteName: 'Element Group',
-    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'Redes Sociais — Element Group' }],
+    images: [{ url: '/og/04-social-media.png', width: 1200, height: 630, alt: 'Redes Sociais — Element Group' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Gestão de Redes Sociais e Conteúdo — Element Group',
     description: 'Gestão de redes sociais para empresas: posts com design, copy e vídeos verticais.',
-    images: ['/opengraph-image'],
+    images: ['/og/04-social-media.png'],
   },
 }
 
@@ -285,9 +287,10 @@ export default function SocialMediaPage() {
             </p>
             <div className="mt-10 flex flex-col items-center gap-5">
               <GlowButton href={CTA}>Quero as minhas redes ativas</GlowButton>
-              <Link href="mailto:info@elementgroup.pt" className="text-sm text-white/70 hover:text-white transition-colors">
-                ou escreve-me para <span className="text-white/90 underline underline-offset-4">info@elementgroup.pt</span>
-              </Link>
+              <span className="text-sm text-white/70">
+                ou escreve-me para{' '}
+                <Link href="mailto:info@elementgroup.pt" className="text-white/90 underline underline-offset-4 hover:text-white transition-colors">info@elementgroup.pt</Link>
+              </span>
             </div>
           </AnimateOnScroll>
         </div>

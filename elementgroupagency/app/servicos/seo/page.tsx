@@ -15,6 +15,8 @@ import RelatedServices from '@/components/servicos/RelatedServices'
 
 const CTA = `/contacto?servico=${encodeURIComponent('SEO & Otimização')}`
 
+export const dynamic = 'force-static'
+
 export const metadata: Metadata = {
   title: 'Serviços de SEO e Otimização Google — Element Group',
   description:
@@ -29,13 +31,13 @@ export const metadata: Metadata = {
     url: '/servicos/seo',
     locale: 'pt_PT',
     siteName: 'Element Group',
-    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'SEO e Otimização Google — Element Group' }],
+    images: [{ url: '/og/03-seo.png', width: 1200, height: 630, alt: 'SEO e Otimização Google — Element Group' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Serviços de SEO e Otimização Google — Element Group',
     description: 'SEO para empresas em Portugal: técnico, local (Top 3 Google Maps) e conteúdo otimizado.',
-    images: ['/opengraph-image'],
+    images: ['/og/03-seo.png'],
   },
 }
 
@@ -290,9 +292,10 @@ export default function SeoPage() {
             </p>
             <div className="mt-10 flex flex-col items-center gap-5">
               <GlowButton href={CTA}>Quero aparecer no Google</GlowButton>
-              <Link href="mailto:info@elementgroup.pt" className="text-sm text-white/70 hover:text-white transition-colors">
-                ou escreve-me para <span className="text-white/90 underline underline-offset-4">info@elementgroup.pt</span>
-              </Link>
+              <span className="text-sm text-white/70">
+                ou escreve-me para{' '}
+                <Link href="mailto:info@elementgroup.pt" className="text-white/90 underline underline-offset-4 hover:text-white transition-colors">info@elementgroup.pt</Link>
+              </span>
             </div>
           </AnimateOnScroll>
         </div>

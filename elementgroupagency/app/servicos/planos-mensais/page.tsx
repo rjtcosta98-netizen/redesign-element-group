@@ -15,6 +15,8 @@ import RelatedServices from '@/components/servicos/RelatedServices'
 
 const CTA = `/contacto?servico=${encodeURIComponent('Planos Mensais')}`
 
+export const dynamic = 'force-static'
+
 export const metadata: Metadata = {
   title: 'Manutenção de Sites e Planos Mensais — Element Group',
   description:
@@ -29,13 +31,13 @@ export const metadata: Metadata = {
     url: '/servicos/planos-mensais',
     locale: 'pt_PT',
     siteName: 'Element Group',
-    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'Planos Mensais — Element Group' }],
+    images: [{ url: '/og/05-planos-mensais.png', width: 1200, height: 630, alt: 'Planos Mensais — Element Group' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Manutenção de Sites e Planos Mensais — Element Group',
     description: 'Planos mensais para empresas: manutenção, backups, SEO contínuo e relatórios.',
-    images: ['/opengraph-image'],
+    images: ['/og/05-planos-mensais.png'],
   },
 }
 
@@ -280,9 +282,10 @@ export default function PlanosMensaisPage() {
             </p>
             <div className="mt-10 flex flex-col items-center gap-5">
               <GlowButton href={CTA}>Quero um parceiro contínuo</GlowButton>
-              <Link href="mailto:info@elementgroup.pt" className="text-sm text-white/70 hover:text-white transition-colors">
-                ou escreve-me para <span className="text-white/90 underline underline-offset-4">info@elementgroup.pt</span>
-              </Link>
+              <span className="text-sm text-white/70">
+                ou escreve-me para{' '}
+                <Link href="mailto:info@elementgroup.pt" className="text-white/90 underline underline-offset-4 hover:text-white transition-colors">info@elementgroup.pt</Link>
+              </span>
             </div>
           </AnimateOnScroll>
         </div>

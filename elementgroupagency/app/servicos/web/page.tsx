@@ -14,6 +14,8 @@ import RelatedServices from '@/components/servicos/RelatedServices'
 
 const CTA = `/contacto?servico=${encodeURIComponent('Websites & Lojas Online')}`
 
+export const dynamic = 'force-static'
+
 export const metadata: Metadata = {
   title: 'Criação de Websites e Lojas Online — Element Group',
   description:
@@ -28,13 +30,13 @@ export const metadata: Metadata = {
     url: '/servicos/web',
     locale: 'pt_PT',
     siteName: 'Element Group',
-    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'Criação de Websites — Element Group' }],
+    images: [{ url: '/og/02-websites.png', width: 1200, height: 630, alt: 'Criação de Websites — Element Group' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Criação de Websites e Lojas Online — Element Group',
     description: 'Sites e lojas online à medida: ultra-rápidos, responsivos e prontos para vender.',
-    images: ['/opengraph-image'],
+    images: ['/og/02-websites.png'],
   },
 }
 
@@ -297,9 +299,12 @@ export default function WebsitesPage() {
             </p>
             <div className="mt-10 flex flex-col items-center gap-5">
               <GlowButton href={CTA}>Quero o meu website</GlowButton>
-              <Link href="mailto:info@elementgroup.pt" className="text-sm text-white/70 hover:text-white transition-colors">
-                ou escreve-me para <span className="text-white/90 underline underline-offset-4">info@elementgroup.pt</span>
-              </Link>
+              <span className="text-sm text-white/70">
+                ou escreve-me para{' '}
+                <Link href="mailto:info@elementgroup.pt" className="text-white/90 underline underline-offset-4 hover:text-white transition-colors">
+                  info@elementgroup.pt
+                </Link>
+              </span>
             </div>
           </AnimateOnScroll>
         </div>
