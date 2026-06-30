@@ -1,5 +1,5 @@
 'use client'
-import { useRef } from 'react'
+import { useRef, useImperativeHandle, forwardRef } from 'react'
 import Script from 'next/script'
 
 declare global {
@@ -12,26 +12,36 @@ declare global {
   }
 }
 
-export default function Turnstile({
-  onToken,
-  onExpire,
-}: {
+export interface TurnstileHandle {
+  execute: () => boolean // returns false if widget not ready yet
+}
+
+const Turnstile = forwardRef<TurnstileHandle, {
   onToken: (token: string) => void
   onExpire?: () => void
-}) {
+  onError?: () => void
+}>(function Turnstile({ onToken, onExpire, onError }, ref) {
   const container = useRef<HTMLDivElement>(null)
   const widgetId = useRef<string | null>(null)
   const onTokenRef = useRef(onToken)
   onTokenRef.current = onToken
+
+  useImperativeHandle(ref, () => ({
+    execute: () => {
+      if (!widgetId.current || !window.turnstile) return false
+      window.turnstile.execute(widgetId.current)
+      return true
+    },
+  }))
 
   function render() {
     if (!container.current || widgetId.current || !window.turnstile) return
     widgetId.current = window.turnstile.render(container.current, {
       sitekey: process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? '',
       size: 'invisible',
+      execution: 'execute',
       callback: (token: string) => onTokenRef.current(token),
       'expired-callback': () => {
-        // Auto-reset para obter um token fresco sem intervenção do utilizador
         onExpire?.()
         if (widgetId.current && window.turnstile) {
           window.turnstile.reset(widgetId.current)
@@ -39,7 +49,7 @@ export default function Turnstile({
       },
       'error-callback': () => {
         onExpire?.()
-        // Re-render em caso de erro (ex: rede)
+        onError?.()
         widgetId.current = null
         setTimeout(render, 2000)
       },
@@ -56,4 +66,6 @@ export default function Turnstile({
       <div ref={container} />
     </>
   )
-}
+})
+
+export default Turnstile

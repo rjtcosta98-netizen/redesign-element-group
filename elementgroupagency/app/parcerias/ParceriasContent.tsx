@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import Turnstile from '@/components/ui/Turnstile'
+import Turnstile, { type TurnstileHandle } from '@/components/ui/Turnstile'
 import { motion, animate, useInView } from 'framer-motion'
 import Link from 'next/link'
 import AnimateOnScroll from '@/components/ui/AnimateOnScroll'
@@ -545,6 +545,8 @@ function PartnerMultiStepForm() {
   const [status, setStatus] = useState<'idle' | 'sending' | 'ok' | 'err'>('idle')
   const [errMsg, setErrMsg] = useState('')
   const [cfToken, setCfToken] = useState('')
+  const turnstileRef = useRef<TurnstileHandle>(null)
+  const pendingSubmit = useRef(false)
 
   function canAdvance() {
     if (step === 0) return data.name.trim() !== '' && /\S+@\S+\.\S+/.test(data.email)
@@ -563,12 +565,7 @@ function PartnerMultiStepForm() {
     }))
   }
 
-  async function doSubmit() {
-    if (!cfToken) {
-      setErrMsg('Verificação de segurança ainda a carregar. Aguarda um momento e tenta de novo.')
-      setStatus('err')
-      return
-    }
+  async function submitWithToken(token: string) {
     setStatus('sending')
     setErrMsg('')
     try {
@@ -585,7 +582,7 @@ function PartnerMultiStepForm() {
           service: 'Parceiro / Afiliado',
           source: 'parcerias',
           consent: data.terms,
-          cfToken,
+          cfToken: token,
         }),
       })
       if (r.ok) {
@@ -597,6 +594,30 @@ function PartnerMultiStepForm() {
       }
     } catch {
       setErrMsg('Erro de rede. Verifica a tua ligação e tenta de novo.')
+      setStatus('err')
+    }
+  }
+
+  function handleToken(token: string) {
+    setCfToken(token)
+    if (pendingSubmit.current) {
+      pendingSubmit.current = false
+      submitWithToken(token)
+    }
+  }
+
+  function doSubmit() {
+    if (cfToken) {
+      submitWithToken(cfToken)
+      return
+    }
+    const ready = turnstileRef.current?.execute()
+    if (ready) {
+      // Turnstile widget existe — aguardar token (handleToken chama submitWithToken)
+      pendingSubmit.current = true
+      setStatus('sending')
+    } else {
+      setErrMsg('Verificação de segurança ainda a carregar. Aguarda um momento e tenta de novo.')
       setStatus('err')
     }
   }
@@ -845,7 +866,18 @@ function PartnerMultiStepForm() {
           </motion.div>
         )}
 
-        <Turnstile onToken={setCfToken} onExpire={() => setCfToken('')} />
+        <Turnstile
+          ref={turnstileRef}
+          onToken={handleToken}
+          onExpire={() => { setCfToken(''); pendingSubmit.current = false }}
+          onError={() => {
+            if (pendingSubmit.current) {
+              pendingSubmit.current = false
+              setErrMsg('Erro na verificação de segurança. Tenta novamente.')
+              setStatus('err')
+            }
+          }}
+        />
 
         {/* ── Navigation ── */}
         {status !== 'ok' && (
