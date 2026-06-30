@@ -7,6 +7,7 @@ declare global {
     turnstile: {
       render: (el: HTMLElement, opts: Record<string, unknown>) => string
       reset: (id: string) => void
+      execute: (id: string) => void
     }
   }
 }
@@ -30,8 +31,17 @@ export default function Turnstile({
       size: 'invisible',
       callback: (token: string) => onTokenRef.current(token),
       'expired-callback': () => {
-        widgetId.current = null
+        // Auto-reset para obter um token fresco sem intervenção do utilizador
         onExpire?.()
+        if (widgetId.current && window.turnstile) {
+          window.turnstile.reset(widgetId.current)
+        }
+      },
+      'error-callback': () => {
+        onExpire?.()
+        // Re-render em caso de erro (ex: rede)
+        widgetId.current = null
+        setTimeout(render, 2000)
       },
     })
   }
@@ -40,7 +50,7 @@ export default function Turnstile({
     <>
       <Script
         src="https://challenges.cloudflare.com/turnstile/v0/api.js"
-        strategy="lazyOnload"
+        strategy="afterInteractive"
         onLoad={render}
       />
       <div ref={container} />

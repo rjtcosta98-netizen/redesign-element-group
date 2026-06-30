@@ -543,6 +543,7 @@ function PartnerMultiStepForm() {
     terms: false,
   })
   const [status, setStatus] = useState<'idle' | 'sending' | 'ok' | 'err'>('idle')
+  const [errMsg, setErrMsg] = useState('')
   const [cfToken, setCfToken] = useState('')
 
   function canAdvance() {
@@ -563,7 +564,13 @@ function PartnerMultiStepForm() {
   }
 
   async function doSubmit() {
+    if (!cfToken) {
+      setErrMsg('Verificação de segurança ainda a carregar. Aguarda um momento e tenta de novo.')
+      setStatus('err')
+      return
+    }
     setStatus('sending')
+    setErrMsg('')
     try {
       const r = await fetch('/api/contact', {
         method: 'POST',
@@ -581,8 +588,15 @@ function PartnerMultiStepForm() {
           cfToken,
         }),
       })
-      setStatus(r.ok ? 'ok' : 'err')
+      if (r.ok) {
+        setStatus('ok')
+      } else {
+        const body = await r.json().catch(() => ({})) as { error?: string }
+        setErrMsg(body.error ?? 'Algo correu mal. Tenta novamente.')
+        setStatus('err')
+      }
     } catch {
+      setErrMsg('Erro de rede. Verifica a tua ligação e tenta de novo.')
       setStatus('err')
     }
   }
@@ -793,7 +807,7 @@ function PartnerMultiStepForm() {
 
           {status === 'err' && (
             <p className="text-xs text-red-400 mb-4">
-              Algo correu mal. Tenta novamente.
+              {errMsg || 'Algo correu mal. Tenta novamente.'}
             </p>
           )}
         </div>
