@@ -149,8 +149,7 @@ export default function Footer() {
             alt=""
             width={96}
             height={96}
-            className="relative w-14 h-14 sm:w-[4.5rem] sm:h-[4.5rem] object-contain
-                       [filter:brightness(0)_invert(1)] drop-shadow-[0_4px_18px_rgba(0,0,0,0.6)]"
+            className="relative w-14 h-14 sm:w-[4.5rem] sm:h-[4.5rem] object-contain mix-blend-screen"
           />
         </div>
       </div>
