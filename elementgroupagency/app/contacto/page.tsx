@@ -165,31 +165,45 @@ export default function Contact({ searchParams }: { searchParams: { servico?: st
         </div>
       </section>
 
-      {/* Localização — Maps embed */}
+      {/* Localização — card on-brand */}
       <section className="bg-bg px-6 pb-24">
         <div className="max-w-[1000px] mx-auto">
-          <div className="rounded-[24px] overflow-hidden border border-white/10" style={{ height: '360px' }}>
-            <iframe
-              src="https://www.openstreetmap.org/export/embed.html?bbox=-7.7307%2C40.3999%2C-7.6707%2C40.4399&layer=mapnik&marker=40.4199%2C-7.7007"
-              width="100%"
-              height="100%"
-              style={{ border: 0, filter: 'invert(92%) hue-rotate(180deg) saturate(0.85)' }}
-              allowFullScreen
-              loading="lazy"
-              title="Localização Element Group — Seia, Serra da Estrela"
-            />
-          </div>
-          <p className="mt-3 text-center text-[11px] text-dark">
-            Seia, Serra da Estrela · Portugal ·{' '}
-            <a
-              href="https://maps.app.goo.gl/1fk3WM9AXPJGD7YK9"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-accent hover:underline"
-            >
-              Abrir no Google Maps →
-            </a>
-          </p>
+          <a
+            href="https://maps.app.goo.gl/1fk3WM9AXPJGD7YK9"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group relative flex items-center justify-between gap-6 rounded-[24px] border border-white/10 bg-bg-card px-8 py-10 overflow-hidden hover:border-white/20 transition-colors"
+          >
+            {/* glow de fundo */}
+            <div aria-hidden className="absolute -top-20 -left-20 w-72 h-72 rounded-full blur-[80px] opacity-[0.10] pointer-events-none" style={{ background: 'rgb(var(--accent-rgb, 127 168 217))' }} />
+
+            {/* Lado esquerdo — info */}
+            <div className="relative flex items-center gap-6">
+              {/* Ícone pin */}
+              <span className="grid place-items-center w-14 h-14 shrink-0 rounded-2xl bg-accent/10 border border-accent/20 text-accent">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                  <path d="M12 21s-7-6.3-7-11a7 7 0 1 1 14 0c0 4.7-7 11-7 11Z" />
+                  <circle cx="12" cy="10" r="2.5" />
+                </svg>
+              </span>
+
+              <div>
+                <p className="text-[11px] uppercase tracking-[0.18em] text-dark mb-1">Localização</p>
+                <p className="text-white font-medium text-lg leading-snug">Seia, Serra da Estrela</p>
+                <p className="text-muted text-sm mt-0.5">Portugal · Atendemos clientes em todo o país</p>
+                {/* coordenadas — toque técnico/premium */}
+                <p className="mt-3 font-mono text-[11px] text-dark tracking-wide">40°25′N · 7°42′O</p>
+              </div>
+            </div>
+
+            {/* Lado direito — CTA */}
+            <span className="relative shrink-0 inline-flex items-center gap-2 text-sm text-accent font-medium group-hover:gap-3 transition-all">
+              Abrir no Google Maps
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <path d="M7 17 17 7M17 7H7M17 7v10" />
+              </svg>
+            </span>
+          </a>
         </div>
       </section>
     </main>
