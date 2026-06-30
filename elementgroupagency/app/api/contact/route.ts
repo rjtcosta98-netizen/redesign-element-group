@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server'
-import { Resend } from 'resend'
 
 async function verifyTurnstile(token: string | undefined): Promise<boolean> {
   const secret = process.env.TURNSTILE_SECRET_KEY
@@ -39,7 +38,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'É necessário aceitar a Política de Privacidade.' }, { status: 422 })
   }
 
-  const apiKey = process.env.RESEND_API_KEY
+  const apiKey = process.env.BREVO_API_KEY
   if (!apiKey) {
     return NextResponse.json(
       { error: 'O formulário ainda não está ligado. Escreve-me para info@elementgroup.pt.' },
@@ -47,31 +46,36 @@ export async function POST(req: Request) {
     )
   }
 
-  const resend = new Resend(apiKey)
+  const serviceLabel = service ? `<tr><td style="padding:4px 0;color:#888;width:100px">Serviço</td><td style="padding:4px 0">${service}</td></tr>` : ''
 
-  const serviceLabel = service ? `<tr><td style="padding:4px 0;color:#888">Serviço</td><td style="padding:4px 0">${service}</td></tr>` : ''
-
-  const { error } = await resend.emails.send({
-    from: 'Element Group <noreply@elementgroup.pt>',
-    to: ['info@elementgroup.pt'],
-    replyTo: email.trim(),
-    subject: `Novo contacto de ${name.trim()}`,
-    html: `
-      <div style="font-family:sans-serif;max-width:600px;margin:0 auto;color:#1a1a1a">
-        <h2 style="margin:0 0 24px;font-size:20px">Novo pedido de contacto</h2>
-        <table style="border-collapse:collapse;width:100%">
-          <tr><td style="padding:4px 0;color:#888;width:100px">Nome</td><td style="padding:4px 0">${name.trim()}</td></tr>
-          <tr><td style="padding:4px 0;color:#888">Email</td><td style="padding:4px 0"><a href="mailto:${email.trim()}">${email.trim()}</a></td></tr>
-          ${serviceLabel}
-        </table>
-        <div style="margin:24px 0;padding:16px;background:#f5f5f5;border-radius:8px;white-space:pre-wrap">${message.trim()}</div>
-        <p style="font-size:12px;color:#888">Enviado via elementgroup.pt</p>
-      </div>
-    `,
+  const res = await fetch('https://api.brevo.com/v3/smtp/email', {
+    method: 'POST',
+    headers: {
+      'api-key': apiKey,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      sender: { name: 'Element Group Website', email: 'info@elementgroup.pt' },
+      to: [{ email: 'info@elementgroup.pt', name: 'Element Group' }],
+      replyTo: { email: email.trim(), name: name.trim() },
+      subject: `Novo contacto de ${name.trim()}`,
+      htmlContent: `
+        <div style="font-family:sans-serif;max-width:600px;margin:0 auto;color:#1a1a1a">
+          <h2 style="margin:0 0 24px;font-size:20px">Novo pedido de contacto</h2>
+          <table style="border-collapse:collapse;width:100%">
+            <tr><td style="padding:4px 0;color:#888;width:100px">Nome</td><td style="padding:4px 0">${name.trim()}</td></tr>
+            <tr><td style="padding:4px 0;color:#888">Email</td><td style="padding:4px 0"><a href="mailto:${email.trim()}">${email.trim()}</a></td></tr>
+            ${serviceLabel}
+          </table>
+          <div style="margin:24px 0;padding:16px;background:#f5f5f5;border-radius:8px;white-space:pre-wrap">${message.trim()}</div>
+          <p style="font-size:12px;color:#888">Enviado via elementgroup.pt</p>
+        </div>
+      `,
+    }),
   })
 
-  if (error) {
-    console.error('Resend error:', error)
+  if (!res.ok) {
+    console.error('Brevo error:', res.status, await res.text())
     return NextResponse.json({ error: 'Não consegui enviar. Tenta de novo ou escreve para info@elementgroup.pt.' }, { status: 502 })
   }
 
