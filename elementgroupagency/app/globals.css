@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 * { box-sizing: border-box; }
-html, body { overflow-x: hidden; }
+body { overflow-x: clip; }
 
 /* ── Acento da marca (sapphire por defeito). Cada página de serviço pode
    sobrepor estas variáveis no <main> → todos os efeitos re-tematizam por herança,
