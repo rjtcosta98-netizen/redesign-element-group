@@ -275,6 +275,7 @@ export default function FeatureStack({ showIntro = true }: { showIntro?: boolean
                     <p className="mt-4 text-muted text-sm leading-relaxed">{s.body}</p>
                     <Link
                       href={s.href}
+                      aria-label={`Saber mais sobre ${s.title}`}
                       className="group mt-7 inline-flex items-center gap-1.5 rounded-pill bg-white text-black
                                  text-sm font-medium px-5 py-2.5 transition-all hover:bg-white/90"
                     >

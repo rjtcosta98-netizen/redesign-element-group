@@ -23,7 +23,7 @@ function Avatar({ r, className }: { r: Review; className: string }) {
     return (
       <Image
         src={r.avatar}
-        alt={r.name}
+        alt=""
         width={260}
         height={260}
         className={`${className} object-cover grayscale`}
@@ -71,7 +71,7 @@ export default function Testimonials({ reviews }: { reviews?: Review[] }) {
             >
               <Avatar r={t} className="w-[160px] h-[200px] md:w-[240px] md:h-[260px] rounded-2xl shrink-0" />
               <div className="max-w-sm">
-                <h4 className="text-white">{t.name}</h4>
+                <p className="text-white font-heading font-medium">{t.name}</p>
                 <p className="mt-4 text-muted text-sm leading-relaxed">“{t.quote}”</p>
                 {t.role ? <p className="mt-6 text-white/80 text-sm">{t.role}</p> : null}
               </div>
@@ -92,16 +92,16 @@ export default function Testimonials({ reviews }: { reviews?: Review[] }) {
             <button
               onClick={() => setIdx(i => (i - 1 + list.length) % list.length)}
               className="w-10 h-10 rounded-full border border-white/20 text-white flex items-center justify-center hover:bg-white hover:text-bg transition-colors"
-              aria-label="Testemunho anterior"
             >
-              ←
+              <span aria-hidden="true">←</span>
+              <span className="sr-only">Testemunho anterior</span>
             </button>
             <button
               onClick={() => setIdx(i => (i + 1) % list.length)}
               className="w-10 h-10 rounded-full border border-white/20 text-white flex items-center justify-center hover:bg-white hover:text-bg transition-colors"
-              aria-label="Testemunho seguinte"
             >
-              →
+              <span aria-hidden="true">→</span>
+              <span className="sr-only">Testemunho seguinte</span>
             </button>
           </div>
           <span className="text-muted text-sm">{idx + 1}/{list.length}</span>

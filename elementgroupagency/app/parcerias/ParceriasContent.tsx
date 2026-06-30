@@ -238,24 +238,36 @@ function EarnFilmstrip() {
       </div>
 
       {/* Navigation dots */}
-      <div className="hidden md:flex justify-center items-center gap-2 mt-6">
-        {EARN_SCENARIOS.map((_, i) => (
+      <div className="hidden md:flex justify-center items-center gap-1 mt-6">
+        {EARN_SCENARIOS.map((s, i) => (
           <button
             key={i}
             onClick={() => setActive(i)}
-            aria-label={`Ver cenário ${i + 1}`}
+            aria-label={`Ver cenário ${i + 1}: ${s.service}`}
+            aria-pressed={i === active}
             style={{
-              height: '3px',
-              width: i === active ? '24px' : '8px',
-              borderRadius: '9999px',
-              background: i === active ? '#34d399' : 'rgba(255,255,255,0.18)',
-              transition: 'width 0.3s, background 0.3s',
+              minHeight: '44px',
+              minWidth: '44px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
               border: 'none',
+              background: 'transparent',
               cursor: 'pointer',
               padding: 0,
-              display: 'block',
             }}
-          />
+          >
+            <span
+              style={{
+                display: 'block',
+                height: '3px',
+                width: i === active ? '24px' : '8px',
+                borderRadius: '9999px',
+                background: i === active ? '#34d399' : 'rgba(255,255,255,0.18)',
+                transition: 'width 0.3s, background 0.3s',
+              }}
+            />
+          </button>
         ))}
       </div>
 
@@ -577,7 +589,7 @@ function PartnerMultiStepForm() {
       key={label}
       type="button"
       onClick={onClick}
-      className="rounded-full border px-4 py-2 text-sm transition-all duration-200"
+      className="rounded-full border px-4 py-2 text-sm transition-all duration-200 min-h-[44px] inline-flex items-center"
       style={{
         borderColor: active ? 'rgba(52,211,153,0.5)' : 'rgba(255,255,255,0.1)',
         background: active ? 'rgba(52,211,153,0.1)' : 'transparent',
@@ -633,8 +645,9 @@ function PartnerMultiStepForm() {
         <div style={{ display: step === 0 ? 'block' : 'none' }}>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
             <div>
-              <label className="block text-xs text-muted mb-1.5">Nome *</label>
+              <label htmlFor="partner-name" className="block text-xs text-muted mb-1.5">Nome *</label>
               <input
+                id="partner-name"
                 type="text"
                 value={data.name}
                 onChange={e => setData(d => ({ ...d, name: e.target.value }))}
@@ -643,8 +656,9 @@ function PartnerMultiStepForm() {
               />
             </div>
             <div>
-              <label className="block text-xs text-muted mb-1.5">Email *</label>
+              <label htmlFor="partner-email" className="block text-xs text-muted mb-1.5">Email *</label>
               <input
+                id="partner-email"
                 type="email"
                 value={data.email}
                 onChange={e => setData(d => ({ ...d, email: e.target.value }))}
@@ -654,10 +668,11 @@ function PartnerMultiStepForm() {
             </div>
           </div>
           <div>
-            <label className="block text-xs text-muted mb-1.5">
+            <label htmlFor="partner-tel" className="block text-xs text-muted mb-1.5">
               Telefone <span className="text-white/25">(opcional)</span>
             </label>
             <input
+              id="partner-tel"
               type="tel"
               value={data.phone}
               onChange={e => setData(d => ({ ...d, phone: e.target.value }))}
@@ -704,7 +719,9 @@ function PartnerMultiStepForm() {
           </div>
           {data.channels.includes('Outro') && (
             <div className="mt-3">
+              <label htmlFor="partner-other-channel" className="sr-only">Descreve o canal</label>
               <input
+                id="partner-other-channel"
                 type="text"
                 value={data.otherChannel}
                 onChange={e => setData(d => ({ ...d, otherChannel: e.target.value }))}
@@ -819,7 +836,7 @@ function PartnerMultiStepForm() {
                 type="button"
                 onClick={() => setStep(s => s - 1)}
                 disabled={status === 'sending'}
-                className="px-5 py-2.5 rounded-xl text-sm transition-all duration-200"
+                className="px-5 py-2.5 rounded-xl text-sm transition-all duration-200 min-h-[44px]"
                 style={{
                   color: 'rgba(255,255,255,0.4)',
                   background: 'rgba(255,255,255,0.04)',
@@ -833,7 +850,7 @@ function PartnerMultiStepForm() {
                 type="button"
                 onClick={() => { if (canAdvance()) setStep(s => s + 1) }}
                 disabled={!canAdvance()}
-                className="px-6 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 disabled:opacity-40"
+                className="px-6 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 disabled:opacity-40 min-h-[44px]"
                 style={{
                   background: canAdvance() ? '#34d399' : 'rgba(52,211,153,0.2)',
                   color: canAdvance() ? '#000' : 'rgba(52,211,153,0.4)',
@@ -846,7 +863,7 @@ function PartnerMultiStepForm() {
                 type="button"
                 onClick={doSubmit}
                 disabled={!canAdvance() || status === 'sending'}
-                className="px-6 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 disabled:opacity-40"
+                className="px-6 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 disabled:opacity-40 min-h-[44px]"
                 style={{ background: '#34d399', color: '#000' }}
               >
                 {status === 'sending' ? 'A enviar…' : 'Confirmar adesão'}
@@ -912,7 +929,7 @@ export default function ParceriasContent() {
                 <GlowButton href="#aderir">Tornar-me parceiro</GlowButton>
                 <a
                   href="#como-funciona"
-                  className="group inline-flex items-center gap-1.5 text-sm text-muted hover:text-white transition-colors"
+                  className="group inline-flex items-center gap-1.5 text-sm text-muted hover:text-white transition-colors py-2.5"
                 >
                   Como funciona
                   <svg
@@ -1199,7 +1216,7 @@ export default function ParceriasContent() {
 
                   <a
                     href="#aderir"
-                    className="inline-flex items-center px-5 py-2.5 rounded-xl text-sm font-medium text-black transition-opacity hover:opacity-90"
+                    className="inline-flex items-center min-h-[44px] px-5 py-2.5 rounded-xl text-sm font-medium text-black transition-opacity hover:opacity-90"
                     style={{ background: '#34d399' }}
                   >
                     Tornar-me parceiro
@@ -1302,7 +1319,9 @@ export default function ParceriasContent() {
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={p.src}
-                      alt={`Logótipo ${p.name}`}
+                      alt={p.name}
+                      height={28}
+                      width={80}
                       className="h-7 w-auto max-w-[60%] object-contain transition-transform duration-300 group-hover:scale-105"
                       style={p.invert ? { filter: 'invert(1)' } : undefined}
                       loading="lazy"
@@ -1343,7 +1362,7 @@ export default function ParceriasContent() {
               <GlowButton href="#aderir">Tornar-me parceiro</GlowButton>
               <Link
                 href="/contacto"
-                className="group inline-flex items-center gap-1.5 text-sm text-muted hover:text-white transition-colors"
+                className="group inline-flex items-center gap-1.5 text-sm text-muted hover:text-white transition-colors py-2.5"
               >
                 Falar connosco
                 <svg

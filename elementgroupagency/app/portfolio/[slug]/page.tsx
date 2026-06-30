@@ -71,7 +71,11 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   const resultLine = project.resultLine ?? project.summary
   const setor = project.snapshot?.industria ?? project.category
   const servicosLabel = project.servicesUsed?.map((s) => s.label).join(' · ') ?? project.category
-  const related = PROJECTS.filter((p) => p.slug !== project.slug).slice(0, 2)
+  const idx = PROJECTS.findIndex((p) => p.slug === project.slug)
+  const related = [
+    PROJECTS[(idx - 1 + PROJECTS.length) % PROJECTS.length],
+    PROJECTS[(idx + 1) % PROJECTS.length],
+  ]
   const schemaImage = project.showcase?.desktop ?? project.cover.src
 
   // When showcase is mobile-only (no desktop) and every gallery item is a phone,
@@ -563,9 +567,10 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                   <span className="block text-muted text-[13px] leading-tight">{project.quote.role}</span>
                 </span>
                 {project.quote.url && (
-                  <a href={project.quote.url} target="_blank" rel="noopener noreferrer" aria-label="Ver avaliação no Google" className="ml-auto shrink-0 inline-flex items-center gap-1.5 min-h-[44px] text-[12px] text-accent hover:text-white transition-colors">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden><path d="M12 11v2.9h4.1c-.18 1.07-1.27 3.14-4.1 3.14A4.54 4.54 0 0 1 12 7.5c1.28 0 2.14.55 2.63 1.02l1.9-1.83A6.9 6.9 0 0 0 12 4.6a7.4 7.4 0 1 0 0 14.8c4.27 0 7.1-3 7.1-7.23 0-.49-.05-.86-.12-1.23L12 11Z" /></svg>
-                    <span className="hidden sm:inline">Ver no Google</span>
+                  <a href={project.quote.url} target="_blank" rel="noopener noreferrer" className="ml-auto shrink-0 inline-flex items-center gap-1.5 min-h-[44px] text-[12px] text-accent hover:text-white transition-colors">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 11v2.9h4.1c-.18 1.07-1.27 3.14-4.1 3.14A4.54 4.54 0 0 1 12 7.5c1.28 0 2.14.55 2.63 1.02l1.9-1.83A6.9 6.9 0 0 0 12 4.6a7.4 7.4 0 1 0 0 14.8c4.27 0 7.1-3 7.1-7.23 0-.49-.05-.86-.12-1.23L12 11Z" /></svg>
+                    <span className="hidden sm:inline" aria-hidden="true">Ver no Google</span>
+                    <span className="sr-only">Ver no Google</span>
                   </a>
                 )}
               </figcaption>
@@ -612,9 +617,12 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             </p>
             <div className="mt-10 flex flex-col items-center gap-5">
               <GlowButton href="/contacto">Pedir orçamento grátis</GlowButton>
-              <a href="mailto:info@elementgroup.pt" className="inline-flex items-center min-h-[44px] text-sm text-white/70 hover:text-white transition-colors">
-                ou escreve-me para <span className="text-white/90 underline underline-offset-4">info@elementgroup.pt</span>
-              </a>
+              <span className="inline-flex items-center min-h-[44px] text-sm text-white/70">
+                ou escreve-me para{' '}
+                <a href="mailto:info@elementgroup.pt" className="ml-1 text-white/90 underline underline-offset-4 hover:text-white transition-colors">
+                  info@elementgroup.pt
+                </a>
+              </span>
             </div>
           </AnimateOnScroll>
         </div>

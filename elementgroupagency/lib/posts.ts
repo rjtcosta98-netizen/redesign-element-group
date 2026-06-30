@@ -90,7 +90,7 @@ export const POSTS: Post[] = [
   },
   {
     slug: 'presenca-online-pme-por-onde-comecar',
-    title: 'Presença online para PMEs: por onde começar (e por onde não)',
+    title: 'Presença online para PME: por onde começar (e por onde não)',
     excerpt: 'Site, SEO, redes, anúncios… A ordem certa poupa-te dinheiro e dores de cabeça.',
     category: 'Negócio',
     date: '2026-05-28',

@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "build:cf": "npx @opennextjs/cloudflare build --dangerouslyUseUnsupportedNextVersion",
+    "deploy:cf": "npm run build:cf && npx wrangler deploy"
   },
   "dependencies": {
     "framer-motion": "^12.41.0",

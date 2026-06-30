@@ -1,8 +1,18 @@
 import { NextResponse } from 'next/server'
 
-// Recebe o formulário de contacto e grava na tabela `leads` do Supabase.
-// Project-agnostic: usa SUPABASE_URL + SUPABASE_ANON_KEY das env vars.
-// Anti-spam: honeypot ('company'). A chave anónima só precisa de uma policy de INSERT.
+async function verifyTurnstile(token: string | undefined): Promise<boolean> {
+  const secret = process.env.TURNSTILE_SECRET_KEY
+  if (!secret) return true // sem chave configurada: deixa passar (dev/local)
+  if (!token) return false
+  const res = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ secret, response: token }),
+  })
+  const data = (await res.json()) as { success: boolean }
+  return data.success === true
+}
+
 export async function POST(req: Request) {
   let data: Record<string, string>
   try {
@@ -11,10 +21,14 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Pedido inválido.' }, { status: 400 })
   }
 
-  const { name, email, message, service, consent, company } = data ?? {}
+  const { name, email, message, service, consent, company, cfToken } = data ?? {}
 
   // Honeypot: bots preenchem 'company'. Fingimos sucesso e ignoramos.
   if (company) return NextResponse.json({ ok: true })
+
+  if (!await verifyTurnstile(cfToken)) {
+    return NextResponse.json({ error: 'Verificação de segurança falhou. Recarrega a página.' }, { status: 403 })
+  }
 
   if (!name?.trim() || !email?.includes('@') || !message?.trim()) {
     return NextResponse.json({ error: 'Preenche nome, email e mensagem.' }, { status: 422 })

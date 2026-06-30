@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation'
 import GlowButton from '@/components/ui/GlowButton'
 import CoverArt from '@/components/blog/CoverArt'
 import { POSTS, getPost, relatedPosts, formatDate } from '@/lib/posts'
+import JsonLd from '@/components/JsonLd'
 import { SITE, breadcrumbSchema } from '@/lib/seo'
 
 export function generateStaticParams() {
@@ -54,10 +55,24 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
     dateModified: post.date,
     inLanguage: 'pt-PT',
     url: `${SITE.url}/blog/${post.slug}`,
+    image: `${SITE.url}/opengraph-image`,
     mainEntityOfPage: { '@id': `${SITE.url}/blog/${post.slug}#webpage` },
     isPartOf: { '@id': `${SITE.url}/#website` },
-    author: { '@type': 'Person', '@id': `${SITE.url}/sobre#author`, name: 'Ricardo Jorge', url: `${SITE.url}/sobre` },
-    publisher: { '@id': `${SITE.url}/#business` },
+    author: {
+      '@type': 'Person',
+      '@id': `${SITE.url}/sobre#author`,
+      name: 'Ricardo Jorge',
+      url: `${SITE.url}/sobre`,
+    },
+    publisher: {
+      '@type': 'Organization',
+      '@id': `${SITE.url}/#business`,
+      name: 'Element Group',
+      logo: {
+        '@type': 'ImageObject',
+        url: `${SITE.url}/web-app-manifest-512x512.png`,
+      },
+    },
   }
   const breadcrumb = breadcrumbSchema([
     { name: 'Início', path: '/' },
@@ -67,8 +82,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
 
   return (
     <main>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
+      <JsonLd data={[schema, breadcrumb]} />
 
       <article>
         {/* Header */}

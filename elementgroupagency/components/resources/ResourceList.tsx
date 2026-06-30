@@ -88,7 +88,7 @@ export default function ResourceList({ resources, types }: { resources: Resource
                     Brevemente
                   </span>
                 ) : (
-                  <Link href={r.href} className="group inline-flex items-center gap-1.5 text-sm text-white hover:text-accent transition-colors">
+                  <Link href={r.href} aria-label={`Abrir: ${r.title}`} className="group inline-flex items-center gap-1.5 text-sm text-white hover:text-accent transition-colors">
                     Abrir
                     <span className="transition-transform group-hover:translate-x-0.5" aria-hidden>→</span>
                   </Link>

@@ -15,8 +15,10 @@ export default function ClientLogo({ name, logo }: { name: string; logo?: string
           src={logo}
           alt={name}
           onError={() => setFailed(true)}
+          height={40}
+          width={160}
           className="h-8 md:h-10 w-auto object-contain"
-          loading="lazy"
+          loading="eager"
           draggable={false}
         />
       )}

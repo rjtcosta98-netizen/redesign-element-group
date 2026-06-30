@@ -2,11 +2,13 @@ import type { Metadata } from 'next'
 import { LegalShell, H2, P, UL, LI } from '@/components/legal/LegalShell'
 import { COMPANY } from '@/lib/company'
 
+export const dynamic = 'force-static'
+
 export const metadata: Metadata = {
   alternates: { canonical: '/politica-de-cookies' },
   title: 'Política de Cookies — Element Group',
   description: 'Que cookies o site da Element Group utiliza, para quê, e como podes geri-las.',
-  robots: { index: false, follow: false },
+  openGraph: { url: '/politica-de-cookies' },
 }
 
 export default function CookiesPage() {
@@ -50,10 +52,35 @@ export default function CookiesPage() {
         essenciais pode afetar o funcionamento do site.
       </P>
 
-      <H2>4. Mais informações</H2>
+      <H2>4. Cookies de terceiros</H2>
       <P>
-        Para saber como tratamos os dados recolhidos, consulta a nossa{' '}
+        Além das cookies próprias, o site pode carregar conteúdos de terceiros — como mapas do Google Maps —
+        que podem definir as suas próprias cookies, sujeitas às políticas de privacidade respetivas.
+        Não controlamos nem somos responsáveis por essas cookies. Consulta a política de privacidade de
+        cada fornecedor para mais informações sobre como utilizam os teus dados.
+      </P>
+
+      <H2>5. Como gerir cookies no teu navegador</H2>
+      <P>
+        Todos os navegadores modernos permitem bloquear ou eliminar cookies nas definições. Encontras
+        instruções detalhadas nos centros de ajuda de cada navegador: Chrome, Firefox, Safari e Edge disponibilizam
+        opções para limpar cookies individualmente ou para todos os sites. Desativar cookies essenciais pode
+        afetar o correto funcionamento de algumas funcionalidades deste site.
+      </P>
+
+      <H2>6. Alterações a esta política</H2>
+      <P>
+        Reservamo-nos o direito de atualizar esta Política de Cookies sempre que necessário, por exemplo para
+        refletir alterações nas leis aplicáveis ou nos serviços que utilizamos. A data de última atualização
+        está sempre indicada no topo desta página. Recomendamos que a revises periodicamente.
+      </P>
+
+      <H2>7. Mais informações</H2>
+      <P>
+        Para saber como tratamos os dados recolhidos através de cookies analíticas, consulta a nossa{' '}
         <a href="/politica-de-privacidade" className="text-white underline underline-offset-4 hover:text-accent">Política de Privacidade</a>.
+        Tens também o direito de apresentar reclamação à autoridade de controlo competente (CNPD — Comissão
+        Nacional de Proteção de Dados, em Portugal).
       </P>
     </LegalShell>
   )

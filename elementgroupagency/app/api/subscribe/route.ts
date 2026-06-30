@@ -1,7 +1,18 @@
 import { NextResponse } from 'next/server'
 
-// Subscrições por email (newsletter / recursos) → tabela `subscribers` no Supabase.
-// Regista o consentimento RGPD (texto aceite + data).
+async function verifyTurnstile(token: string | undefined): Promise<boolean> {
+  const secret = process.env.TURNSTILE_SECRET_KEY
+  if (!secret) return true // sem chave configurada: deixa passar (dev/local)
+  if (!token) return false
+  const res = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ secret, response: token }),
+  })
+  const data = (await res.json()) as { success: boolean }
+  return data.success === true
+}
+
 export async function POST(req: Request) {
   let data: Record<string, unknown>
   try {
@@ -13,7 +24,12 @@ export async function POST(req: Request) {
   const email = typeof data.email === 'string' ? data.email.trim() : ''
   const source = typeof data.source === 'string' && data.source ? data.source : 'newsletter'
   const consent = Boolean(data.consent)
+  const cfToken = typeof data.cfToken === 'string' ? data.cfToken : undefined
   if (data.company) return NextResponse.json({ ok: true }) // honeypot
+
+  if (!await verifyTurnstile(cfToken)) {
+    return NextResponse.json({ error: 'Verificação de segurança falhou. Recarrega a página.' }, { status: 403 })
+  }
 
   if (!email.includes('@')) {
     return NextResponse.json({ error: 'Email inválido.' }, { status: 422 })

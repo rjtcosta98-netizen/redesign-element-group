@@ -171,8 +171,8 @@ function StackedProcess({ steps, header }: { steps: ProcessStep[]; header: Heade
         <div aria-hidden className="absolute left-[15px] top-3 bottom-3 w-px bg-gradient-to-b from-accent/40 via-white/10 to-accent/40" />
         <ol className="flex flex-col gap-8">
           {steps.map((s, i) => (
-            <AnimateOnScroll key={s.title} delay={(i % 2) * 0.06}>
-              <li className="relative pl-12">
+            <li key={s.title}>
+              <AnimateOnScroll delay={(i % 2) * 0.06} className="relative pl-12">
                 <span aria-hidden className="absolute left-[6px] top-1 grid place-items-center w-5 h-5 rounded-full border border-accent/50 bg-bg">
                   <span className="w-2 h-2 rounded-full bg-accent" />
                 </span>
@@ -183,8 +183,8 @@ function StackedProcess({ steps, header }: { steps: ProcessStep[]; header: Heade
                   <span className="font-heading text-xl font-medium text-accent leading-none">{s.metric}</span>
                   <span className="text-[12px] text-muted">{s.metricLabel}</span>
                 </p>
-              </li>
-            </AnimateOnScroll>
+              </AnimateOnScroll>
+            </li>
           ))}
         </ol>
       </div>

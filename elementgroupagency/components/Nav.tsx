@@ -131,6 +131,7 @@ export default function Nav() {
         }`}
         style={{ transitionTimingFunction: EASE }}
         aria-hidden={!open}
+        ref={(node) => { if (node) node.inert = !open }}
       >
         {/* dark base */}
         <div className="absolute inset-0 bg-bg/95 backdrop-blur-xl" onClick={close} />

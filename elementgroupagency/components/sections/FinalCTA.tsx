@@ -58,12 +58,12 @@ export default function FinalCTA() {
 
           <div className="mt-10 flex flex-col items-center gap-5">
             <GlowButton href="/contacto">Pedir orçamento grátis</GlowButton>
-            <Link
-              href="mailto:info@elementgroup.pt"
-              className="text-sm text-white/70 hover:text-white transition-colors"
-            >
-              Preferes email? <span className="text-white/90 underline underline-offset-4">info@elementgroup.pt</span>
-            </Link>
+            <span className="text-sm text-white/70">
+              Preferes email?{' '}
+              <Link href="mailto:info@elementgroup.pt" className="text-white/90 underline underline-offset-4 hover:text-white transition-colors">
+                info@elementgroup.pt
+              </Link>
+            </span>
           </div>
 
           <p className="mt-12 text-xs text-muted flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1">

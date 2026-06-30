@@ -1,5 +1,6 @@
 'use client'
 import { useState, type ReactNode } from 'react'
+import Turnstile from '@/components/ui/Turnstile'
 
 type Variant = 'blog' | 'resources'
 
@@ -25,6 +26,7 @@ export default function NewsletterSignup({ variant = 'blog' }: { variant?: Varia
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'done' | 'error'>('idle')
   const [error, setError] = useState('')
+  const [cfToken, setCfToken] = useState('')
 
   async function submit(e: React.FormEvent) {
     e.preventDefault()
@@ -35,7 +37,7 @@ export default function NewsletterSignup({ variant = 'blog' }: { variant?: Varia
       const res = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, source: copy.source, consent: true }),
+        body: JSON.stringify({ email, source: copy.source, consent: true, cfToken }),
       })
       const json = await res.json().catch(() => ({}))
       if (!res.ok) {
@@ -64,6 +66,7 @@ export default function NewsletterSignup({ variant = 'blog' }: { variant?: Varia
           <p className="mt-7 text-accent text-sm">{copy.success}</p>
         ) : (
           <form onSubmit={submit} className="mt-7 flex flex-col gap-3">
+            <Turnstile onToken={setCfToken} onExpire={() => setCfToken('')} />
             <div className="flex flex-col sm:flex-row gap-2">
               <label htmlFor="nl-email" className="sr-only">Email</label>
               <input

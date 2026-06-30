@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useState, useId } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 type Item = { q: string; a: string }
@@ -7,6 +7,7 @@ type Item = { q: string; a: string }
 // Reusable accessible accordion (used across the service pages).
 export default function FaqAccordion({ items }: { items: Item[] }) {
   const [open, setOpen] = useState<number | null>(0)
+  const uid = useId()
 
   return (
     <div className="flex flex-col gap-3">
@@ -20,9 +21,9 @@ export default function FaqAccordion({ items }: { items: Item[] }) {
           >
             <h3>
               <button
-                id={`faq-q-${i}`}
+                id={`${uid}-q-${i}`}
                 aria-expanded={isOpen}
-                aria-controls={`faq-a-${i}`}
+                aria-controls={`${uid}-a-${i}`}
                 onClick={() => setOpen(isOpen ? null : i)}
                 className="w-full text-left px-6 py-5 flex items-center justify-between gap-4
                            focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent rounded-2xl"
@@ -40,9 +41,9 @@ export default function FaqAccordion({ items }: { items: Item[] }) {
             <AnimatePresence initial={false}>
               {isOpen && (
                 <motion.div
-                  id={`faq-a-${i}`}
+                  id={`${uid}-a-${i}`}
                   role="region"
-                  aria-labelledby={`faq-q-${i}`}
+                  aria-labelledby={`${uid}-q-${i}`}
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: 'auto', opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}

@@ -1,4 +1,13 @@
-// Injeta JSON-LD de forma segura. Usado para schema global e por página.
+// Serializa JSON de forma segura para embedding em HTML.
+// < > & são escapados para unicode para evitar que parsers HTML os interpretem
+// como markup mesmo dentro de um <script> (especialmente em CDNs e validators).
+function safeStringify(data: object): string {
+  return JSON.stringify(data)
+    .replace(/</g, '\\u003c')
+    .replace(/>/g, '\\u003e')
+    .replace(/&/g, '\\u0026')
+}
+
 export default function JsonLd({ data }: { data: object | object[] }) {
   const json = Array.isArray(data) ? data : [data]
   return (
@@ -7,7 +16,7 @@ export default function JsonLd({ data }: { data: object | object[] }) {
         <script
           key={i}
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(d) }}
+          dangerouslySetInnerHTML={{ __html: safeStringify(d) }}
         />
       ))}
     </>

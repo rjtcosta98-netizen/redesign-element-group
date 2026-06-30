@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import Turnstile from '@/components/ui/Turnstile'
 
 const SERVICES = ['Websites & Lojas Online', 'SEO & Otimização', 'Social Media', 'Planos Mensais', 'Outro / ainda não sei']
 
@@ -9,13 +10,14 @@ const inputCls =
 export default function ContactForm({ initialService = '' }: { initialService?: string }) {
   const [status, setStatus] = useState<'idle' | 'loading' | 'ok' | 'error'>('idle')
   const [error, setError] = useState('')
+  const [cfToken, setCfToken] = useState('')
   // Pré-seleção vinda da página de serviço (?servico=…); só aceita valores válidos.
   const preselected = SERVICES.includes(initialService) ? initialService : ''
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     const form = e.currentTarget
-    const payload = Object.fromEntries(new FormData(form))
+    const payload = { ...Object.fromEntries(new FormData(form)), cfToken }
     setStatus('loading')
     setError('')
     try {
@@ -55,8 +57,9 @@ export default function ContactForm({ initialService = '' }: { initialService?: 
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-4">
+      <Turnstile onToken={setCfToken} onExpire={() => setCfToken('')} />
       {/* Honeypot anti-spam (escondido a humanos) */}
-      <input type="text" name="company" tabIndex={-1} autoComplete="off" aria-hidden className="absolute -left-[9999px] w-px h-px opacity-0" />
+      <input type="text" name="company" tabIndex={-1} autoComplete="off" aria-hidden="true" className="absolute -left-[9999px] w-px h-px opacity-0" />
 
       <div>
         <label htmlFor="name" className="block text-[11px] uppercase tracking-[0.16em] text-dark mb-2">Nome</label>
