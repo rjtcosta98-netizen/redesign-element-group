@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 * { box-sizing: border-box; }
+html, body { overflow-x: hidden; }
 
 /* ── Acento da marca (sapphire por defeito). Cada página de serviço pode
    sobrepor estas variáveis no <main> → todos os efeitos re-tematizam por herança,
@@ -15,10 +16,10 @@
   --accent-light: #bcd6f0;     /* brilho do gradiente */
 }
 
-h1 { font-family: var(--font-inter-tight), sans-serif; font-size: clamp(36px, 7.5vw, 70px); letter-spacing: clamp(-0.8px, -0.12vw, -1.4px); font-weight: 500; }
-h2 { font-family: var(--font-inter-tight), sans-serif; font-size: clamp(28px, 5vw, 48px); letter-spacing: clamp(-0.56px, -0.1vw, -0.96px); font-weight: 500; }
-h3 { font-family: var(--font-instrument), sans-serif; font-size: clamp(24px, 4vw, 40px); letter-spacing: clamp(-0.48px, -0.08vw, -0.80px); font-weight: 500; }
-h4 { font-family: var(--font-inter-tight), sans-serif; font-size: clamp(18px, 2.5vw, 24px); letter-spacing: clamp(-0.36px, -0.06vw, -0.48px); font-weight: 500; }
+h1, .text-h1 { font-family: var(--font-inter-tight), sans-serif; font-size: clamp(36px, 7.5vw, 70px); letter-spacing: clamp(-0.8px, -0.12vw, -1.4px); font-weight: 500; }
+h2, .text-h2 { font-family: var(--font-inter-tight), sans-serif; font-size: clamp(28px, 5vw, 48px); letter-spacing: clamp(-0.56px, -0.1vw, -0.96px); font-weight: 500; }
+h3, .text-h3 { font-family: var(--font-instrument), sans-serif; font-size: clamp(24px, 4vw, 40px); letter-spacing: clamp(-0.48px, -0.08vw, -0.80px); font-weight: 500; }
+h4, .text-h4 { font-family: var(--font-inter-tight), sans-serif; font-size: clamp(18px, 2.5vw, 24px); letter-spacing: clamp(-0.36px, -0.06vw, -0.48px); font-weight: 500; }
 
 /* Exact "Send Code" secondary-button shadow lifted from the live Framer site:
    nine stacked layers — drop shadows + a greenish bottom inset that gives the

@@ -51,7 +51,7 @@ export default function AnimateOnScroll({ children, className = '', delay = 0, d
         opacity: shown ? 1 : 0,
         transform: shown ? 'none' : HIDDEN[direction],
         transition: `opacity 0.6s cubic-bezier(0.44,0,0.56,1) ${delay}s, transform 0.6s cubic-bezier(0.44,0,0.56,1) ${delay}s`,
-        willChange: 'opacity, transform',
+        willChange: shown ? 'auto' : 'opacity, transform',
       }}
     >
       {children}

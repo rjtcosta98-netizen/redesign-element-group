@@ -14,8 +14,10 @@ export default function FAQ() {
     <section className="bg-bg py-24 px-6 border-t border-white/10" aria-labelledby="faq">
       <div className="max-w-[1100px] mx-auto">
         <div className="grid md:grid-cols-[0.85fr_1.15fr] gap-12 lg:gap-20 items-start">
-          {/* Support card — sticky, converts the "still unsure" reader */}
-          <AnimateOnScroll className="md:sticky md:top-28" direction="left">
+          {/* Support card — sticky wrapper kept separate from AnimateOnScroll:
+              an active transform on the sticky element itself breaks position:sticky */}
+          <div className="md:sticky md:top-28">
+          <AnimateOnScroll direction="left">
             <div className="relative overflow-hidden rounded-[28px] border border-white/10 bg-bg-card p-8
                             bg-[radial-gradient(circle_at_50%_0%,rgba(127,168,217,0.16),rgba(14,14,14,0)_60%)]">
               {/* faint grid texture */}
@@ -54,6 +56,7 @@ export default function FAQ() {
               </div>
             </div>
           </AnimateOnScroll>
+          </div>
 
           {/* Accordion */}
           <div className="flex flex-col gap-3">

@@ -76,7 +76,8 @@ export default function Nav() {
               </svg>
             </button>
             <div className="absolute left-1/2 -translate-x-1/2 top-full pt-3 opacity-0 invisible translate-y-1
-                            transition-all duration-200 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0">
+                            transition-all duration-200 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0
+                            group-focus-within:opacity-100 group-focus-within:visible group-focus-within:translate-y-0">
               <div className="bg-bg-card border border-white/10 rounded-xl min-w-[220px] py-2 shadow-[0_20px_40px_rgba(0,0,0,0.5)]">
                 {SERVICES.map((s) => (
                   <Link key={s.href} href={s.href} className="block px-5 py-2.5 text-sm text-muted hover:text-white hover:bg-white/5 transition-colors">

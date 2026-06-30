@@ -67,7 +67,7 @@ export default function Testimonials({ reviews }: { reviews?: Review[] }) {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -40 }}
               transition={{ duration: 0.4 }}
-              className="flex flex-col items-start gap-5 sm:flex-row sm:items-center sm:gap-8 shrink-0 w-full lg:w-auto"
+              className="flex flex-col items-start gap-5 md:flex-row md:items-center md:gap-8 shrink-0 w-full lg:w-auto"
             >
               <Avatar r={t} className="w-[160px] h-[200px] md:w-[240px] md:h-[260px] rounded-2xl shrink-0" />
               <div className="max-w-sm">

@@ -38,7 +38,7 @@ export default function Hero() {
   const [bgLoaded, setBgLoaded] = useState(false)
 
   return (
-    <section className="relative w-full min-h-screen overflow-hidden bg-[#08090b]">
+    <section className="relative w-full min-h-screen min-h-dvh overflow-hidden bg-[#08090b]">
       {/* Photoreal Earth-from-space backdrop (curve, atmosphere, city lights, stars baked in).
           Faz fade-in suave quando carrega — evita o "salto" de preto para imagem. */}
       <Image
@@ -84,7 +84,7 @@ export default function Hero() {
       <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-bg pointer-events-none" />
 
       {/* Content */}
-      <div className="relative z-10 max-w-[1200px] mx-auto px-6 min-h-screen flex flex-col items-center justify-center text-center">
+      <div className="relative z-10 max-w-[1200px] mx-auto px-6 min-h-screen min-h-dvh flex flex-col items-center justify-center text-center">
         {/* Floating proof cards (decorative — kept clear of the text column, xl+ only) */}
         <CardShell className="top-[15%] left-[2%] 2xl:left-[6%] w-[168px]" delay={0.5}>
           <p className="text-[11px] text-muted">PageSpeed</p>
