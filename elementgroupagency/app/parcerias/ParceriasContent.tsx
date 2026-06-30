@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
+import Turnstile from '@/components/ui/Turnstile'
 import { motion, animate, useInView } from 'framer-motion'
 import Link from 'next/link'
 import AnimateOnScroll from '@/components/ui/AnimateOnScroll'
@@ -542,6 +543,7 @@ function PartnerMultiStepForm() {
     terms: false,
   })
   const [status, setStatus] = useState<'idle' | 'sending' | 'ok' | 'err'>('idle')
+  const [cfToken, setCfToken] = useState('')
 
   function canAdvance() {
     if (step === 0) return data.name.trim() !== '' && /\S+@\S+\.\S+/.test(data.email)
@@ -576,6 +578,7 @@ function PartnerMultiStepForm() {
           service: 'Parceiro / Afiliado',
           source: 'parcerias',
           consent: data.terms,
+          cfToken,
         }),
       })
       setStatus(r.ok ? 'ok' : 'err')
@@ -827,6 +830,8 @@ function PartnerMultiStepForm() {
             </p>
           </motion.div>
         )}
+
+        <Turnstile onToken={setCfToken} onExpire={() => setCfToken('')} />
 
         {/* ── Navigation ── */}
         {status !== 'ok' && (

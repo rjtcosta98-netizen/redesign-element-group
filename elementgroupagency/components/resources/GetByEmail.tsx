@@ -1,11 +1,13 @@
 'use client'
 import { useState } from 'react'
+import Turnstile from '@/components/ui/Turnstile'
 
 // Captura de email para um recurso gated → grava em `subscribers` (com consentimento).
 export default function GetByEmail({ cta = 'Obter por email', source = 'resource' }: { cta?: string; source?: string }) {
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'done' | 'error'>('idle')
   const [error, setError] = useState('')
+  const [cfToken, setCfToken] = useState('')
 
   async function submit(e: React.FormEvent) {
     e.preventDefault()
@@ -16,7 +18,7 @@ export default function GetByEmail({ cta = 'Obter por email', source = 'resource
       const res = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, source, consent: true }),
+        body: JSON.stringify({ email, source, consent: true, cfToken }),
       })
       const json = await res.json().catch(() => ({}))
       if (!res.ok) {
@@ -60,6 +62,7 @@ export default function GetByEmail({ cta = 'Obter por email', source = 'resource
         </span>
       </label>
       {status === 'error' && <p className="text-[12px] text-[#ff9a9a]">{error}</p>}
+      <Turnstile onToken={setCfToken} onExpire={() => setCfToken('')} />
     </form>
   )
 }
