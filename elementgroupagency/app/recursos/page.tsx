@@ -101,7 +101,7 @@ export default function RecursosPage() {
                         <span className="text-[11px] tabular-nums text-dark">5 / {featured.previewTotal ?? featured.preview.length}</span>
                       </div>
 
-                      <ul className="px-5 pt-5 space-y-3.5">
+                      <ul role="list" className="px-5 pt-5 space-y-3.5">
                         {shown.map((item) => (
                           <li key={item} className="flex items-start gap-3 text-[13.5px] text-white/90 leading-snug">
                             <span className="grid place-items-center w-5 h-5 shrink-0 mt-px rounded-md bg-gradient-to-br from-accent to-[var(--accent-mid)] text-black">

@@ -82,7 +82,7 @@ export default function Quotes({ reviews }: { reviews?: Review[] }) {
                   </p>
                   <footer className="mt-7 flex items-center gap-3">
                     {q.avatar ? (
-                      <Image src={q.avatar} alt={q.name} width={44} height={44} className="w-11 h-11 rounded-full object-cover border border-white/15" unoptimized />
+                      <Image src={q.avatar} alt={q.name} width={44} height={44} className="w-11 h-11 rounded-full object-cover border border-white/15" loading="lazy" />
                     ) : (
                       <span className="grid place-items-center w-11 h-11 rounded-full bg-gradient-to-br from-accent to-[#4f7fb8] text-white font-heading font-semibold text-sm">
                         {initials(q.name)}

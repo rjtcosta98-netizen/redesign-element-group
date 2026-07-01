@@ -23,7 +23,7 @@ function Avatar({ r, className }: { r: Review; className: string }) {
     return (
       <Image
         src={r.avatar}
-        alt=""
+        alt={`Foto de ${r.name}`}
         width={260}
         height={260}
         className={`${className} object-cover grayscale`}

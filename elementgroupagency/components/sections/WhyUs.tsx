@@ -125,7 +125,7 @@ export default function WhyUs() {
                   <p className="mt-1 text-sm text-dark">{col.tag}</p>
                 </div>
 
-                <ul className="relative mt-7 flex flex-col gap-3.5 flex-1">
+                <ul role="list" className="relative mt-7 flex flex-col gap-3.5 flex-1">
                   {col.rows.map((r, j) => (
                     <li key={j} className="flex items-start gap-3 text-sm">
                       <Verdict v={r.v} highlight={col.highlight} />

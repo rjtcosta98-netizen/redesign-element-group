@@ -68,10 +68,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
       '@type': 'Organization',
       '@id': `${SITE.url}/#business`,
       name: 'Element Group',
-      logo: {
-        '@type': 'ImageObject',
-        url: `${SITE.url}/web-app-manifest-512x512.png`,
-      },
+      logo: `${SITE.url}/web-app-manifest-512x512.png`,
     },
   }
   const breadcrumb = breadcrumbSchema([
@@ -102,7 +99,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
             <p className="mt-5 text-muted text-lg leading-relaxed">{post.excerpt}</p>
 
             <div className="mt-7 flex items-center gap-3">
-              <Image src="/ricardo-portrait.jpg" alt="Ricardo Jorge" width={40} height={40} className="w-10 h-10 rounded-full object-cover object-top border border-white/10" />
+              <Image src="/ricardo-portrait.jpg" alt="" width={40} height={40} className="w-10 h-10 rounded-full object-cover object-top border border-white/10" />
               <div className="text-sm">
                 <p className="text-white leading-tight">Ricardo Jorge</p>
                 <p className="text-[11px] text-dark">Fundador · Element Group</p>
@@ -125,7 +122,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
               }
               if (b.type === 'ul') {
                 return (
-                  <ul key={i} className="my-4 flex flex-col gap-2.5">
+                  <ul key={i} role="list" className="my-4 flex flex-col gap-2.5">
                     {b.items.map((it, j) => (
                       <li key={j} className="flex gap-3 text-muted leading-relaxed">
                         <span className="mt-2 w-1.5 h-1.5 rounded-full bg-accent shrink-0" aria-hidden />

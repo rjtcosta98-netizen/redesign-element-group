@@ -143,12 +143,12 @@ export default function SeoPage() {
       />
 
       {/* 3 · O que inclui */}
-      <section className="bg-bg border-t border-white/10 py-24" aria-labelledby="inclui">
+      <section className="bg-bg border-t border-white/10 py-24" aria-labelledby="inclui-desktop inclui-mobile">
         <IncludesGlobe
           items={INCLUDES}
           eyebrow="O que está incluído"
           title="SEO completo — técnico, local e de conteúdo"
-          subtitle="Não há truques nem atalhos. Há trabalho sério, nas três frentes que fazem subir no Google."
+          subtitle="Não há truques nem atalhos. Há trabalho sério, nas três frentes que fazem subir nos resultados de pesquisa."
         />
       </section>
 
@@ -175,9 +175,9 @@ export default function SeoPage() {
                   </span>
                   É para ti se…
                 </p>
-                <ul className="flex flex-col gap-3">
+                <ul role="list" className="flex flex-col gap-3">
                   {[
-                    'Tens um site (ou vais ter) e queres que ele traga clientes do Google.',
+                    'Tens um site (ou vais ter) e queres que ele traga clientes da pesquisa online.',
                     'Tens um negócio local e queres aparecer no Maps de quem procura perto.',
                     'Queres deixar de depender só de anúncios pagos.',
                     'Pensas a médio prazo — sabes que o melhor investimento compõe.',
@@ -199,7 +199,7 @@ export default function SeoPage() {
                   </span>
                   Não é para ti se…
                 </p>
-                <ul className="flex flex-col gap-3">
+                <ul role="list" className="flex flex-col gap-3">
                   {[
                     'Queres o primeiro lugar “para amanhã” — quem promete isso está a mentir.',
                     'Não tens (nem queres) um site minimamente decente para otimizar.',
@@ -218,11 +218,11 @@ export default function SeoPage() {
       </section>
 
       {/* 5 · Como funciona */}
-      <section className="bg-bg border-t border-white/10 py-24" aria-labelledby="processo">
+      <section className="bg-bg border-t border-white/10 py-24" aria-labelledby="processo-desktop processo-mobile">
         <ProcessTimeline
           steps={STEPS}
           eyebrow="Como funciona"
-          title="Do diagnóstico ao topo do Google"
+          title="Do diagnóstico ao topo das pesquisas"
           subtitle="SEO não é magia — é método. Sabes sempre em que pé estás e para onde vamos."
         />
       </section>
@@ -234,7 +234,7 @@ export default function SeoPage() {
           title="O que podes esperar"
           subtitle="Resultados médios dos meus projetos de SEO — sem inflar nada."
           before={[
-            { label: 'Sem tráfego vindo do Google', icon: (<><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z" /><circle cx="12" cy="12" r="3" /><path d="M3 3l18 18" /></>) },
+            { label: 'Sem tráfego vindo da pesquisa orgânica', icon: (<><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z" /><circle cx="12" cy="12" r="3" /><path d="M3 3l18 18" /></>) },
             { label: 'Atrás da concorrência', icon: (<><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M22 21v-2a4 4 0 0 0-3-3.9" /></>) },
             { label: 'Longe do Top do Maps', icon: (<><path d="M12 21s-7-6.3-7-11a7 7 0 1 1 14 0c0 4.7-7 11-7 11Z" /><circle cx="12" cy="10" r="2.5" /></>) },
           ]}
@@ -267,7 +267,7 @@ export default function SeoPage() {
 
       {/* 8 · FAQ específico */}
       <section className="bg-bg border-t border-white/10 py-24 px-6" aria-labelledby="faq">
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(FAQ_SCHEMA) }} />
+        <JsonLd data={FAQ_SCHEMA} />
         <div className="max-w-[820px] mx-auto">
           <AnimateOnScroll className="text-center mb-12">
             <p className="text-[11px] uppercase tracking-[0.22em] text-dark mb-4">FAQ</p>
@@ -291,7 +291,7 @@ export default function SeoPage() {
               pessoalmente em menos de 2 horas, sem compromisso.
             </p>
             <div className="mt-10 flex flex-col items-center gap-5">
-              <GlowButton href={CTA}>Quero aparecer no Google</GlowButton>
+              <GlowButton href={CTA}>Quero o meu diagnóstico grátis</GlowButton>
               <span className="text-sm text-white/70">
                 ou escreve-me para{' '}
                 <Link href="mailto:info@elementgroup.pt" className="text-white/90 underline underline-offset-4 hover:text-white transition-colors">info@elementgroup.pt</Link>
@@ -308,10 +308,10 @@ export default function SeoPage() {
 // Componentes do serviço de SEO (feature → benefício).
 const INCLUDES = [
   { title: 'Auditoria SEO',            desc: 'Análise completa do teu site e da concorrência para saber o que travar e o que melhorar.',          icon: (<><path d="M3 17l6-6 4 4 7-7" /><path d="M16 7h5v5" /></>) },
-  { title: 'SEO técnico',              desc: 'Velocidade, estrutura e código limpos — para o Google gostar do teu site e mostrá-lo.',           icon: (<><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-2.7 1.1V21a2 2 0 0 1-4 0v-.1A1.6 1.6 0 0 0 7 19.4a1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0-1.1-2.7H1a2 2 0 0 1 0-4h.1A1.6 1.6 0 0 0 2.6 7" /></>) },
+  { title: 'SEO técnico',              desc: 'Velocidade, estrutura e código limpos — para os motores de busca gostarem do teu site e o mostrarem.', icon: (<><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-2.7 1.1V21a2 2 0 0 1-4 0v-.1A1.6 1.6 0 0 0 7 19.4a1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0-1.1-2.7H1a2 2 0 0 1 0-4h.1A1.6 1.6 0 0 0 2.6 7" /></>) },
   { title: 'SEO local (Google Maps)',  desc: 'Otimizo o teu perfil de empresa para apareceres no Top 3 do Maps de quem procura perto.',         icon: (<><path d="M12 21s-7-6.3-7-11a7 7 0 1 1 14 0c0 4.7-7 11-7 11Z" /><circle cx="12" cy="10" r="2.5" /></>) },
   { title: 'Pesquisa de palavras-chave', desc: 'Descubro exatamente o que os teus clientes pesquisam — e otimizo para esses termos.',           icon: (<><circle cx="11" cy="11" r="7" /><path d="m20 20-3-3" /></>) },
-  { title: 'Conteúdo otimizado',       desc: 'Textos e páginas escritos para posicionar no Google e converter quem chega ao site.',             icon: (<><path d="M4 4h16v16H4z" /><path d="M8 9h8M8 13h8M8 17h5" /></>) },
+  { title: 'Conteúdo otimizado',       desc: 'Textos e páginas escritos para posicionar nas pesquisas e converter quem chega ao site.',          icon: (<><path d="M4 4h16v16H4z" /><path d="M8 9h8M8 13h8M8 17h5" /></>) },
   { title: 'Relatórios mensais',       desc: 'Vês o progresso todos os meses: posições, tráfego e contactos gerados. Zero achismos.',           icon: (<><path d="M3 3v18h18" /><path d="m19 9-5 5-4-4-3 3" /></>) },
 ]
 
@@ -339,7 +339,7 @@ const PRICES = [
   { name: 'Setup Google + Perfis', desc: 'Google Business Profile + Instagram/Facebook criados e otimizados.',  price: '297€',       type: 'Pagamento único', highlight: true,
     features: ['Google Business Profile otimizado', 'Instagram + Facebook configurados', 'Categorias, fotos e contactos', 'Base pronta para SEO local'] },
   { name: 'Setup SEO Técnico',     desc: 'Auditoria, correções on-page e indexação para arrancar bem no Google.', price: '390€',       type: 'Pagamento único',
-    features: ['Auditoria SEO completa', 'Correções on-page', 'Indexação no Google', 'Estrutura e velocidade otimizadas'] },
+    features: ['Auditoria SEO completa', 'Correções on-page', 'Indexação nos motores de busca', 'Estrutura e velocidade otimizadas'] },
   { name: 'Copywriting',           desc: 'Textos de venda para páginas, campanhas ou perfis.',                    price: 'desde 190€', type: 'Por projeto',
     features: ['Textos de venda à medida', 'Otimizados para SEO', 'Para páginas, campanhas ou perfis', 'Na linguagem do teu cliente'] },
   { name: 'SEO para IAs (GEO)',    desc: 'Otimização para apareceres no Google AI, ChatGPT e Perplexity.',        price: '290€',       type: 'Add-on', tag: 'Diferenciador',

@@ -1,6 +1,21 @@
 'use client'
-import { useRef, useImperativeHandle, forwardRef } from 'react'
+import { useEffect, useRef, useImperativeHandle, forwardRef } from 'react'
 import Script from 'next/script'
+
+// Cloudflare's script injects the challenge iframe itself, without a title —
+// watch for it and label it for screen readers as soon as it lands.
+function labelIframes(root: HTMLElement) {
+  root.querySelectorAll('iframe:not([title])').forEach((el) => {
+    el.setAttribute('title', 'Verificação de segurança Cloudflare Turnstile')
+  })
+}
+
+function watchForIframeTitle(root: HTMLElement) {
+  labelIframes(root)
+  const observer = new MutationObserver(() => labelIframes(root))
+  observer.observe(root, { childList: true, subtree: true })
+  return observer
+}
 
 declare global {
   interface Window {
@@ -23,8 +38,11 @@ const Turnstile = forwardRef<TurnstileHandle, {
 }>(function Turnstile({ onToken, onExpire, onError }, ref) {
   const container = useRef<HTMLDivElement>(null)
   const widgetId = useRef<string | null>(null)
+  const titleObserver = useRef<MutationObserver | null>(null)
   const onTokenRef = useRef(onToken)
   onTokenRef.current = onToken
+
+  useEffect(() => () => titleObserver.current?.disconnect(), [])
 
   useImperativeHandle(ref, () => ({
     execute: () => {
@@ -54,6 +72,8 @@ const Turnstile = forwardRef<TurnstileHandle, {
         setTimeout(render, 2000)
       },
     })
+    titleObserver.current?.disconnect()
+    titleObserver.current = watchForIframeTitle(container.current)
   }
 
   return (

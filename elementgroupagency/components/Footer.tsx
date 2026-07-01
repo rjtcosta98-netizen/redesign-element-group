@@ -65,7 +65,7 @@ export default function Footer() {
           {/* Brand block */}
           <div>
             <Link href="/" className="inline-flex items-center gap-2.5" aria-label="Element Group — início">
-              <Image src="/web-app-manifest-512x512.png" alt="" width={32} height={32} className="w-8 h-8" />
+              <Image src="/web-app-manifest-512x512.png" alt="Element Group" width={32} height={32} className="w-8 h-8" priority />
               <span className="font-heading text-[19px] font-semibold leading-none tracking-[-0.03em] text-white">
                 Element<span className="font-normal text-white/55"> Group</span>
               </span>
@@ -99,7 +99,7 @@ export default function Footer() {
           {COLS.map((col) => (
             <nav key={col.title} aria-label={col.title}>
               <p className="text-white text-sm font-medium mb-4">{col.title}</p>
-              <ul className="flex flex-col gap-2.5">
+              <ul role="list" className="flex flex-col gap-2.5">
                 {col.links.map((l) => (
                   <li key={l.label}>
                     <Link
@@ -150,6 +150,7 @@ export default function Footer() {
             width={96}
             height={96}
             className="relative w-14 h-14 sm:w-[4.5rem] sm:h-[4.5rem] object-contain mix-blend-screen"
+            priority
           />
         </div>
       </div>

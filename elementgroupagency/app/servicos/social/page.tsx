@@ -138,7 +138,7 @@ export default function SocialMediaPage() {
       />
 
       {/* 3 · O que inclui */}
-      <section className="bg-bg border-t border-white/10 py-24" aria-labelledby="inclui">
+      <section className="bg-bg border-t border-white/10 py-24" aria-labelledby="inclui-desktop inclui-mobile">
         <IncludesGlobe
           items={INCLUDES}
           eyebrow="O que está incluído"
@@ -171,7 +171,7 @@ export default function SocialMediaPage() {
                   </span>
                   É para ti se…
                 </p>
-                <ul className="flex flex-col gap-3">
+                <ul role="list" className="flex flex-col gap-3">
                   {[
                     'Queres estar presente e profissional nas redes, sem perder tempo.',
                     'Já tens (ou vais ter) site e SEO e queres complementar com presença social.',
@@ -195,7 +195,7 @@ export default function SocialMediaPage() {
                   </span>
                   Não é para ti se…
                 </p>
-                <ul className="flex flex-col gap-3">
+                <ul role="list" className="flex flex-col gap-3">
                   {[
                     'Achas que só as redes sociais vão fazer o teu negócio crescer.',
                     'Queres viralizar da noite para o dia — não prometo milagres.',
@@ -214,7 +214,7 @@ export default function SocialMediaPage() {
       </section>
 
       {/* 5 · Como funciona */}
-      <section className="bg-bg border-t border-white/10 py-24" aria-labelledby="processo">
+      <section className="bg-bg border-t border-white/10 py-24" aria-labelledby="processo-desktop processo-mobile">
         <ProcessTimeline
           steps={STEPS}
           eyebrow="Como funciona"
@@ -262,7 +262,7 @@ export default function SocialMediaPage() {
 
       {/* 8 · FAQ */}
       <section className="bg-bg border-t border-white/10 py-24 px-6" aria-labelledby="faq">
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(FAQ_SCHEMA) }} />
+        <JsonLd data={FAQ_SCHEMA} />
         <div className="max-w-[820px] mx-auto">
           <AnimateOnScroll className="text-center mb-12">
             <p className="text-[11px] uppercase tracking-[0.22em] text-dark mb-4">FAQ</p>

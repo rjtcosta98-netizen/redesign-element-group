@@ -119,7 +119,7 @@ export default function PackageSelector({
                   <span className="text-white font-heading text-[40px] leading-none font-medium tracking-[-0.02em]">{pkg.price}</span>
                 </div>
 
-                <ul className="mt-6 space-y-3">
+                <ul role="list" className="mt-6 space-y-3">
                   {pkg.features.map((f) => (
                     <li key={f} className="flex items-start gap-2.5 text-sm text-white/85">
                       <span className="grid place-items-center w-5 h-5 shrink-0 mt-px rounded-full bg-accent/15 text-accent">

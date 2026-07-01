@@ -31,7 +31,7 @@ export default async function LogoTicker() {
         <div className="absolute left-0 top-0 bottom-0 w-28 md:w-40 z-10 bg-gradient-to-r from-bg to-transparent pointer-events-none" />
         <div className="absolute right-0 top-0 bottom-0 w-28 md:w-40 z-10 bg-gradient-to-l from-bg to-transparent pointer-events-none" />
 
-        <ul className="flex w-max items-center animate-ticker hover:[animation-play-state:paused] motion-reduce:animate-none">
+        <ul role="list" className="flex w-max items-center animate-ticker hover:[animation-play-state:paused] motion-reduce:animate-none">
           {TRACK.map((c, i) => (
             <li key={i} className="flex items-center justify-center px-8 md:px-12 shrink-0">
               <ClientLogo name={c.name} logo={c.logo} />

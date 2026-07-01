@@ -30,7 +30,7 @@ export function P({ children }: { children: React.ReactNode }) {
 }
 
 export function UL({ children }: { children: React.ReactNode }) {
-  return <ul className="my-3 flex flex-col gap-2">{children}</ul>
+  return <ul role="list" className="my-3 flex flex-col gap-2">{children}</ul>
 }
 
 export function LI({ children }: { children: React.ReactNode }) {

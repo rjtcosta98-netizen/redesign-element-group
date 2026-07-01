@@ -8,7 +8,7 @@ import PainPoints from '@/components/servicos/PainPoints'
 import DeviceShowcase from '@/components/portfolio/DeviceShowcase'
 import ResultsFlow from '@/components/servicos/ResultsFlow'
 import JsonLd from '@/components/JsonLd'
-import { caseStudySchema, breadcrumbSchema, itemPageSchema } from '@/lib/seo'
+import { caseStudySchema, breadcrumbSchema, itemPageSchema, metaDescription } from '@/lib/seo'
 import { PROJECTS, ACCENTS, getProject, ProjectCover } from '../projects'
 
 export function generateStaticParams() {
@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const p = getProject(slug)
   if (!p) return { title: 'Projeto não encontrado — Element Group' }
   const ogImage = p.showcase?.desktop ?? p.cover.src
-  const description = p.resultLine ?? p.summary
+  const description = metaDescription(p.resultLine, p.summary)
   const title = `${p.client} — ${p.category} | Element Group`
   const keywords = [
     p.client,
@@ -143,6 +143,13 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                   <p className="text-xs uppercase tracking-[0.2em] text-accent/90 mb-4">{project.category} · {project.year}</p>
                   <h1 className="text-white tracking-[-0.03em] leading-[1.06]">{resultLine}</h1>
                   <p className="mt-5 text-muted leading-relaxed max-w-xl">{project.intro}</p>
+                  <div className="mt-6 flex items-center gap-3">
+                    <Image src="/ricardo-portrait.jpg" alt="" width={36} height={36} className="w-9 h-9 rounded-full object-cover object-top border border-white/10" />
+                    <div className="text-sm">
+                      <p className="text-white leading-tight">Ricardo Jorge</p>
+                      <p className="text-[11px] text-dark">Fundador · Element Group</p>
+                    </div>
+                  </div>
                   {/* Métricas — desktop only; no mobile surgem abaixo do iPhone */}
                   <div className="hidden lg:grid grid-cols-3 gap-3 mt-9">
                     {project.highlights.map((h) => (
@@ -231,6 +238,13 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                   <p className="text-xs uppercase tracking-[0.2em] text-accent/90 mb-4">{project.category} · {project.year}</p>
                   <h1 className="text-white tracking-[-0.03em] leading-[1.06]">{resultLine}</h1>
                   <p className="mt-5 text-muted leading-relaxed max-w-xl">{project.intro}</p>
+                  <div className="mt-6 flex items-center gap-3">
+                    <Image src="/ricardo-portrait.jpg" alt="" width={36} height={36} className="w-9 h-9 rounded-full object-cover object-top border border-white/10" />
+                    <div className="text-sm">
+                      <p className="text-white leading-tight">Ricardo Jorge</p>
+                      <p className="text-[11px] text-dark">Fundador · Element Group</p>
+                    </div>
+                  </div>
                   <div className="mt-9 grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-4">
                     {project.highlights.map((h) => (
                       <div key={h.label} className="relative overflow-hidden rounded-2xl border border-accent/25 bg-accent/[0.05] p-3 sm:p-5 shadow-[0_0_30px_-12px_rgb(var(--accent-rgb)/0.6)]">
@@ -346,7 +360,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           {/* Entregue neste projeto — detalhe completo (chips) */}
           <AnimateOnScroll className="mt-9">
             <p className="text-xs uppercase tracking-[0.2em] text-dark mb-4">Entregue neste projeto</p>
-            <ul className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3">
+            <ul role="list" className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3">
               {project.scope.map((s) => (
                 <li key={s} className="flex items-center gap-2 rounded-2xl border border-white/10 bg-bg-card px-4 py-3 text-[13px] text-white/80">
                   <span className="text-accent shrink-0"><Check /></span>
@@ -406,7 +420,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                             </div>
                             {/* ecrã */}
                             <div className="absolute overflow-hidden rounded-[1.3rem]" style={{ inset: '4px' }}>
-                              <Image src={g.src} alt={g.alt} fill sizes={mergeShowcaseIntoGallery ? '(max-width: 640px) 90vw, 210px' : '160px'} className="object-cover object-top" />
+                              <Image src={g.src} alt="" fill sizes={mergeShowcaseIntoGallery ? '(max-width: 640px) 90vw, 210px' : '160px'} className="object-cover object-top" />
                               <div className="absolute inset-0 pointer-events-none z-10" style={{ background: 'linear-gradient(148deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.016) 28%, transparent 48%)' }} />
                             </div>
                           </div>
@@ -433,7 +447,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                         <span aria-hidden className="absolute top-2.5 right-2.5 z-10 w-3.5 h-3.5 border-r border-t border-white/25" />
                         <span aria-hidden className="absolute bottom-2.5 left-2.5 z-10 w-3.5 h-3.5 border-l border-b border-white/25" />
                         <span aria-hidden className="absolute bottom-2.5 right-2.5 z-10 w-3.5 h-3.5 border-r border-b border-white/25" />
-                        <Image src={g.src} alt={g.alt} fill sizes="(max-width: 768px) 90vw, 480px" className="object-contain object-center p-6" />
+                        <Image src={g.src} alt="" fill sizes="(max-width: 768px) 90vw, 480px" className="object-contain object-center p-6" />
                       </div>
                       <figcaption className="px-4 py-3 text-[12px] text-muted">{g.alt}</figcaption>
                     </figure>
@@ -446,7 +460,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                         <span className="w-2.5 h-2.5 rounded-full bg-[#28c840]/80" />
                       </div>
                       <div className="relative w-full aspect-[16/10]">
-                        <Image src={g.src} alt={g.alt} fill sizes="(max-width: 768px) 90vw, 480px" className="object-cover object-top" />
+                        <Image src={g.src} alt="" fill sizes="(max-width: 768px) 90vw, 480px" className="object-cover object-top" />
                       </div>
                       <figcaption className="px-4 py-3 text-[12px] text-muted">{g.alt}</figcaption>
                     </figure>
@@ -518,7 +532,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                       <blockquote className="-mt-1 flex-1 text-white/90 text-sm leading-relaxed">{q.text}</blockquote>
                       <figcaption className="mt-6 flex items-center gap-3">
                         {q.avatar ? (
-                          <Image src={q.avatar} alt={q.author} width={40} height={40} className="w-10 h-10 shrink-0 rounded-full object-cover border border-white/15" />
+                          <Image src={q.avatar} alt="" width={40} height={40} className="w-10 h-10 shrink-0 rounded-full object-cover border border-white/15" />
                         ) : (
                           <span aria-hidden className="grid place-items-center w-10 h-10 shrink-0 rounded-full bg-gradient-to-br from-accent/80 to-[#2f4f7a] text-white font-heading font-semibold text-[13px]">
                             {q.author.trim().split(/\s+/).slice(0, 2).map((w) => w[0]).join('').toUpperCase()}
@@ -556,7 +570,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
               <figcaption className="relative mt-8 flex items-center gap-3.5">
                 {/* avatar: foto real se existir, senão iniciais */}
                 {project.quote.avatar ? (
-                  <Image src={project.quote.avatar} alt={project.quote.author} width={44} height={44} className="w-11 h-11 shrink-0 rounded-full object-cover border border-white/15" />
+                  <Image src={project.quote.avatar} alt="" width={44} height={44} className="w-11 h-11 shrink-0 rounded-full object-cover border border-white/15" />
                 ) : (
                   <span aria-hidden className="grid place-items-center w-11 h-11 shrink-0 rounded-full bg-gradient-to-br from-accent/80 to-[#2f4f7a] text-white font-heading font-semibold text-sm shadow-[0_8px_20px_-6px_rgb(var(--accent-rgb)/0.7)]">
                     {project.quote.author.trim().split(/\s+/).slice(0, 2).map((w) => w[0]).join('').toUpperCase()}

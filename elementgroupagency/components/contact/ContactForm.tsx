@@ -59,7 +59,10 @@ export default function ContactForm({ initialService = '' }: { initialService?: 
     <form onSubmit={onSubmit} className="flex flex-col gap-4">
       <Turnstile onToken={setCfToken} onExpire={() => setCfToken('')} />
       {/* Honeypot anti-spam (escondido a humanos) */}
-      <input type="text" name="company" tabIndex={-1} autoComplete="off" aria-hidden="true" className="absolute -left-[9999px] w-px h-px opacity-0" />
+      <div aria-hidden="true" className="absolute -left-[9999px] w-px h-px overflow-hidden opacity-0">
+        <label htmlFor="company">Empresa</label>
+        <input type="text" id="company" name="company" tabIndex={-1} autoComplete="off" />
+      </div>
 
       <div>
         <label htmlFor="name" className="block text-[11px] uppercase tracking-[0.16em] text-dark mb-2">Nome</label>

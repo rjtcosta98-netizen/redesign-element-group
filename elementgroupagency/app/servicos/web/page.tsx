@@ -146,7 +146,7 @@ export default function WebsitesPage() {
       />
 
       {/* O que está incluído — feature → benefit */}
-      <section className="bg-bg border-t border-white/10 py-24" aria-labelledby="inclui">
+      <section className="bg-bg border-t border-white/10 py-24" aria-labelledby="inclui-desktop inclui-mobile">
         <IncludesGlobe
           items={INCLUDES}
           eyebrow="O que está incluído"
@@ -178,7 +178,7 @@ export default function WebsitesPage() {
                   </span>
                   É para ti se…
                 </p>
-                <ul className="flex flex-col gap-3">
+                <ul role="list" className="flex flex-col gap-3">
                   {[
                     'Tens uma empresa ou negócio local e queres uma presença online profissional.',
                     'Queres um site que traga clientes — não só “estar online”.',
@@ -202,7 +202,7 @@ export default function WebsitesPage() {
                   </span>
                   Não é para ti se…
                 </p>
-                <ul className="flex flex-col gap-3">
+                <ul role="list" className="flex flex-col gap-3">
                   {[
                     'Procuras só o mais barato, custe o que custar à qualidade.',
                     'És uma grande marca/multinacional com equipas internas enormes.',
@@ -221,7 +221,7 @@ export default function WebsitesPage() {
       </section>
 
       {/* Como funciona / processo */}
-      <section className="bg-bg border-t border-white/10 py-24" aria-labelledby="processo">
+      <section className="bg-bg border-t border-white/10 py-24" aria-labelledby="processo-desktop processo-mobile">
         <ProcessTimeline
           steps={STEPS}
           eyebrow="Como funciona"
@@ -269,7 +269,7 @@ export default function WebsitesPage() {
 
       {/* FAQ específico do serviço */}
       <section className="bg-bg border-t border-white/10 py-24 px-6" aria-labelledby="faq">
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(FAQ_SCHEMA) }} />
+        <JsonLd data={FAQ_SCHEMA} />
         <div className="max-w-[820px] mx-auto">
           <AnimateOnScroll className="text-center mb-12">
             <p className="text-[11px] uppercase tracking-[0.22em] text-dark mb-4">FAQ</p>

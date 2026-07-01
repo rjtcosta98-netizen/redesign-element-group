@@ -22,6 +22,7 @@ type Service = {
   body: string
   href: string
   kind: Kind
+  ctaLabel: string
 }
 
 // SEO-optimized PT-PT copy. Every claim here is real (PageSpeed 95+, 3,2× tráfego,
@@ -33,6 +34,7 @@ const SERVICES: Service[] = [
     body: 'Sites institucionais e lojas online (e-commerce) desenhados à medida do teu negócio — ultra-rápidos (PageSpeed 95+), responsivos e pensados para converter visitas em clientes. Do design ao alojamento, tratamos de tudo.',
     href: '/servicos/web',
     kind: 'web',
+    ctaLabel: 'Saber mais sobre Websites',
   },
   {
     eyebrow: 'Categoria 02 · Visibilidade & SEO',
@@ -40,6 +42,7 @@ const SERVICES: Service[] = [
     body: 'Colocamos o teu negócio à frente de quem procura: SEO técnico, SEO local (Top 3 no Google Maps) e conteúdo otimizado para as pesquisas certas. Em média, os nossos projetos de SEO geram 3,2× mais tráfego orgânico.',
     href: '/servicos/seo',
     kind: 'seo',
+    ctaLabel: 'Saber mais sobre SEO',
   },
   {
     eyebrow: 'Categoria 03 · Social Media',
@@ -47,6 +50,7 @@ const SERVICES: Service[] = [
     body: 'Gerimos as tuas redes sociais com conteúdo e design profissional e campanhas pagas (Meta e Google Ads) que atraem os clientes certos — não só seguidores. Presença consistente, todos os dias, sem te tirar tempo.',
     href: '/servicos/social',
     kind: 'social',
+    ctaLabel: 'Saber mais sobre Social Media',
   },
   {
     eyebrow: 'Categoria 04 · Planos Mensais',
@@ -54,6 +58,7 @@ const SERVICES: Service[] = [
     body: 'Uma parceria contínua, sem surpresas: manutenção técnica e backups, SEO mensal, gestão de redes sociais e relatórios de resultados — tudo num plano recorrente. O teu marketing digital sempre a trabalhar por ti.',
     href: '/servicos/planos-mensais',
     kind: 'plans',
+    ctaLabel: 'Saber mais sobre Planos Mensais',
   },
 ]
 
@@ -216,7 +221,7 @@ function ServiceVisual({ kind }: { kind: Kind }) {
               Recorrente
             </span>
           </div>
-          <ul className="space-y-2.5">
+          <ul role="list" className="space-y-2.5">
             {items.map((it) => (
               <li key={it} className="flex items-center gap-2.5">
                 <span className="w-5 h-5 shrink-0 rounded-full bg-gradient-to-br from-accent to-[var(--accent-mid)] flex items-center justify-center text-black text-[11px]">✓</span>
@@ -275,11 +280,10 @@ export default function FeatureStack({ showIntro = true }: { showIntro?: boolean
                     <p className="mt-4 text-muted text-sm leading-relaxed">{s.body}</p>
                     <Link
                       href={s.href}
-                      aria-label={`Saber mais sobre ${s.title}`}
                       className="group mt-7 inline-flex items-center gap-1.5 rounded-pill bg-white text-black
                                  text-sm font-medium px-5 py-2.5 transition-all hover:bg-white/90"
                     >
-                      Saber mais
+                      {s.ctaLabel}
                       <span className="transition-transform group-hover:translate-x-0.5" aria-hidden>→</span>
                     </Link>
                   </div>

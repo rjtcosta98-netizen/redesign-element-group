@@ -12,17 +12,17 @@ export type ProcessStep = {
   metricLabel: string // legenda do destaque
   icon: ReactNode
 }
-type HeaderProps = { eyebrow?: string; title: string; subtitle?: string }
+type HeaderProps = { eyebrow?: string; title: string; subtitle?: string; id?: string }
 
 const H_C = 74        // pitch de um passo colapsado (px)
 const VIEWPORT = 440  // altura da janela da timeline (px)
 const FOCUS_Y = 150   // onde fica o topo do passo ativo (≈ a meio do cartão)
 
-function SectionHeader({ eyebrow, title, subtitle, className = '' }: HeaderProps & { className?: string }) {
+function SectionHeader({ eyebrow, title, subtitle, id, className = '' }: HeaderProps & { className?: string }) {
   return (
     <div className={`text-center max-w-[640px] mx-auto px-6 ${className}`}>
       {eyebrow && <p className="text-[11px] uppercase tracking-[0.22em] text-dark mb-4">{eyebrow}</p>}
-      <h2 id="processo" className="text-white">{title}</h2>
+      <h2 id={id} className="text-white">{title}</h2>
       {subtitle && <p className="mt-5 text-muted leading-relaxed">{subtitle}</p>}
     </div>
   )
@@ -141,16 +141,18 @@ function PinnedProcess({ steps, header }: { steps: ProcessStep[]; header: Header
 
           {/* Lista em foco: o passo ativo fica a meio; os seguintes entram em fade com o scroll */}
           <div className="relative overflow-hidden" style={{ height: VIEWPORT }}>
-            <motion.ol
+            <motion.div
               className="absolute left-0 right-0 top-0"
               animate={{ y: FOCUS_Y - active * H_C }}
               transition={{ duration: 0.55, ease: [0.22, 0.61, 0.36, 1] }}
             >
               <div aria-hidden className="absolute left-[15px] top-2 bottom-2 w-px bg-white/12" />
-              {steps.map((s, i) => (
-                <FocusStep key={s.title} step={s} index={i} active={active} />
-              ))}
-            </motion.ol>
+              <ol role="list">
+                {steps.map((s, i) => (
+                  <FocusStep key={s.title} step={s} index={i} active={active} />
+                ))}
+              </ol>
+            </motion.div>
 
             {/* máscaras de fade topo/fundo */}
             <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-bg to-transparent" />
@@ -169,7 +171,7 @@ function StackedProcess({ steps, header }: { steps: ProcessStep[]; header: Heade
       <SectionHeader {...header} className="mb-12" />
       <div className="relative max-w-md mx-auto">
         <div aria-hidden className="absolute left-[15px] top-3 bottom-3 w-px bg-gradient-to-b from-accent/40 via-white/10 to-accent/40" />
-        <ol className="flex flex-col gap-8">
+        <ol role="list" className="flex flex-col gap-8">
           {steps.map((s, i) => (
             <li key={s.title}>
               <AnimateOnScroll delay={(i % 2) * 0.06} className="relative pl-12">
@@ -195,15 +197,15 @@ function StackedProcess({ steps, header }: { steps: ProcessStep[]; header: Heade
 export default function ProcessTimeline({ steps, eyebrow, title, subtitle }: { steps: ProcessStep[] } & HeaderProps) {
   const reduce = useReducedMotion()
   const header = { eyebrow, title, subtitle }
-  if (reduce) return <StackedProcess steps={steps} header={header} />
+  if (reduce) return <StackedProcess steps={steps} header={{ ...header, id: 'processo-mobile' }} />
 
   return (
     <>
       <div className="hidden lg:block">
-        <PinnedProcess steps={steps} header={header} />
+        <PinnedProcess steps={steps} header={{ ...header, id: 'processo-desktop' }} />
       </div>
       <div className="lg:hidden">
-        <StackedProcess steps={steps} header={header} />
+        <StackedProcess steps={steps} header={{ ...header, id: 'processo-mobile' }} />
       </div>
     </>
   )

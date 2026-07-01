@@ -1,6 +1,6 @@
 'use client'
 import { useState, useId } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 
 type Item = { q: string; a: string }
 
@@ -38,22 +38,18 @@ export default function FaqAccordion({ items }: { items: Item[] }) {
               </button>
             </h3>
 
-            <AnimatePresence initial={false}>
-              {isOpen && (
-                <motion.div
-                  id={`${uid}-a-${i}`}
-                  role="region"
-                  aria-labelledby={`${uid}-q-${i}`}
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.3, ease: [0.44, 0, 0.56, 1] }}
-                  className="overflow-hidden"
-                >
-                  <p className="px-6 pb-6 text-muted text-sm leading-relaxed">{faq.a}</p>
-                </motion.div>
-              )}
-            </AnimatePresence>
+            <motion.div
+              id={`${uid}-a-${i}`}
+              role="region"
+              aria-labelledby={`${uid}-q-${i}`}
+              aria-hidden={!isOpen}
+              initial={false}
+              animate={{ height: isOpen ? 'auto' : 0, opacity: isOpen ? 1 : 0 }}
+              transition={{ duration: 0.3, ease: [0.44, 0, 0.56, 1] }}
+              className="overflow-hidden"
+            >
+              <p className="px-6 pb-6 text-muted text-sm leading-relaxed">{faq.a}</p>
+            </motion.div>
           </div>
         )
       })}

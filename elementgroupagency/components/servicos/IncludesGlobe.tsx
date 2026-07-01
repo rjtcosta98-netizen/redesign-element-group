@@ -4,17 +4,17 @@ import { motion, useScroll, useTransform, useMotionValueEvent, useReducedMotion,
 import AnimateOnScroll from '@/components/ui/AnimateOnScroll'
 
 export type GlobeItem = { title: string; desc: string; icon: ReactNode }
-type HeaderProps = { eyebrow?: string; title: string; subtitle?: string }
+type HeaderProps = { eyebrow?: string; title: string; subtitle?: string; id?: string }
 
 const LATS = [-0.8, -0.4, 0.4, 0.8] // sem o equador: esse é a linha-guia + os conectores
 const MERIDIANS = 6
 const rad = (deg: number) => (deg * Math.PI) / 180
 
-function SectionHeader({ eyebrow, title, subtitle, className = '' }: HeaderProps & { className?: string }) {
+function SectionHeader({ eyebrow, title, subtitle, id, className = '' }: HeaderProps & { className?: string }) {
   return (
     <div className={`text-center max-w-[640px] mx-auto px-6 ${className}`}>
       {eyebrow && <p className="text-[11px] uppercase tracking-[0.22em] text-dark mb-4">{eyebrow}</p>}
-      <h2 id="inclui" className="text-white">{title}</h2>
+      <h2 id={id} className="text-white">{title}</h2>
       {subtitle && <p className="mt-5 text-muted leading-relaxed">{subtitle}</p>}
     </div>
   )
@@ -203,29 +203,31 @@ function StackedGlobe({ items, header, idle = true }: { items: GlobeItem[]; head
         <Globe items={items} size={220} idle={idle} active={0} />
       </div>
 
-      <ul className="relative flex flex-col gap-5 max-w-md mx-auto pl-7">
+      <div className="relative max-w-md mx-auto pl-7">
         <span aria-hidden className="absolute left-[10px] top-4 bottom-4 w-[2px] rounded-full bg-gradient-to-b from-accent/0 via-accent/55 to-accent/0" />
-        {items.map((it, i) => (
-          <AnimateOnScroll key={it.title} delay={(i % 2) * 0.06}>
-            <li className="relative">
-              <span aria-hidden className="absolute left-[-22px] top-5 w-3.5 h-3.5">
-                <span className="node-glow" />
-                <span className="crystal relative block" />
-              </span>
-              <div className="relative overflow-hidden flex gap-4 rounded-2xl border border-white/10 p-5
-                              bg-gradient-to-br from-[#181c24] to-[#0c0d11]
-                              shadow-[0_20px_50px_-30px_rgba(0,0,0,0.9)]">
-                <span aria-hidden className="absolute inset-x-0 top-0 h-px" style={{ background: 'linear-gradient(90deg, transparent, rgb(var(--accent-rgb) / 0.4), transparent)' }} />
-                <IconBadge icon={it.icon} className="w-11 h-11 shrink-0" />
-                <div className="min-w-0">
-                  <h3 className="text-white font-heading text-lg font-medium tracking-[-0.01em]">{it.title}</h3>
-                  <p className="mt-1.5 text-muted text-sm leading-relaxed">{it.desc}</p>
+        <ul role="list" className="flex flex-col gap-5">
+          {items.map((it, i) => (
+            <li key={it.title} className="relative">
+              <AnimateOnScroll delay={(i % 2) * 0.06}>
+                <span aria-hidden className="absolute left-[-22px] top-5 w-3.5 h-3.5">
+                  <span className="node-glow" />
+                  <span className="crystal relative block" />
+                </span>
+                <div className="relative overflow-hidden flex gap-4 rounded-2xl border border-white/10 p-5
+                                bg-gradient-to-br from-[#181c24] to-[#0c0d11]
+                                shadow-[0_20px_50px_-30px_rgba(0,0,0,0.9)]">
+                  <span aria-hidden className="absolute inset-x-0 top-0 h-px" style={{ background: 'linear-gradient(90deg, transparent, rgb(var(--accent-rgb) / 0.4), transparent)' }} />
+                  <IconBadge icon={it.icon} className="w-11 h-11 shrink-0" />
+                  <div className="min-w-0">
+                    <h3 className="text-white font-heading text-lg font-medium tracking-[-0.01em]">{it.title}</h3>
+                    <p className="mt-1.5 text-muted text-sm leading-relaxed">{it.desc}</p>
+                  </div>
                 </div>
-              </div>
+              </AnimateOnScroll>
             </li>
-          </AnimateOnScroll>
-        ))}
-      </ul>
+          ))}
+        </ul>
+      </div>
     </div>
   )
 }
@@ -233,15 +235,15 @@ function StackedGlobe({ items, header, idle = true }: { items: GlobeItem[]; head
 export default function IncludesGlobe({ items, eyebrow, title, subtitle }: { items: GlobeItem[] } & HeaderProps) {
   const reduce = useReducedMotion()
   const header = { eyebrow, title, subtitle }
-  if (reduce) return <StackedGlobe items={items} header={header} idle={false} />
+  if (reduce) return <StackedGlobe items={items} header={{ ...header, id: 'inclui-mobile' }} idle={false} />
 
   return (
     <>
       <div className="hidden lg:block">
-        <PinnedGlobe items={items} header={header} />
+        <PinnedGlobe items={items} header={{ ...header, id: 'inclui-desktop' }} />
       </div>
       <div className="lg:hidden">
-        <StackedGlobe items={items} header={header} />
+        <StackedGlobe items={items} header={{ ...header, id: 'inclui-mobile' }} />
       </div>
     </>
   )

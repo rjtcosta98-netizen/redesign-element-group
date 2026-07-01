@@ -39,7 +39,7 @@ export default function PainPoints({ title, intro, items, eyebrow = 'Soa-te fami
           <p className="mt-6 text-muted leading-relaxed max-w-md">{intro}</p>
         </AnimateOnScroll>
 
-        <ul className="flex flex-col gap-3.5">
+        <ul role="list" className="flex flex-col gap-3.5">
           {items.map((it, i) => (
             <motion.li
               key={it.pain}

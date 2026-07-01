@@ -62,7 +62,7 @@ export default function HowItWorks() {
                        bg-gradient-to-b from-accent/0 via-accent/30 to-accent/0"
           />
 
-          <ol className="relative grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-6">
+          <ol role="list" className="relative grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-6">
             {STEPS.map((s, i) => (
               <li key={s.n}>
                 {/* Staggered reveal → the path appears to "draw" step by step */}

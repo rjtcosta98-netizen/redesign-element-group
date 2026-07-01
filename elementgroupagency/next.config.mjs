@@ -1,26 +1,22 @@
 /** @type {import('next').NextConfig} */
 
-const csp = [
-  "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com",
-  "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob: https:",
-  "font-src 'self' data:",
-  "connect-src 'self' https://*.supabase.co https://challenges.cloudflare.com",
-  "frame-src https://www.openstreetmap.org https://challenges.cloudflare.com",
-  "frame-ancestors 'none'",
-  "object-src 'none'",
-  "base-uri 'self'",
-  "form-action 'self'",
-].join('; ')
-
+// Content-Security-Policy is set per-request by middleware.ts (nonce-based
+// script-src) rather than here, since a static header can't carry a nonce.
 const securityHeaders = [
-  { key: 'Content-Security-Policy',   value: csp },
   { key: 'Strict-Transport-Security', value: 'max-age=31536000; includeSubDomains' },
   { key: 'X-Frame-Options',           value: 'DENY' },
   { key: 'X-Content-Type-Options',    value: 'nosniff' },
   { key: 'Referrer-Policy',           value: 'strict-origin-when-cross-origin' },
   { key: 'Permissions-Policy',        value: 'camera=(), microphone=(), geolocation=()' },
+]
+
+// Headers are resolved once at build time, so this timestamp is fixed per
+// deploy — exactly what Last-Modified should represent for statically
+// rendered pages (OpenNext's Cloudflare "dummy" incrementalCache never
+// populates Next's own Last-Modified, so every response was missing a
+// freshness validator entirely).
+const revalidationHeaders = [
+  { key: 'Last-Modified', value: new Date().toUTCString() },
 ]
 
 const htmlCacheHeaders = [
@@ -40,6 +36,7 @@ const nextConfig = {
   async headers() {
     return [
       { source: '/(.*)', headers: securityHeaders },
+      { source: '/(.*)', headers: revalidationHeaders },
       // HTML pages: Cloudflare caches 1h, browsers revalidate every visit,
       // stale content served for up to 24h while revalidating in background.
       { source: '/((?!api/).*)', headers: htmlCacheHeaders },

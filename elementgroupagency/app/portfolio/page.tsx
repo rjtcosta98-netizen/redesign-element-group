@@ -101,7 +101,7 @@ export default function PortfolioPage() {
 
           {/* Faixa de provas reais — cards "glassy" elevados (factos agregados, nada inventado) */}
           <AnimateOnScroll delay={0.1}>
-            <ul className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
+            <ul role="list" className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
               {STATS.map((s, i) => (
                 <li key={s.l} className="glow-card p-6 md:p-7 text-center" style={{ animationDelay: `${-i * 1.6}s` }}>
                   <span className="glow-card__glow" aria-hidden />
@@ -174,7 +174,7 @@ export default function PortfolioPage() {
                   <span className="absolute top-4 left-5 z-10 font-heading text-xs tabular-nums text-white/40">0{i + 2}</span>
                   <div className="relative h-[240px] overflow-hidden bg-gradient-to-br from-[#1a1d24] via-[#131417] to-[#0F0F0E]">
                     <div className="absolute inset-0 transition-transform duration-500 group-hover:scale-[1.03]">
-                      <ProjectCover project={p} variant="card" />
+                      <ProjectCover project={p} variant="card" priority={i < 2} />
                     </div>
                     <span
                       aria-hidden

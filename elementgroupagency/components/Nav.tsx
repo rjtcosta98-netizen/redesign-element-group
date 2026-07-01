@@ -59,7 +59,7 @@ export default function Nav() {
       <div className="max-w-[1200px] mx-auto px-6 h-20 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="shrink-0 flex items-center gap-2" aria-label="Element Group — início" onClick={close}>
-          <Image src="/web-app-manifest-512x512.png" alt="" width={512} height={512} className="w-8 h-8" priority />
+          <Image src="/web-app-manifest-512x512.png" alt="Element Group" width={32} height={32} className="w-8 h-8" priority />
           <span className="font-heading text-[19px] font-semibold leading-none tracking-[-0.03em] text-white">
             Element<span className="font-normal text-white/55"> Group</span>
           </span>
@@ -132,7 +132,7 @@ export default function Nav() {
         }`}
         style={{ transitionTimingFunction: EASE }}
         aria-hidden={!open}
-        ref={(node) => { if (node) node.inert = !open }}
+        {...(!open ? ({ inert: '' } as Record<string, string>) : {})}
       >
         {/* dark base */}
         <div className="absolute inset-0 bg-bg/95 backdrop-blur-xl" onClick={close} />

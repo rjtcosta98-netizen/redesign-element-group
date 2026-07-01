@@ -22,6 +22,16 @@ export const SITE = {
 
 const ABS = (path: string) => (path === '/' ? SITE.url : `${SITE.url}${path}`)
 
+// ── Meta description builder ─────────────────────────────────────────────────
+// Junta a frase-resultado (curta, usada também como H1) com o resumo para
+// atingir os 120-160 caracteres recomendados, cortando em fronteira de palavra.
+export function metaDescription(headline: string | undefined, summary: string): string {
+  const combined = headline ? `${headline}. ${summary}` : summary
+  if (combined.length <= 160) return combined
+  const cut = combined.slice(0, 157)
+  return `${cut.slice(0, cut.lastIndexOf(' '))}…`
+}
+
 // Zona servida: Portugal (nacional) + foco local Seia/Guarda/Serra da Estrela.
 const AREA_SERVED = [
   { '@type': 'Country', name: 'Portugal' },
@@ -42,13 +52,7 @@ export function organizationGraph() {
         name: SITE.name,
         legalName: COMPANY.legalName,
         url: SITE.url,
-        logo: {
-          '@type': 'ImageObject',
-          '@id': `${SITE.url}/#logo`,
-          url: `${SITE.url}/web-app-manifest-512x512.png`,
-          width: 512,
-          height: 512,
-        },
+        logo: `${SITE.url}/web-app-manifest-512x512.png`,
         image: `${SITE.url}/opengraph-image`,
         email: COMPANY.email,
         telephone: COMPANY.phone,
@@ -131,13 +135,13 @@ export function caseStudySchema(opts: {
     name: `${opts.client} — ${opts.category}`,
     headline: opts.description,
     description: opts.description,
-    about: { '@type': 'Organization', name: opts.client },
+    about: { '@type': 'Brand', name: opts.client },
     articleSection: opts.category,
     url: ABS(`/portfolio/${opts.slug}`),
     inLanguage: 'pt-PT',
-    author: { '@id': `${SITE.url}/#business` },
-    publisher: { '@id': `${SITE.url}/#business` },
-    creator: { '@id': `${SITE.url}/#business` },
+    author: { '@type': 'Person', '@id': `${SITE.url}/sobre#author`, name: 'Ricardo Jorge', url: `${SITE.url}/sobre` },
+    publisher: { '@type': 'Organization', '@id': `${SITE.url}/#business`, name: SITE.name },
+    creator: { '@type': 'Organization', '@id': `${SITE.url}/#business`, name: SITE.name },
     isPartOf: { '@id': `${SITE.url}/#website` },
     ...(opts.keywords?.length ? { keywords: opts.keywords.join(', ') } : {}),
     ...(isoDate ? { datePublished: isoDate, dateCreated: isoDate, dateModified: isoDate } : {}),
