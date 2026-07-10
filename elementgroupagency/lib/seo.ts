@@ -173,6 +173,23 @@ export function itemPageSchema(opts: {
   }
 }
 
+// ── FAQPage schema (AEO) ─────────────────────────────────────────────────────
+// Perguntas/respostas citáveis por motores de IA (AI Overviews, ChatGPT,
+// Perplexity). @id ancorado à página do caso para viver no mesmo grafo.
+export function faqSchema(slug: string, faq: { q: string; a: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    '@id': ABS(`/portfolio/${slug}#faq`),
+    inLanguage: 'pt-PT',
+    mainEntity: faq.map((item) => ({
+      '@type': 'Question',
+      name: item.q,
+      acceptedAnswer: { '@type': 'Answer', text: item.a },
+    })),
+  }
+}
+
 // ── BreadcrumbList schema ────────────────────────────────────────────────────
 export function breadcrumbSchema(items: { name: string; path: string }[]) {
   return {

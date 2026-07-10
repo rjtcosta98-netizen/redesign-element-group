@@ -40,6 +40,7 @@ export type Project = {
   showcase?: { desktop?: string; mobile?: string }   // mockups desktop + telemóvel ("Por dentro do projeto"); desktop omitido → só telemóvel (apps mobile-first)
   gallery?: { src: string; alt: string; frame?: 'browser' | 'plain' | 'phone' }[]   // frame 'plain' = moldura branded; frame 'phone' = iPhone mockup (mobile screenshots)
   seoKeywords?: string[]   // termos extra para meta keywords + schema — específicos ao nicho/caso (ex: "criar loja online Portugal")
+  faq?: { q: string; a: string }[]   // bloco FAQ + FAQPage JSON-LD (AEO) — perguntas citáveis por motores de IA
 }
 
 // Acentos por categoria — o mesmo sistema das páginas de serviço.
@@ -193,6 +194,107 @@ export const PROJECTS: Project[] = [
     },
     cover: { alt: 'Resultado nº 1 no Google para Maria Mendes Massagens' },
     showcase: { desktop: '/Projetos/mariamendes/mariamendespc.webp', mobile: '/Projetos/mariamendes/mariamendesmob.webp' },
+  },
+  {
+    slug: 'maria-mendes-redesign',
+    client: 'Maria Mendes Massagens',
+    category: 'Redesign & Conversão (CRO)',
+    kind: 'web',
+    accent: 'lilac',
+    year: '2026',
+    url: 'https://mariamendesmassagens.pt',
+    urlLabel: 'mariamendesmassagens.pt',
+    summary: 'Mesmo conteúdo, palavra por palavra. Só mudaram 4 coisas — e reservar deixou de ser um salto de fé.',
+    intro:
+      'O site da Maria Mendes já era razoável — conteúdo certo, informação toda lá. Faltava o essencial: marketing de conversão. Refizemos o design de raiz, moderno e limpo, sem reescrever uma única palavra. Provámos uma tese simples: o design não é gosto, é comportamento.',
+    challenge:
+      'Um site pode ter tudo certo e ainda assim não converter. Quem chegava lia a informação, mas hesitava em marcar: a promessa estava enterrada em parágrafos, os visuais eram ícones genéricos e a prova social vivia numa página perdida. Faltava a arquitetura que transforma um visitante em marcação.',
+    challengeHeadline: 'Um site decente — mas onde marcar era um salto de fé.',
+    challengePoints: [
+      { pain: 'A promessa não cabia num ecrã — três parágrafos antes de perceber o valor.', cost: 'Muitos saíam antes de chegar ao que importava.' },
+      { pain: 'Ícones genéricos em vez do espaço real da Maria.', cost: 'Zero ligação emocional no momento de decidir.' },
+      { pain: 'As avaliações 5,0★ estavam numa página à parte.', cost: 'Sem prova visível, marcar era um salto de fé.' },
+    ],
+    solution:
+      'Reconstruímos a experiência à volta do comportamento de quem decide — não do gosto. Uma paleta única em todo o site para criar atmosfera, fotografia real do espaço em vez de ícones, a promessa condensada num só ecrã e as avaliações 5,0★ coladas ao botão de reserva. Resultado: do primeiro clique à reserva enviada, cerca de um minuto, no telemóvel.',
+    approach: [
+      { title: '01 · Atmosfera', desc: 'Uma paleta só, repetida em todo o site. O cliente não repara — mas sente. É o que separa um site que parece profissional de um que parece improvisado.' },
+      { title: '02 · Fotografia real', desc: 'Fora os ícones genéricos, dentro as fotos reais do espaço. Não é preciso estúdio: fotografia autêntica cria mais confiança que qualquer ilustração de banco de imagens.' },
+      { title: '03 · Clareza', desc: 'A promessa deixou de ser três parágrafos e passou a caber num ecrã. Quem chega percebe o valor em segundos — antes de ter de fazer scroll.' },
+      { title: '04 · Confiança', desc: 'As avaliações 5,0★ passaram para ao lado do botão de reserva, não numa página perdida. A prova certa, no momento exato da decisão.' },
+    ],
+    scope: [
+      'Redesign de website à medida',
+      'Marketing de conversão (CRO)',
+      'Otimização 100% mobile',
+      'Fluxo de reserva simplificado',
+      'Prova social junto ao CTA',
+      'Design 100% responsivo',
+    ],
+    highlights: [
+      { metric: '~1 min', label: 'do primeiro clique à reserva enviada, no telemóvel' },
+      { metric: '100%', label: 'experiência desenhada mobile-first' },
+      { metric: 'Mesmo texto', label: 'zero conteúdo novo — só melhor mostrado' },
+    ],
+    before: [
+      { label: 'Promessa enterrada', icon: (<><line x1="4" y1="6" x2="20" y2="6" /><line x1="4" y1="12" x2="20" y2="12" /><line x1="4" y1="18" x2="14" y2="18" /></>) },
+      { label: 'Ícones genéricos', icon: (<><rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="9" cy="9" r="2" /><path d="m21 15-5-5L5 21" /></>) },
+      { label: 'Prova escondida', icon: (<><path d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.7 7L12 17.8 5.7 21.2l1.7-7L2 9.5l7.1-.6z" /><path d="m3 3 18 18" /></>) },
+    ],
+    engineChips: ['Redesign', 'CRO', 'Mobile-first'],
+    resultLine: 'Como um redesign focado em conversão transformou a experiência de marcação da Maria Mendes Massagens',
+    servicesUsed: [
+      { label: 'Criação de Websites & Landing Pages', href: '/servicos/web' },
+      { label: 'SEO local & otimização Google', href: '/servicos/seo' },
+    ],
+    snapshot: {
+      industria: 'Massagens & bem-estar · Serviço local',
+      desafio: 'Site decente, mas sem marketing de conversão',
+      resultado: 'Redesign moderno e mobile-first que tornou a reserva imediata — do primeiro clique à marcação em cerca de um minuto, sem mudar uma palavra do conteúdo',
+    },
+    // TODO: testemunho novo da Maria sobre o redesign/novo visual (Ricardo fornece).
+    // Adicionar aqui um objeto `quote: { text, author, role, url?, avatar? }` quando disponível.
+    cover: { alt: 'Redesign do site da Maria Mendes Massagens — versão desktop e telemóvel' },
+    showcase: { desktop: '/Projetos/mariamendes/mariamendespc.webp', mobile: '/Projetos/mariamendes/mariamendesmob.webp' },
+    // TODO: imagens before/after (Ricardo fornece). Drop dos ficheiros em public/Projetos/mariamendes/
+    gallery: [
+      { src: '/Projetos/mariamendes/antigo-pc.webp', alt: 'Antes — site anterior da Maria Mendes Massagens (desktop)', frame: 'browser' },
+      { src: '/Projetos/mariamendes/antigo-mob.webp', alt: 'Antes — site anterior da Maria Mendes Massagens (telemóvel)', frame: 'phone' },
+    ],
+    seoKeywords: [
+      'redesign de website',
+      'criação de sites profissionais',
+      'marketing de conversão',
+      'otimização de conversão CRO',
+      'agência web Guarda',
+      'agência digital Seia',
+      'design web Serra da Estrela',
+      'SEO local Portugal',
+      'caso de sucesso redesign',
+      'redesign site mobile',
+    ],
+    faq: [
+      {
+        q: 'Vale a pena fazer redesign a um site que já funciona?',
+        a: 'Sim, quando o site tem o conteúdo certo mas não converte. No caso da Maria Mendes Massagens não mudámos uma única palavra — só a forma como o conteúdo é mostrado (atmosfera, fotografia real, clareza da promessa e prova social junto ao botão de reserva). O mesmo conteúdo passou a gerar muito mais marcações.',
+      },
+      {
+        q: 'O que muda num redesign focado em conversão (CRO)?',
+        a: 'Trabalham-se quatro alavancas de comportamento: atmosfera (uma paleta única e coerente), fotografia real do espaço em vez de ícones genéricos, clareza (a promessa a caber num só ecrã) e confiança (as avaliações coladas ao call-to-action). O objetivo não é o site ficar mais bonito — é o visitante avançar para a ação.',
+      },
+      {
+        q: 'Preciso de fotografia profissional para o site converter?',
+        a: 'Não necessariamente. Fotografias reais do espaço, mesmo tiradas ao telemóvel, criam mais confiança do que ícones ou imagens de banco genéricas. A autenticidade converte mais do que a produção.',
+      },
+      {
+        q: 'Quanto tempo demora a marcar no site novo da Maria Mendes?',
+        a: 'Do primeiro clique à reserva enviada, cerca de um minuto — e otimizado para o telemóvel, onde a maioria das pessoas decide. Reservar deixou de ser um salto de fé.',
+      },
+      {
+        q: 'Quem faz redesign de websites na Guarda e Serra da Estrela?',
+        a: 'A Element Group é uma agência digital em Seia (Guarda) que faz redesign de websites, landing pages e SEO local para PMEs em toda a Serra da Estrela e no resto de Portugal, com foco em marketing de conversão e resultados mensuráveis.',
+      },
+    ],
   },
   {
     slug: 'matias-nature',
