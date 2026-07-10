@@ -245,6 +245,20 @@ h4, .text-h4 { font-family: var(--font-inter-tight), sans-serif; font-size: clam
   .pain-word::after { animation: none; opacity: 0.75; }
 }
 
+/* ── Carrossel: esconder scrollbar (mantém scroll/swipe nativo) ── */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; }
+
+/* ── Before/After: dica de arrasto no handle (nudge horizontal lento) ── */
+@keyframes ba-nudge {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50%      { transform: translate(-50%, -50%) scale(1.08); box-shadow: 0 6px 26px rgb(var(--accent-rgb) / 0.5); }
+}
+.ba-handle { animation: ba-nudge 2.8s ease-in-out infinite; will-change: transform; }
+@media (prefers-reduced-motion: reduce) {
+  .ba-handle { animation: none; }
+}
+
 /* ── Globo de inclusões: wireframe 3D (meridianos/paralelos) tema sapphire ── */
 .globe-scene { perspective: 1100px; }
 .globe-3d { transform-style: preserve-3d; will-change: transform; }

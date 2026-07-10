@@ -6,9 +6,11 @@ import AnimateOnScroll from '@/components/ui/AnimateOnScroll'
 import GlowButton from '@/components/ui/GlowButton'
 import PainPoints from '@/components/servicos/PainPoints'
 import DeviceShowcase from '@/components/portfolio/DeviceShowcase'
+import BeforeAfterReveal from '@/components/portfolio/BeforeAfterReveal'
+import NewDesignCarousel from '@/components/portfolio/NewDesignCarousel'
 import ResultsFlow from '@/components/servicos/ResultsFlow'
 import JsonLd from '@/components/JsonLd'
-import { caseStudySchema, breadcrumbSchema, itemPageSchema, metaDescription } from '@/lib/seo'
+import { caseStudySchema, breadcrumbSchema, itemPageSchema, faqSchema, metaDescription } from '@/lib/seo'
 import { PROJECTS, ACCENTS, getProject, ProjectCover } from '../projects'
 
 export function generateStaticParams() {
@@ -120,6 +122,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             { name: 'Portefólio', path: '/portfolio' },
             { name: project.client, path: `/portfolio/${project.slug}` },
           ]),
+          ...(project.faq && project.faq.length > 0 ? [faqSchema(project.slug, project.faq)] : []),
         ]}
       />
       {/* ── 1 · HERO DO CASO ─────────────────────────────────────── */}
@@ -372,14 +375,31 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         </div>
       </section>
 
-      {/* ── 5 · DESTAQUES VISUAIS (showcase desktop+mobile → galeria) ─ */}
-      {(project.showcase || (project.gallery && project.gallery.length > 0)) && (
+      {/* ── 5 · DESTAQUES VISUAIS (before/after OU showcase → galeria) ─ */}
+      {(project.beforeAfter || project.showcase || (project.gallery && project.gallery.length > 0)) && (
         <section className="relative overflow-hidden bg-bg border-t border-white/10 py-20 px-6">
           <div className="max-w-[1100px] mx-auto">
             <AnimateOnScroll className="mb-12">
-              <p className="text-xs uppercase tracking-[0.2em] text-dark mb-3">Destaques visuais</p>
-              <h2 className="text-white">Por dentro do projeto</h2>
+              {project.beforeAfter ? (
+                <>
+                  <p className="text-xs uppercase tracking-[0.2em] text-accent mb-3">Antes → Depois</p>
+                  <h2 className="text-white">Vê a diferença com o teu polegar</h2>
+                  <p className="mt-4 text-muted leading-relaxed max-w-xl">Mesmo conteúdo, palavra por palavra. Arrasta o divisor para revelar o que o redesign mudou — no site e no telemóvel.</p>
+                </>
+              ) : (
+                <>
+                  <p className="text-xs uppercase tracking-[0.2em] text-dark mb-3">Destaques visuais</p>
+                  <h2 className="text-white">Por dentro do projeto</h2>
+                </>
+              )}
             </AnimateOnScroll>
+
+            {/* Comparador interativo Antes → Depois (casos de redesign/CRO) */}
+            {project.beforeAfter && (
+              <AnimateOnScroll className="mb-16">
+                <BeforeAfterReveal web={project.beforeAfter.web} mobile={project.beforeAfter.mobile} />
+              </AnimateOnScroll>
+            )}
 
             {/* Mockups desktop + telemóvel */}
             {project.showcase && !mergeShowcaseIntoGallery && (
@@ -393,8 +413,20 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
               </AnimateOnScroll>
             )}
 
-            {/* Galeria */}
-            {(project.gallery && project.gallery.length > 0 || mergeShowcaseIntoGallery) && (
+            {/* Sub-título da galeria de detalhes quando há comparador acima */}
+            {project.beforeAfter && project.gallery && project.gallery.length > 0 && (
+              <AnimateOnScroll className="mb-8">
+                <p className="text-xs uppercase tracking-[0.2em] text-accent mb-2">A galeria do novo design</p>
+                <p className="text-muted text-sm leading-relaxed max-w-lg">O resultado final, por dentro — do site ao telemóvel.</p>
+              </AnimateOnScroll>
+            )}
+
+            {/* Galeria — carrossel horizontal (imagens raw, já com mockup próprio) quando há beforeAfter */}
+            {project.beforeAfter && project.gallery && project.gallery.length > 0 ? (
+              <AnimateOnScroll>
+                <NewDesignCarousel items={project.gallery.map((g) => ({ src: g.src, alt: g.alt }))} />
+              </AnimateOnScroll>
+            ) : (project.gallery && project.gallery.length > 0 || mergeShowcaseIntoGallery) ? (
             <div className={`grid gap-6 mx-auto ${
               galleryAllPhones
                 ? mergeShowcaseIntoGallery
@@ -468,7 +500,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                 </AnimateOnScroll>
               ))}
             </div>
-            )}
+            ) : null}
           </div>
         </section>
       )}
@@ -613,6 +645,33 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                   {s.label}
                   <span className="text-accent transition-transform group-hover:translate-x-0.5" aria-hidden>→</span>
                 </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── 8.5 · FAQ (AEO — citável por motores de IA) ──────────── */}
+      {project.faq && project.faq.length > 0 && (
+        <section className="bg-bg border-t border-white/10 py-20 px-6">
+          <div className="max-w-[820px] mx-auto">
+            <AnimateOnScroll className="mb-10 text-center max-w-[640px] mx-auto">
+              <p className="text-xs uppercase tracking-[0.2em] text-accent mb-3">Perguntas frequentes</p>
+              <h2 className="text-white">O que costumam perguntar sobre este projeto</h2>
+            </AnimateOnScroll>
+            <div className="space-y-3">
+              {project.faq.map((item, i) => (
+                <AnimateOnScroll key={item.q} delay={i * 0.06}>
+                  <details className="group overflow-hidden rounded-[18px] border border-white/10 bg-gradient-to-br from-[#16191f] to-[#0d0e12] shadow-[0_20px_50px_-40px_rgba(0,0,0,0.9),inset_0_1px_0_rgb(255_255_255/0.05)]">
+                    <summary className="flex cursor-pointer items-center justify-between gap-4 px-6 py-5 min-h-[44px] text-white font-medium list-none [&::-webkit-details-marker]:hidden">
+                      <span className="text-[15px] leading-snug">{item.q}</span>
+                      <span aria-hidden className="shrink-0 grid place-items-center w-7 h-7 rounded-full border border-white/15 text-accent transition-transform duration-300 group-open:rotate-45">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M12 5v14M5 12h14" /></svg>
+                      </span>
+                    </summary>
+                    <div className="px-6 pb-6 -mt-1 text-muted text-sm leading-relaxed">{item.a}</div>
+                  </details>
+                </AnimateOnScroll>
               ))}
             </div>
           </div>
