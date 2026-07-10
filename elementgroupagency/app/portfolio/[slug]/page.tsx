@@ -7,6 +7,7 @@ import GlowButton from '@/components/ui/GlowButton'
 import PainPoints from '@/components/servicos/PainPoints'
 import DeviceShowcase from '@/components/portfolio/DeviceShowcase'
 import BeforeAfterReveal from '@/components/portfolio/BeforeAfterReveal'
+import NewDesignCarousel from '@/components/portfolio/NewDesignCarousel'
 import ResultsFlow from '@/components/servicos/ResultsFlow'
 import JsonLd from '@/components/JsonLd'
 import { caseStudySchema, breadcrumbSchema, itemPageSchema, faqSchema, metaDescription } from '@/lib/seo'
@@ -420,8 +421,12 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
               </AnimateOnScroll>
             )}
 
-            {/* Galeria */}
-            {(project.gallery && project.gallery.length > 0 || mergeShowcaseIntoGallery) && (
+            {/* Galeria — carrossel horizontal (imagens raw, já com mockup próprio) quando há beforeAfter */}
+            {project.beforeAfter && project.gallery && project.gallery.length > 0 ? (
+              <AnimateOnScroll>
+                <NewDesignCarousel items={project.gallery.map((g) => ({ src: g.src, alt: g.alt }))} />
+              </AnimateOnScroll>
+            ) : (project.gallery && project.gallery.length > 0 || mergeShowcaseIntoGallery) ? (
             <div className={`grid gap-6 mx-auto ${
               galleryAllPhones
                 ? mergeShowcaseIntoGallery
@@ -495,7 +500,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                 </AnimateOnScroll>
               ))}
             </div>
-            )}
+            ) : null}
           </div>
         </section>
       )}
