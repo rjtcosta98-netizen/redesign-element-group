@@ -114,7 +114,7 @@ export default function NewDesignCarousel({ items }: { items: Item[] }) {
       <p className="mt-4 text-center text-[13px] text-muted">{items[active]?.alt}</p>
 
       {/* Pontos */}
-      <div className="mt-5 flex items-center justify-center gap-2.5">
+      <div className="mt-5 flex flex-wrap items-center justify-center gap-2.5">
         {items.map((_, i) => (
           <button
             key={i}

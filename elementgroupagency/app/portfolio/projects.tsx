@@ -282,13 +282,35 @@ export const PROJECTS: Project[] = [
         afterAlt: 'Depois — a nova experiência de boas-vindas no telemóvel',
       },
     },
-    // Galeria só do novo design (o «depois»), sob o comparador — 2 browser + 2 telemóvel
-    // num grid 2×2: linha de sites, linha de telemóveis.
+    // Galeria completa do novo design (o «depois») — percurso integral do site
+    // redesenhado: primeiro a jornada desktop (DepoisWeb), depois a mobile (DepoisMob).
     gallery: [
-      { src: '/Projetos/mariamendes/mm-depois-web.webp', alt: 'Página inicial redesenhada — atmosfera premium e promessa num só ecrã', frame: 'browser' },
-      { src: '/Projetos/mariamendes/mm-depois-web2.webp', alt: 'Nova secção premium e rodapé com mapa da localização', frame: 'browser' },
-      { src: '/Projetos/mariamendes/mm-depois-mob.webp', alt: 'Nova experiência mobile — boas-vindas e reserva sempre à mão', frame: 'phone' },
-      { src: '/Projetos/mariamendes/mm-depois-mob2.webp', alt: 'Fluxo de reserva no telemóvel, desenhado mobile-first', frame: 'phone' },
+      // ── Desktop (MacBook) ──────────────────────────────────────────────────
+      { src: '/Projetos/redesingmaria/DepoisWeb/web-01.webp', alt: 'Novo design — secção «Como funciona»: pedido, confirmação e sessão em três passos simples', frame: 'browser' },
+      { src: '/Projetos/redesingmaria/DepoisWeb/web-02.webp', alt: 'Novo design — área de cliente no desktop, com vantagens de fidelidade e mockup de telemóvel', frame: 'browser' },
+      { src: '/Projetos/redesingmaria/DepoisWeb/web-03.webp', alt: 'Novo design — serviços em destaque: relaxamento, descontraturante, head spa e drenagem linfática', frame: 'browser' },
+      { src: '/Projetos/redesingmaria/DepoisWeb/web-04.webp', alt: 'Novo design — carta completa de tratamentos organizada por categorias (Corpo, Especialidades, Rosto, Rituais)', frame: 'browser' },
+      { src: '/Projetos/redesingmaria/DepoisWeb/web-05.webp', alt: 'Novo design — galeria «O espaço»: a atmosfera e a luz antes da sessão', frame: 'browser' },
+      { src: '/Projetos/redesingmaria/DepoisWeb/web-06.webp', alt: 'Novo design — feed de Instagram integrado, o dia a dia do espaço', frame: 'browser' },
+      { src: '/Projetos/redesingmaria/DepoisWeb/web-07.webp', alt: 'Novo design — testemunhos reais de clientes com avaliação de 5 estrelas', frame: 'browser' },
+      { src: '/Projetos/redesingmaria/DepoisWeb/web-08.webp', alt: 'Novo design — formulário de reserva «Marque o seu momento» em menos de 1 minuto', frame: 'browser' },
+      { src: '/Projetos/redesingmaria/DepoisWeb/web-09.webp', alt: 'Novo design — rodapé com contactos, horário e mapa da localização em São Romão, Seia', frame: 'browser' },
+      { src: '/Projetos/redesingmaria/DepoisWeb/web-10.webp', alt: 'Novo design — área de cliente: login e registo com hero «O seu momento, guardado»', frame: 'browser' },
+      // ── Mobile (iPhone) ────────────────────────────────────────────────────
+      { src: '/Projetos/redesingmaria/DepoisMob/mob-01.webp', alt: 'Novo design mobile — ecrã de entrada «Bem-vinda ao seu refúgio»', frame: 'phone' },
+      { src: '/Projetos/redesingmaria/DepoisMob/mob-02.webp', alt: 'Novo design mobile — hero «Momentos de Pausa» com prova social e reserva imediata', frame: 'phone' },
+      { src: '/Projetos/redesingmaria/DepoisMob/mob-03.webp', alt: 'Novo design mobile — apresentação «O meu espaço, a sua paz» e benefícios da massagem', frame: 'phone' },
+      { src: '/Projetos/redesingmaria/DepoisMob/mob-04.webp', alt: 'Novo design mobile — «Como funciona» em três passos', frame: 'phone' },
+      { src: '/Projetos/redesingmaria/DepoisMob/mob-05.webp', alt: 'Novo design mobile — área de cliente: registe-se uma vez, reserve melhor sempre', frame: 'phone' },
+      { src: '/Projetos/redesingmaria/DepoisMob/mob-06.webp', alt: 'Novo design mobile — serviços com preço e botão de reserva em cada tratamento', frame: 'phone' },
+      { src: '/Projetos/redesingmaria/DepoisMob/mob-07.webp', alt: 'Novo design mobile — carta completa por categorias e início da secção do espaço', frame: 'phone' },
+      { src: '/Projetos/redesingmaria/DepoisMob/mob-08.webp', alt: 'Novo design mobile — carrossel «O espaço», ambiente pensado para abrandar', frame: 'phone' },
+      { src: '/Projetos/redesingmaria/DepoisMob/mob-09.webp', alt: 'Novo design mobile — feed de Instagram do espaço', frame: 'phone' },
+      { src: '/Projetos/redesingmaria/DepoisMob/mob-10.webp', alt: 'Novo design mobile — testemunhos reais das clientes', frame: 'phone' },
+      { src: '/Projetos/redesingmaria/DepoisMob/mob-11.webp', alt: 'Novo design mobile — formulário de reserva «Marque o seu momento»', frame: 'phone' },
+      { src: '/Projetos/redesingmaria/DepoisMob/mob-12.webp', alt: 'Novo design mobile — rodapé com contactos e navegação', frame: 'phone' },
+      { src: '/Projetos/redesingmaria/DepoisMob/mob-13.webp', alt: 'Novo design mobile — menu de navegação aberto', frame: 'phone' },
+      { src: '/Projetos/redesingmaria/DepoisMob/mob-14.webp', alt: 'Novo design mobile — área de cliente «O seu momento, guardado» com login', frame: 'phone' },
     ],
     seoKeywords: [
       'redesign de website',
