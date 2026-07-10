@@ -9,9 +9,13 @@ import type { NextRequest } from 'next/server'
 export function middleware(request: NextRequest) {
   const nonce = crypto.randomUUID().replace(/-/g, '')
 
+  // Next.js dev (HMR / React Refresh) evaluates strings as JS, which needs
+  // 'unsafe-eval'. Only enabled outside production so the prod CSP stays strict.
+  const devEval = process.env.NODE_ENV !== 'production' ? " 'unsafe-eval'" : ''
+
   const csp = [
     "default-src 'self'",
-    `script-src 'self' 'nonce-${nonce}' 'strict-dynamic' https://challenges.cloudflare.com`,
+    `script-src 'self' 'nonce-${nonce}' 'strict-dynamic'${devEval} https://challenges.cloudflare.com`,
     "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data: blob: https:",
     "font-src 'self' data:",
