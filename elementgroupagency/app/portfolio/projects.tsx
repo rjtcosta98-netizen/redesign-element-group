@@ -282,10 +282,13 @@ export const PROJECTS: Project[] = [
         afterAlt: 'Depois — a nova experiência de boas-vindas no telemóvel',
       },
     },
-    // Detalhes adicionais do novo site (mostrados sob o comparador).
+    // Galeria só do novo design (o «depois»), sob o comparador — 2 browser + 2 telemóvel
+    // num grid 2×2: linha de sites, linha de telemóveis.
     gallery: [
+      { src: '/Projetos/mariamendes/mm-depois-web.webp', alt: 'Página inicial redesenhada — atmosfera premium e promessa num só ecrã', frame: 'browser' },
       { src: '/Projetos/mariamendes/mm-depois-web2.webp', alt: 'Nova secção premium e rodapé com mapa da localização', frame: 'browser' },
-      { src: '/Projetos/mariamendes/mm-depois-mob2.webp', alt: 'Nova experiência de boas-vindas no telemóvel', frame: 'phone' },
+      { src: '/Projetos/mariamendes/mm-depois-mob.webp', alt: 'Nova experiência mobile — boas-vindas e reserva sempre à mão', frame: 'phone' },
+      { src: '/Projetos/mariamendes/mm-depois-mob2.webp', alt: 'Fluxo de reserva no telemóvel, desenhado mobile-first', frame: 'phone' },
     ],
     seoKeywords: [
       'redesign de website',

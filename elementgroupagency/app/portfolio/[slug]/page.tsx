@@ -415,7 +415,8 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             {/* Sub-título da galeria de detalhes quando há comparador acima */}
             {project.beforeAfter && project.gallery && project.gallery.length > 0 && (
               <AnimateOnScroll className="mb-8">
-                <p className="text-xs uppercase tracking-[0.2em] text-dark">Mais do novo site</p>
+                <p className="text-xs uppercase tracking-[0.2em] text-accent mb-2">A galeria do novo design</p>
+                <p className="text-muted text-sm leading-relaxed max-w-lg">O resultado final, por dentro — do site ao telemóvel.</p>
               </AnimateOnScroll>
             )}
 
