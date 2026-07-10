@@ -39,6 +39,10 @@ export type Project = {
   cover: { src?: string; alt: string; frame?: 'browser' | 'plain' | 'phone' }   // sem src e sem googleCard → capa branded (placeholder); frame 'plain' = sem cromo; frame 'phone' = moldura de telemóvel (apps mobile-first)
   showcase?: { desktop?: string; mobile?: string }   // mockups desktop + telemóvel ("Por dentro do projeto"); desktop omitido → só telemóvel (apps mobile-first)
   gallery?: { src: string; alt: string; frame?: 'browser' | 'plain' | 'phone' }[]   // frame 'plain' = moldura branded; frame 'phone' = iPhone mockup (mobile screenshots)
+  beforeAfter?: {                                                                    // slider interativo Antes → Depois (casos de redesign/CRO); substitui showcase+galeria genérica
+    web?: { before: string; after: string; beforeAlt: string; afterAlt: string }
+    mobile?: { before: string; after: string; beforeAlt: string; afterAlt: string }
+  }
   seoKeywords?: string[]   // termos extra para meta keywords + schema — específicos ao nicho/caso (ex: "criar loja online Portugal")
   faq?: { q: string; a: string }[]   // bloco FAQ + FAQPage JSON-LD (AEO) — perguntas citáveis por motores de IA
 }
@@ -259,14 +263,29 @@ export const PROJECTS: Project[] = [
       url: 'https://share.google/yHF8iJo8yG6J85Ybv',
       avatar: 'https://zkxmotwtrblluqcahnpc.supabase.co/storage/v1/object/public/Avatars%20Reviews/maria-mendes.png',
     },
-    cover: { alt: 'Redesign do site da Maria Mendes Massagens — versão desktop e telemóvel' },
-    showcase: { desktop: '/Projetos/mariamendes/mm-depois-web.webp', mobile: '/Projetos/mariamendes/mm-depois-mob.webp' },
-    // Galeria comparativa antes/depois (grelha 2×2: coluna esquerda «antes», direita «depois»).
+    // Hero: o site redesenhado real (o «depois»), não um placeholder de iniciais —
+    // fiel à própria tese do caso («fotografia real, não ícones»).
+    cover: { src: '/Projetos/mariamendes/mm-depois-web.webp', alt: 'Página inicial redesenhada da Maria Mendes Massagens', frame: 'browser' },
+    // Peça-âncora: slider interativo Antes → Depois (web + telemóvel). Substitui a
+    // galeria genérica — o visitante arrasta e vê a transformação com o próprio polegar.
+    beforeAfter: {
+      web: {
+        before: '/Projetos/mariamendes/mm-antes-web.webp',
+        after: '/Projetos/mariamendes/mm-depois-web.webp',
+        beforeAlt: 'Antes — a página inicial do site anterior da Maria Mendes Massagens',
+        afterAlt: 'Depois — a página inicial redesenhada, focada em conversão',
+      },
+      mobile: {
+        before: '/Projetos/mariamendes/mm-antes-mob.webp',
+        after: '/Projetos/mariamendes/mm-depois-mob.webp',
+        beforeAlt: 'Antes — a versão telemóvel anterior',
+        afterAlt: 'Depois — a nova experiência de boas-vindas no telemóvel',
+      },
+    },
+    // Detalhes adicionais do novo site (mostrados sob o comparador).
     gallery: [
-      { src: '/Projetos/mariamendes/mm-antes-web.webp', alt: 'Antes — a página inicial do site anterior', frame: 'browser' },
-      { src: '/Projetos/mariamendes/mm-depois-web2.webp', alt: 'Depois — nova secção premium e rodapé com mapa', frame: 'browser' },
-      { src: '/Projetos/mariamendes/mm-antes-mob.webp', alt: 'Antes — a versão telemóvel anterior', frame: 'phone' },
-      { src: '/Projetos/mariamendes/mm-depois-mob2.webp', alt: 'Depois — a nova experiência de boas-vindas no telemóvel', frame: 'phone' },
+      { src: '/Projetos/mariamendes/mm-depois-web2.webp', alt: 'Nova secção premium e rodapé com mapa da localização', frame: 'browser' },
+      { src: '/Projetos/mariamendes/mm-depois-mob2.webp', alt: 'Nova experiência de boas-vindas no telemóvel', frame: 'phone' },
     ],
     seoKeywords: [
       'redesign de website',

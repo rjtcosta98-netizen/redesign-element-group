@@ -6,6 +6,7 @@ import AnimateOnScroll from '@/components/ui/AnimateOnScroll'
 import GlowButton from '@/components/ui/GlowButton'
 import PainPoints from '@/components/servicos/PainPoints'
 import DeviceShowcase from '@/components/portfolio/DeviceShowcase'
+import BeforeAfterReveal from '@/components/portfolio/BeforeAfterReveal'
 import ResultsFlow from '@/components/servicos/ResultsFlow'
 import JsonLd from '@/components/JsonLd'
 import { caseStudySchema, breadcrumbSchema, itemPageSchema, faqSchema, metaDescription } from '@/lib/seo'
@@ -373,14 +374,31 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         </div>
       </section>
 
-      {/* ── 5 · DESTAQUES VISUAIS (showcase desktop+mobile → galeria) ─ */}
-      {(project.showcase || (project.gallery && project.gallery.length > 0)) && (
+      {/* ── 5 · DESTAQUES VISUAIS (before/after OU showcase → galeria) ─ */}
+      {(project.beforeAfter || project.showcase || (project.gallery && project.gallery.length > 0)) && (
         <section className="relative overflow-hidden bg-bg border-t border-white/10 py-20 px-6">
           <div className="max-w-[1100px] mx-auto">
             <AnimateOnScroll className="mb-12">
-              <p className="text-xs uppercase tracking-[0.2em] text-dark mb-3">Destaques visuais</p>
-              <h2 className="text-white">Por dentro do projeto</h2>
+              {project.beforeAfter ? (
+                <>
+                  <p className="text-xs uppercase tracking-[0.2em] text-accent mb-3">Antes → Depois</p>
+                  <h2 className="text-white">Vê a diferença com o teu polegar</h2>
+                  <p className="mt-4 text-muted leading-relaxed max-w-xl">Mesmo conteúdo, palavra por palavra. Arrasta o divisor para revelar o que o redesign mudou — no site e no telemóvel.</p>
+                </>
+              ) : (
+                <>
+                  <p className="text-xs uppercase tracking-[0.2em] text-dark mb-3">Destaques visuais</p>
+                  <h2 className="text-white">Por dentro do projeto</h2>
+                </>
+              )}
             </AnimateOnScroll>
+
+            {/* Comparador interativo Antes → Depois (casos de redesign/CRO) */}
+            {project.beforeAfter && (
+              <AnimateOnScroll className="mb-16">
+                <BeforeAfterReveal web={project.beforeAfter.web} mobile={project.beforeAfter.mobile} />
+              </AnimateOnScroll>
+            )}
 
             {/* Mockups desktop + telemóvel */}
             {project.showcase && !mergeShowcaseIntoGallery && (
@@ -391,6 +409,13 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                   alt={`Website ${project.client}`}
                   url={project.urlLabel}
                 />
+              </AnimateOnScroll>
+            )}
+
+            {/* Sub-título da galeria de detalhes quando há comparador acima */}
+            {project.beforeAfter && project.gallery && project.gallery.length > 0 && (
+              <AnimateOnScroll className="mb-8">
+                <p className="text-xs uppercase tracking-[0.2em] text-dark">Mais do novo site</p>
               </AnimateOnScroll>
             )}
 
