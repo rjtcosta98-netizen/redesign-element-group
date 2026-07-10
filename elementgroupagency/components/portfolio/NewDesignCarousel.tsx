@@ -6,7 +6,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 // ── Carrossel horizontal do novo design ─────────────────────────────────────
 // As imagens já trazem o seu próprio mockup (MacBook / telemóvel) — por isso são
 // mostradas RAW (object-contain, sem cromo). Scroll-snap nativo (swipe no mobile),
-// botões prev/next + pontos no desktop. Acessível (setas do teclado, aria-roledescription).
+// botões prev/next (mobile + desktop) + pontos. Acessível (setas do teclado, aria-roledescription).
 // SEO-safe: as 4 imagens ficam no DOM com alt descritivo.
 
 type Item = { src: string; alt: string }
@@ -89,13 +89,13 @@ export default function NewDesignCarousel({ items }: { items: Item[] }) {
           ))}
         </div>
 
-        {/* Botões prev/next — escondidos no mobile (usa-se swipe) */}
+        {/* Botões prev/next — visíveis em mobile e desktop (swipe continua a funcionar) */}
         <button
           type="button"
           onClick={() => scrollToIndex(active - 1)}
           disabled={active === 0}
           aria-label="Imagem anterior"
-          className="absolute left-2 top-1/2 hidden -translate-y-1/2 place-items-center h-11 w-11 rounded-full border border-white/15 bg-black/55 text-white backdrop-blur-md transition hover:border-accent/50 disabled:opacity-0 sm:grid"
+          className="absolute left-2 top-1/2 grid -translate-y-1/2 place-items-center h-11 w-11 rounded-full border border-white/15 bg-black/55 text-white backdrop-blur-md transition hover:border-accent/50 disabled:opacity-0"
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="m15 18-6-6 6-6" /></svg>
         </button>
@@ -104,7 +104,7 @@ export default function NewDesignCarousel({ items }: { items: Item[] }) {
           onClick={() => scrollToIndex(active + 1)}
           disabled={active === items.length - 1}
           aria-label="Imagem seguinte"
-          className="absolute right-2 top-1/2 hidden -translate-y-1/2 place-items-center h-11 w-11 rounded-full border border-white/15 bg-black/55 text-white backdrop-blur-md transition hover:border-accent/50 disabled:opacity-0 sm:grid"
+          className="absolute right-2 top-1/2 grid -translate-y-1/2 place-items-center h-11 w-11 rounded-full border border-white/15 bg-black/55 text-white backdrop-blur-md transition hover:border-accent/50 disabled:opacity-0"
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="m9 6 6 6-6 6" /></svg>
         </button>
