@@ -1,57 +1,30 @@
 'use client'
 
 import Image from 'next/image'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useState } from 'react'
 
-// ── Carrossel horizontal do novo design ─────────────────────────────────────
-// As imagens já trazem o seu próprio mockup (MacBook / telemóvel) — por isso são
-// mostradas RAW (object-contain, sem cromo). Scroll-snap nativo (swipe no mobile),
-// botões prev/next (mobile + desktop) + pontos. Acessível (setas do teclado, aria-roledescription).
-// SEO-safe: as 4 imagens ficam no DOM com alt descritivo.
+// ── Carrossel do novo design (só setas, sem scroll) ─────────────────────────
+// Navegação exclusiva por botões prev/next + setas do teclado + pontos.
+// NÃO há scroll/swipe: a pista move-se por transform (translateX), clip com
+// overflow-hidden. Cada slide preenche a moldura de ponta a ponta — a mesma
+// imagem entra como fundo ampliado e desfocado, com a versão nítida
+// (object-contain) por cima; assim nunca se vê "espaço vazio" à volta,
+// mesmo misturando ecrãs landscape (web) e portrait (mobile).
+// SEO/A11y: todas as imagens ficam no DOM com alt descritivo.
 
 type Item = { src: string; alt: string }
 
 export default function NewDesignCarousel({ items }: { items: Item[] }) {
-  const trackRef = useRef<HTMLDivElement>(null)
   const [active, setActive] = useState(0)
 
-  const scrollToIndex = useCallback((i: number) => {
-    const track = trackRef.current
-    if (!track) return
-    const idx = Math.max(0, Math.min(items.length - 1, i))
-    const slide = track.children[idx] as HTMLElement | undefined
-    if (!slide) return
-    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
-    track.scrollTo({ left: slide.offsetLeft - track.offsetLeft, behavior: reduce ? 'auto' : 'smooth' })
-  }, [items.length])
-
-  // Mantém o índice ativo em sincronia com o scroll (swipe/arrasto).
-  useEffect(() => {
-    const track = trackRef.current
-    if (!track) return
-    let raf = 0
-    const onScroll = () => {
-      cancelAnimationFrame(raf)
-      raf = requestAnimationFrame(() => {
-        const center = track.scrollLeft + track.clientWidth / 2
-        let best = 0
-        let bestDist = Infinity
-        Array.from(track.children).forEach((c, i) => {
-          const el = c as HTMLElement
-          const mid = el.offsetLeft - track.offsetLeft + el.clientWidth / 2
-          const d = Math.abs(mid - center)
-          if (d < bestDist) { bestDist = d; best = i }
-        })
-        setActive(best)
-      })
-    }
-    track.addEventListener('scroll', onScroll, { passive: true })
-    return () => { track.removeEventListener('scroll', onScroll); cancelAnimationFrame(raf) }
-  }, [])
+  const go = useCallback(
+    (i: number) => setActive(Math.max(0, Math.min(items.length - 1, i))),
+    [items.length],
+  )
 
   const onKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'ArrowRight') { e.preventDefault(); scrollToIndex(active + 1) }
-    if (e.key === 'ArrowLeft') { e.preventDefault(); scrollToIndex(active - 1) }
+    if (e.key === 'ArrowRight') { e.preventDefault(); go(active + 1) }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); go(active - 1) }
   }
 
   return (
@@ -60,54 +33,73 @@ export default function NewDesignCarousel({ items }: { items: Item[] }) {
       role="group"
       aria-roledescription="carrossel"
       aria-label="Galeria do novo design"
+      tabIndex={0}
       onKeyDown={onKeyDown}
     >
-      {/* Pista + setas (as setas centram em top-1/2 da pista) */}
-      <div className="relative">
+      {/* Moldura: clip + pista deslizante (as setas centram em top-1/2) */}
+      <div className="relative overflow-hidden rounded-[24px] border border-white/10">
         <div
-          ref={trackRef}
-          className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain scroll-smooth rounded-[24px]"
-          style={{ scrollbarWidth: 'none' }}
+          className="flex transition-transform duration-500 ease-out motion-reduce:transition-none"
+          style={{ transform: `translateX(-${active * (100 / items.length)}%)` }}
         >
           {items.map((it, i) => (
             <div
               key={it.src}
-              className="relative flex h-[46vh] min-h-[300px] max-h-[520px] w-full shrink-0 snap-center items-center justify-center rounded-[24px] border border-white/10 bg-gradient-to-br from-[#14171d] via-[#101216] to-[#0c0d11] p-4 sm:p-8"
+              className="relative h-[62vh] min-h-[360px] max-h-[620px] w-full shrink-0 overflow-hidden bg-[#0c0d11]"
               role="group"
               aria-roledescription="slide"
+              aria-hidden={i !== active}
               aria-label={`${i + 1} de ${items.length}: ${it.alt}`}
             >
-              <span aria-hidden className="absolute -top-10 left-1/2 -translate-x-1/2 w-[70%] h-40 pointer-events-none" style={{ background: 'radial-gradient(circle at 50% 30%, rgb(var(--accent-rgb) / 0.12), transparent 65%)' }} />
+              {/* Fundo: a própria imagem, ampliada e desfocada — preenche o vazio */}
+              <Image
+                src={it.src}
+                alt=""
+                aria-hidden
+                fill
+                sizes="(max-width: 1100px) 92vw, 1040px"
+                className="scale-110 object-cover opacity-35 blur-2xl"
+              />
+              <span aria-hidden className="absolute inset-0 bg-[#0c0d11]/45" />
+              {/* Glow de acento no topo */}
+              <span aria-hidden className="pointer-events-none absolute -top-10 left-1/2 h-40 w-[70%] -translate-x-1/2" style={{ background: 'radial-gradient(circle at 50% 30%, rgb(var(--accent-rgb) / 0.12), transparent 65%)' }} />
+              {/* Imagem nítida */}
               <Image
                 src={it.src}
                 alt={it.alt}
                 fill
                 sizes="(max-width: 1100px) 92vw, 1040px"
-                className="object-contain"
+                priority={i === 0}
+                className="object-contain p-3 sm:p-6"
               />
             </div>
           ))}
         </div>
 
-        {/* Botões prev/next — visíveis em mobile e desktop (swipe continua a funcionar) */}
+        {/* Botões prev/next — únicos meios de avançar (mobile + desktop) */}
         <button
           type="button"
-          onClick={() => scrollToIndex(active - 1)}
+          onClick={() => go(active - 1)}
           disabled={active === 0}
           aria-label="Imagem anterior"
-          className="absolute left-2 top-1/2 grid -translate-y-1/2 place-items-center h-11 w-11 rounded-full border border-white/15 bg-black/55 text-white backdrop-blur-md transition hover:border-accent/50 disabled:opacity-0"
+          className="absolute left-2 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-black/55 text-white backdrop-blur-md transition hover:border-accent/50 disabled:opacity-0"
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="m15 18-6-6 6-6" /></svg>
         </button>
         <button
           type="button"
-          onClick={() => scrollToIndex(active + 1)}
+          onClick={() => go(active + 1)}
           disabled={active === items.length - 1}
           aria-label="Imagem seguinte"
-          className="absolute right-2 top-1/2 grid -translate-y-1/2 place-items-center h-11 w-11 rounded-full border border-white/15 bg-black/55 text-white backdrop-blur-md transition hover:border-accent/50 disabled:opacity-0"
+          className="absolute right-2 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-black/55 text-white backdrop-blur-md transition hover:border-accent/50 disabled:opacity-0"
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="m9 6 6 6-6 6" /></svg>
         </button>
+
+        {/* Contador */}
+        <div className="absolute right-3 top-3 rounded-full border border-white/10 bg-black/50 px-2.5 py-1 text-[11px] font-medium tabular-nums text-white/80 backdrop-blur-md">
+          {active + 1}/{items.length}
+        </div>
       </div>
 
       {/* Legenda do slide ativo */}
@@ -119,7 +111,7 @@ export default function NewDesignCarousel({ items }: { items: Item[] }) {
           <button
             key={i}
             type="button"
-            onClick={() => scrollToIndex(i)}
+            onClick={() => go(i)}
             aria-label={`Ir para a imagem ${i + 1}`}
             aria-current={active === i}
             className={`h-2 rounded-full transition-all ${active === i ? 'w-6 bg-accent' : 'w-2 bg-white/25 hover:bg-white/40'}`}
