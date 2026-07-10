@@ -252,14 +252,21 @@ export const PROJECTS: Project[] = [
       desafio: 'Site decente, mas sem marketing de conversão',
       resultado: 'Redesign moderno e mobile-first que tornou a reserva imediata — do primeiro clique à marcação em cerca de um minuto, sem mudar uma palavra do conteúdo',
     },
-    // TODO: testemunho novo da Maria sobre o redesign/novo visual (Ricardo fornece).
-    // Adicionar aqui um objeto `quote: { text, author, role, url?, avatar? }` quando disponível.
+    quote: {
+      text: 'Ricardo, achei que fizeste um excelente trabalho! O site ficou incrível e com uma visão totalmente brutal! As pessoas adoraram!',
+      author: 'Maria Mendes',
+      role: 'Fundadora · Maria Mendes Massagens',
+      url: 'https://share.google/yHF8iJo8yG6J85Ybv',
+      avatar: 'https://zkxmotwtrblluqcahnpc.supabase.co/storage/v1/object/public/Avatars%20Reviews/maria-mendes.png',
+    },
     cover: { alt: 'Redesign do site da Maria Mendes Massagens — versão desktop e telemóvel' },
-    showcase: { desktop: '/Projetos/mariamendes/mariamendespc.webp', mobile: '/Projetos/mariamendes/mariamendesmob.webp' },
-    // TODO: imagens before/after (Ricardo fornece). Drop dos ficheiros em public/Projetos/mariamendes/
+    showcase: { desktop: '/Projetos/mariamendes/mm-depois-web.webp', mobile: '/Projetos/mariamendes/mm-depois-mob.webp' },
+    // Galeria comparativa antes/depois (grelha 2×2: coluna esquerda «antes», direita «depois»).
     gallery: [
-      { src: '/Projetos/mariamendes/antigo-pc.webp', alt: 'Antes — site anterior da Maria Mendes Massagens (desktop)', frame: 'browser' },
-      { src: '/Projetos/mariamendes/antigo-mob.webp', alt: 'Antes — site anterior da Maria Mendes Massagens (telemóvel)', frame: 'phone' },
+      { src: '/Projetos/mariamendes/mm-antes-web.webp', alt: 'Antes — a página inicial do site anterior', frame: 'browser' },
+      { src: '/Projetos/mariamendes/mm-depois-web2.webp', alt: 'Depois — nova secção premium e rodapé com mapa', frame: 'browser' },
+      { src: '/Projetos/mariamendes/mm-antes-mob.webp', alt: 'Antes — a versão telemóvel anterior', frame: 'phone' },
+      { src: '/Projetos/mariamendes/mm-depois-mob2.webp', alt: 'Depois — a nova experiência de boas-vindas no telemóvel', frame: 'phone' },
     ],
     seoKeywords: [
       'redesign de website',

@@ -70,12 +70,15 @@ Gera `FAQPage` JSON-LD, `@id` ancorado a `/portfolio/<slug>#faq`. Motor do AEO.
 4. Quanto tempo demora a marcar no site novo da Maria Mendes?
 5. Quem faz redesign de websites na Guarda e Serra da Estrela? *(captura geo + marca)*
 
-## Pendências (fornecidas pelo Ricardo depois)
+## Assets e testemunho (resolvido)
 
-- **Testemunho novo** da Maria sobre o redesign — placeholder marcado com `TODO` no
-  objeto (campo `quote` a adicionar).
-- **Imagens before/after** — `gallery[]` aponta para `antigo-pc.webp` / `antigo-mob.webp`
-  em `public/Projetos/mariamendes/`; basta fazer drop dos ficheiros.
+- **Testemunho novo** da Maria sobre o redesign — fornecido e ligado ao campo `quote`.
+- **Imagens before/after** — fornecidas pelo Ricardo em `public/Projetos/redesingmaria/`
+  (AntesWeb/AntesMob = webp; DepoisWeb/DepoisMob = PNG, convertidos para webp com `cwebp -q 82`).
+  Curados 6 shots para `public/Projetos/mariamendes/` (prefixo `mm-`):
+  - `showcase`: `mm-depois-web.webp` (secção premium escura/dourada) + `mm-depois-mob.webp` (área de cliente).
+  - `gallery` 2×2 comparativa: `mm-antes-web` · `mm-depois-web2` · `mm-antes-mob` · `mm-depois-mob2`,
+    com legendas «Antes»/«Depois» (o `<figcaption>` mostra o `alt`).
 
 ## Verificação
 
