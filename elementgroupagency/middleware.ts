@@ -9,9 +9,14 @@ import type { NextRequest } from 'next/server'
 export function middleware(request: NextRequest) {
   const nonce = crypto.randomUUID().replace(/-/g, '')
 
+  // 'unsafe-eval' apenas em desenvolvimento: o next dev (HMR + eval-source-map)
+  // avalia código via eval(). Em produção o bundle não usa eval, por isso a CSP
+  // mantém-se estrita e sem 'unsafe-eval'.
+  const devEval = process.env.NODE_ENV !== 'production' ? " 'unsafe-eval'" : ''
+
   const csp = [
     "default-src 'self'",
-    `script-src 'self' 'nonce-${nonce}' 'strict-dynamic' https://challenges.cloudflare.com`,
+    `script-src 'self' 'nonce-${nonce}' 'strict-dynamic'${devEval} https://challenges.cloudflare.com`,
     "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data: blob: https:",
     "font-src 'self' data:",
