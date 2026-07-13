@@ -71,6 +71,32 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="pt-PT" className={`${interTight.variable} ${instrumentSans.variable}`}>
       <body className="bg-bg text-white font-body antialiased">
+        {/* Google tag (gtag.js) — GA4 com Consent Mode v2. Server-rendered para
+            garantir que está no HTML e dispara o pageview. Consentimento arranca
+            em 'denied'; o componente GoogleAnalytics atualiza no aceite. */}
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-RNWM2MQTRT"
+        />
+        <script
+          id="gtag-init"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              window.gtag = gtag;
+              gtag('consent', 'default', {
+                ad_storage: 'denied',
+                analytics_storage: 'denied',
+                ad_user_data: 'denied',
+                ad_personalization: 'denied',
+                wait_for_update: 500
+              });
+              gtag('js', new Date());
+              gtag('config', 'G-RNWM2MQTRT');
+            `,
+          }}
+        />
         <GoogleAnalytics />
         <JsonLd data={organizationGraph()} />
         <Nav />
