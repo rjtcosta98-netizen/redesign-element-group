@@ -3,14 +3,13 @@ import Script from 'next/script'
 import { useEffect } from 'react'
 
 // GA4 (Google tag) com Google Consent Mode v2 (RGPD/EEE).
-// O gtag.js carrega SEMPRE — assim a tag é detetável e o Google pode fazer
-// modelação — mas o consentimento arranca em 'denied': sem cookies analíticos
-// nem dados pessoais até o utilizador aceitar. O CookieConsent guarda a escolha
-// em localStorage e dispara 'eg-consent-changed'; aqui atualizamos o consent.
+// O gtag.js carrega SEMPRE — a tag é detetável e dispara pageview (cookieless
+// enquanto o consentimento estiver 'denied'). O consentimento arranca em
+// 'denied' (sem cookies/dados pessoais) e passa a 'granted' quando o utilizador
+// aceita no CookieConsent (evento 'eg-consent-changed').
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID || 'G-RNWM2MQTRT'
 const CONSENT_KEY = 'eg-cookie-consent'
 
-// Estado de consentimento a aplicar ('granted' só se o utilizador aceitou).
 const consentPayload = (granted: boolean) => ({
   ad_storage: granted ? 'granted' : 'denied',
   analytics_storage: granted ? 'granted' : 'denied',
@@ -32,6 +31,7 @@ export default function GoogleAnalytics() {
         w.gtag('consent', 'update', consentPayload(granted))
       }
     }
+    // Aplica já o estado guardado (se o utilizador já aceitou noutra visita).
     update()
     window.addEventListener('eg-consent-changed', update)
     return () => window.removeEventListener('eg-consent-changed', update)
@@ -39,8 +39,9 @@ export default function GoogleAnalytics() {
 
   return (
     <>
-      {/* Consent Mode: default 'denied' ANTES de carregar o gtag. */}
-      <Script id="gtag-consent-default" strategy="beforeInteractive">
+      {/* Init único: consent default 'denied' + js + config, ANTES da lib.
+          A lib lê o dataLayer ao carregar e dispara o pageview. */}
+      <Script id="gtag-init" strategy="afterInteractive">
         {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
@@ -52,18 +53,14 @@ export default function GoogleAnalytics() {
             ad_personalization: 'denied',
             wait_for_update: 500
           });
+          gtag('js', new Date());
+          gtag('config', '${GA_ID}');
         `}
       </Script>
       <Script
         src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
         strategy="afterInteractive"
       />
-      <Script id="gtag-init" strategy="afterInteractive">
-        {`
-          gtag('js', new Date());
-          gtag('config', '${GA_ID}');
-        `}
-      </Script>
     </>
   )
 }
