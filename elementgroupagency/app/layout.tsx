@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { headers } from 'next/headers'
 import { Inter_Tight, Instrument_Sans } from 'next/font/google'
 import './globals.css'
 import Nav from '@/components/Nav'
@@ -68,6 +69,9 @@ export const metadata: Metadata = {
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  // Nonce do CSP (definido no middleware) — sem ele o 'strict-dynamic' bloqueia
+  // os scripts do gtag.
+  const nonce = headers().get('x-nonce') ?? undefined
   return (
     <html lang="pt-PT" className={`${interTight.variable} ${instrumentSans.variable}`}>
       <body className="bg-bg text-white font-body antialiased">
@@ -76,10 +80,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             em 'denied'; o componente GoogleAnalytics atualiza no aceite. */}
         <script
           async
+          nonce={nonce}
           src="https://www.googletagmanager.com/gtag/js?id=G-RNWM2MQTRT"
         />
         <script
           id="gtag-init"
+          nonce={nonce}
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
