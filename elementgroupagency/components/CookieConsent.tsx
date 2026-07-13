@@ -4,8 +4,9 @@ import Link from 'next/link'
 
 const KEY = 'eg-cookie-consent'
 
-// Banner de consentimento (RGPD). Cookies analíticos (Google Analytics) só devem
-// carregar após 'accepted'. TODO: gatilho de carregamento do GA no choose('accepted').
+// Banner de consentimento (RGPD). Cookies analíticos (Google Analytics) só
+// carregam após 'accepted' — o componente GoogleAnalytics ouve o evento
+// 'eg-consent-changed' disparado em choose() e carrega o gtag nesse momento.
 export default function CookieConsent() {
   const [show, setShow] = useState(false)
 
@@ -20,6 +21,9 @@ export default function CookieConsent() {
   function choose(value: 'accepted' | 'rejected') {
     try {
       localStorage.setItem(KEY, value)
+    } catch {}
+    try {
+      window.dispatchEvent(new Event('eg-consent-changed'))
     } catch {}
     setShow(false)
   }

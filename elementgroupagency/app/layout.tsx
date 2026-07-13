@@ -4,6 +4,7 @@ import './globals.css'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import CookieConsent from '@/components/CookieConsent'
+import GoogleAnalytics from '@/components/GoogleAnalytics'
 import WhatsAppFab from '@/components/WhatsAppFab'
 import JsonLd from '@/components/JsonLd'
 import { SITE, organizationGraph } from '@/lib/seo'
@@ -70,6 +71,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="pt-PT" className={`${interTight.variable} ${instrumentSans.variable}`}>
       <body className="bg-bg text-white font-body antialiased">
+        <GoogleAnalytics />
         <JsonLd data={organizationGraph()} />
         <Nav />
         {children}
