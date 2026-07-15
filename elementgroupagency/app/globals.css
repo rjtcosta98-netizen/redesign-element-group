@@ -5,15 +5,20 @@
 * { box-sizing: border-box; }
 body { overflow-x: clip; }
 
-/* ── Acento da marca (sapphire por defeito). Cada página de serviço pode
-   sobrepor estas variáveis no <main> → todos os efeitos re-tematizam por herança,
-   sem mexer no layout. O resto do site mantém o sapphire. ── */
+/* ── Acento da marca — Design System v2: azul elétrico #4D7EFF é a ÚNICA cor de ação.
+   Cada página de serviço pode sobrepor estas variáveis no <main> → todos os efeitos
+   re-tematizam por herança, sem mexer no layout. ── */
 :root {
-  --accent-rgb: 127 168 217;   /* canais p/ rgb(var(--accent-rgb) / α) */
-  --accent: #7FA8D9;           /* sólido */
-  --accent-deep: #2f4f7a;      /* sombra do gradiente */
-  --accent-mid: #4f7fb8;       /* meio (fim do gradiente dos ícones) */
-  --accent-light: #bcd6f0;     /* brilho do gradiente */
+  --accent-rgb: 77 126 255;    /* #4D7EFF — canais p/ rgb(var(--accent-rgb) / α) */
+  --accent: #4D7EFF;           /* sólido — ação */
+  --accent-deep: #2B5BE0;      /* sombra do gradiente (azul profundo) */
+  --accent-mid: #4D7EFF;       /* meio (fim do gradiente dos ícones) */
+  --accent-light: #7FA0FF;     /* brilho do gradiente / hover */
+
+  /* Poppins (v2) é a única família. Alias das duas variáveis antigas para não
+     reescrever cada referência var(--font-inter-tight)/var(--font-instrument). */
+  --font-inter-tight: var(--font-poppins);
+  --font-instrument:  var(--font-poppins);
 }
 
 h1, .text-h1 { font-family: var(--font-inter-tight), sans-serif; font-size: clamp(36px, 7.5vw, 70px); letter-spacing: clamp(-0.8px, -0.12vw, -1.4px); font-weight: 500; }
@@ -67,8 +72,8 @@ h4, .text-h4 { font-family: var(--font-inter-tight), sans-serif; font-size: clam
   padding: 14px 30px;
   min-height: 44px;
   border-radius: 999px;
-  background: #0a0e16;
-  color: #fff;
+  background: #0A0B0D;
+  color: #E6E9EF;
   font-weight: 500;
   font-size: 16px;
   line-height: 1;
@@ -161,7 +166,7 @@ h4, .text-h4 { font-family: var(--font-inter-tight), sans-serif; font-size: clam
 .glow-card {
   position: relative;
   border-radius: 22px;
-  background: #0f1216;
+  background: #111318;
   isolation: isolate;
   animation: nova-spin 7s linear infinite;
 }

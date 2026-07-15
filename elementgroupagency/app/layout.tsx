@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter_Tight, Instrument_Sans } from 'next/font/google'
+import { Poppins } from 'next/font/google'
 import './globals.css'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
@@ -8,15 +8,13 @@ import WhatsAppFab from '@/components/WhatsAppFab'
 import JsonLd from '@/components/JsonLd'
 import { SITE, organizationGraph } from '@/lib/seo'
 
-const interTight = Inter_Tight({
+// Design System v2 — Poppins é a única família. As duas variáveis CSS antigas
+// (--font-inter-tight / --font-instrument) ficam aliased a Poppins em globals.css,
+// para não tocar em todas as referências espalhadas pelos componentes.
+const poppins = Poppins({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-inter-tight',
-})
-const instrumentSans = Instrument_Sans({
-  subsets: ['latin'],
-  weight: ['400', '500'],
-  variable: '--font-instrument',
+  weight: ['300', '400', '500', '600', '700'],
+  variable: '--font-poppins',
 })
 
 const DEFAULT_TITLE = 'Element Group — Websites & Marketing Digital para PMEs'
@@ -68,7 +66,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-PT" className={`${interTight.variable} ${instrumentSans.variable}`}>
+    <html lang="pt-PT" className={poppins.variable}>
       <body className="bg-bg text-white font-body antialiased">
         <JsonLd data={organizationGraph()} />
         <Nav />
