@@ -1,6 +1,7 @@
 'use client'
 import { useState, type ReactNode } from 'react'
 import Turnstile from '@/components/ui/Turnstile'
+import { useTurnstileGate } from '@/components/ui/useTurnstileGate'
 
 type Variant = 'blog' | 'resources'
 
@@ -26,18 +27,14 @@ export default function NewsletterSignup({ variant = 'blog' }: { variant?: Varia
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'done' | 'error'>('idle')
   const [error, setError] = useState('')
-  const [cfToken, setCfToken] = useState('')
-
-  async function submit(e: React.FormEvent) {
-    e.preventDefault()
-    if (!email.includes('@')) return
-    setStatus('loading')
-    setError('')
+  // Sem isto o token nunca era pedido e a subscrição levava 403 — ver
+  // components/ui/useTurnstileGate.ts.
+  const gate = useTurnstileGate(async (_dados: null, token: string) => {
     try {
       const res = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, source: copy.source, consent: true, cfToken }),
+        body: JSON.stringify({ email, source: copy.source, consent: true, cfToken: token }),
       })
       const json = await res.json().catch(() => ({}))
       if (!res.ok) {
@@ -50,6 +47,18 @@ export default function NewsletterSignup({ variant = 'blog' }: { variant?: Varia
       setError('Sem ligação. Tenta de novo.')
       setStatus('error')
     }
+  })
+
+  function submit(e: React.FormEvent) {
+    e.preventDefault()
+    if (!email.includes('@')) return
+    setError('')
+    if (gate.submeter(null) === 'nao-pronto') {
+      setError('Verificação de segurança ainda a carregar. Tenta outra vez daqui a um momento.')
+      setStatus('error')
+      return
+    }
+    setStatus('loading')
   }
 
   return (
@@ -66,7 +75,17 @@ export default function NewsletterSignup({ variant = 'blog' }: { variant?: Varia
           <p className="mt-7 text-accent text-sm">{copy.success}</p>
         ) : (
           <form onSubmit={submit} className="mt-7 flex flex-col gap-3">
-            <Turnstile onToken={setCfToken} onExpire={() => setCfToken('')} />
+            <Turnstile
+              ref={gate.ref}
+              onToken={gate.receberToken}
+              onExpire={gate.limparToken}
+              onError={() => {
+                if (gate.cancelarPendente()) {
+                  setError('Verificação de segurança falhou. Recarrega a página.')
+                  setStatus('error')
+                }
+              }}
+            />
             <div className="flex flex-col sm:flex-row gap-2">
               <label htmlFor="nl-email" className="sr-only">Email</label>
               <input

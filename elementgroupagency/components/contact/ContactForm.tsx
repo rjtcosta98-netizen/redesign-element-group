@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import Turnstile from '@/components/ui/Turnstile'
+import { useTurnstileGate } from '@/components/ui/useTurnstileGate'
 
 const SERVICES = ['Websites & Lojas Online', 'SEO & Otimização', 'Social Media', 'Planos Mensais', 'Outro / ainda não sei']
 
@@ -10,21 +11,18 @@ const inputCls =
 export default function ContactForm({ initialService = '' }: { initialService?: string }) {
   const [status, setStatus] = useState<'idle' | 'loading' | 'ok' | 'error'>('idle')
   const [error, setError] = useState('')
-  const [cfToken, setCfToken] = useState('')
   // Pré-seleção vinda da página de serviço (?servico=…); só aceita valores válidos.
   const preselected = SERVICES.includes(initialService) ? initialService : ''
 
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    const form = e.currentTarget
-    const payload = { ...Object.fromEntries(new FormData(form)), cfToken }
-    setStatus('loading')
-    setError('')
+  // O desafio Turnstile só corre quando alguém o pede, e o token chega depois,
+  // por callback — ver components/ui/useTurnstileGate.ts. Este formulário
+  // nunca o pedia, e por isso levava 403 em todos os envios.
+  const gate = useTurnstileGate(async (dados: Record<string, FormDataEntryValue>, token: string) => {
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({ ...dados, cfToken: token }),
       })
       const json = await res.json().catch(() => ({}))
       if (!res.ok) {
@@ -33,11 +31,22 @@ export default function ContactForm({ initialService = '' }: { initialService?: 
         return
       }
       setStatus('ok')
-      form.reset()
     } catch {
       setError('Sem ligação. Tenta de novo ou escreve-me por email.')
       setStatus('error')
     }
+  })
+
+  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    setError('')
+    const r = gate.submeter(Object.fromEntries(new FormData(e.currentTarget)))
+    if (r === 'nao-pronto') {
+      setError('Verificação de segurança ainda a carregar. Aguarda um momento e tenta de novo.')
+      setStatus('error')
+      return
+    }
+    setStatus('loading')
   }
 
   if (status === 'ok') {
@@ -57,7 +66,19 @@ export default function ContactForm({ initialService = '' }: { initialService?: 
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-4">
-      <Turnstile onToken={setCfToken} onExpire={() => setCfToken('')} />
+      <Turnstile
+        ref={gate.ref}
+        onToken={gate.receberToken}
+        onExpire={gate.limparToken}
+        onError={() => {
+          // O widget morreu com um envio à espera: não deixar o botão preso em
+          // "A enviar…" para sempre.
+          if (gate.cancelarPendente()) {
+            setError('Verificação de segurança falhou. Recarrega a página e tenta de novo.')
+            setStatus('error')
+          }
+        }}
+      />
       {/* Honeypot anti-spam (escondido a humanos) */}
       <div aria-hidden="true" className="absolute -left-[9999px] w-px h-px overflow-hidden opacity-0">
         <label htmlFor="company">Empresa</label>
