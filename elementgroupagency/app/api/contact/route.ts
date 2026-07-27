@@ -38,10 +38,10 @@ async function registarLead(lead: {
   email: string
   message: string
   service?: string
-}): Promise<void> {
+}): Promise<boolean> {
   const url = process.env.SUPABASE_URL
   const key = process.env.SUPABASE_ANON_KEY
-  if (!url || !key) return
+  if (!url || !key) return false
 
   try {
     const res = await fetch(`${url}/rest/v1/leads`, {
@@ -62,9 +62,14 @@ async function registarLead(lead: {
         consent: true,
       }),
     })
-    if (!res.ok) console.error('Supabase lead insert:', res.status, await res.text())
+    if (!res.ok) {
+      console.error('Supabase lead insert:', res.status, await res.text())
+      return false
+    }
+    return true
   } catch (e) {
     console.error('Supabase lead insert falhou:', e)
+    return false
   }
 }
 
@@ -93,23 +98,34 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'É necessário aceitar a Política de Privacidade.' }, { status: 422 })
   }
 
-  const apiKey = process.env.BREVO_API_KEY
-  if (!apiKey) {
-    return NextResponse.json(
-      { error: 'O formulário ainda não está ligado. Escreve-me para info@elementgroup.pt.' },
-      { status: 503 },
-    )
-  }
-
-  // Antes da Brevo, de propósito: se o envio falhar, o contacto fica na mesma
-  // registado — que é exatamente o buraco que isto veio fechar. Não é awaited
-  // com try/catch aqui porque a própria função nunca lança.
-  await registarLead({
+  // GRAVAR É A PRIMEIRA COISA A ACONTECER depois das validações, e antes de
+  // qualquer coisa que possa falhar ou sair mais cedo.
+  //
+  // Não é detalhe de ordem — foi um bug real a 27/07/2026. Esta chamada estava
+  // DEPOIS do guard da BREVO_API_KEY abaixo, e como essa chave não estava
+  // configurada no ambiente, a route saía com 503 sem nunca chegar aqui. O
+  // contacto perdia-se por inteiro: nem email, nem registo. O comentário dizia
+  // "antes da Brevo" e o código dizia outra coisa.
+  //
+  // A função nunca lança — engole os próprios erros.
+  const registada = await registarLead({
     name: name.trim(),
     email: email.trim(),
     message: message.trim(),
     service: service?.trim(),
   })
+
+  const apiKey = process.env.BREVO_API_KEY
+  if (!apiKey) {
+    // Sem Brevo não há email — mas se o contacto ficou gravado, ele CHEGOU.
+    // Dizer à pessoa que falhou seria falso e mandava-a embora; o Ricardo vê-o
+    // no painel «Contactos do site» do cockpit.
+    if (registada) return NextResponse.json({ ok: true })
+    return NextResponse.json(
+      { error: 'O formulário ainda não está ligado. Escreve-me para info@elementgroup.pt.' },
+      { status: 503 },
+    )
+  }
 
   const serviceLabel = service ? `<tr><td style="padding:4px 0;color:#888;width:100px">Serviço</td><td style="padding:4px 0">${service}</td></tr>` : ''
 

@@ -38,10 +38,10 @@ async function verifyTurnstile(token: string | undefined): Promise<boolean> {
  * NUNCA faz o pedido falhar: se o Supabase estiver em baixo, o email da Brevo
  * segue na mesma e a pessoa não vê erro nenhum.
  */
-async function registarSubscritor(email: string, source: string): Promise<void> {
+async function registarSubscritor(email: string, source: string): Promise<boolean> {
   const url = process.env.SUPABASE_URL
   const key = process.env.SUPABASE_ANON_KEY
-  if (!url || !key) return
+  if (!url || !key) return false
 
   try {
     const res = await fetch(`${url}/rest/v1/subscribers`, {
@@ -60,12 +60,14 @@ async function registarSubscritor(email: string, source: string): Promise<void> 
         consent: true,
       }),
     })
-    // 409 = já subscreveu por esta via. Não é erro nem vale um log.
-    if (!res.ok && res.status !== 409) {
-      console.error('Supabase subscriber insert:', res.status, await res.text())
-    }
+    // 409 = já subscreveu por esta via. Não é erro — e conta como registado,
+    // porque a pessoa está mesmo na lista.
+    if (res.ok || res.status === 409) return true
+    console.error('Supabase subscriber insert:', res.status, await res.text())
+    return false
   } catch (e) {
     console.error('Supabase subscriber insert falhou:', e)
+    return false
   }
 }
 
@@ -96,17 +98,22 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'É necessário aceitar a Política de Privacidade.' }, { status: 422 })
   }
 
+  // Gravar primeiro, antes de qualquer saída antecipada — ver o comentário
+  // longo na mesma posição em app/api/contact/route.ts: com a chave da Brevo
+  // por configurar, a versão anterior saía com 503 sem nunca chegar aqui e a
+  // subscrição perdia-se por inteiro.
+  const registado = await registarSubscritor(email, source)
+
   const apiKey = process.env.BREVO_API_KEY
   if (!apiKey) {
+    // Sem Brevo não há email de aviso — mas se ficou gravado, a pessoa está na
+    // lista, que é o que ela pediu. Dizer-lhe que falhou seria falso.
+    if (registado) return NextResponse.json({ ok: true })
     return NextResponse.json(
       { error: 'A subscrição ainda não está ligada. Escreve-me para info@elementgroup.pt.' },
       { status: 503 },
     )
   }
-
-  // Antes da Brevo, de propósito: se o envio falhar, a subscrição fica na mesma
-  // registada — que é o buraco que isto veio fechar. A função nunca lança.
-  await registarSubscritor(email, source)
 
   const isResource = source.startsWith('resource:')
   const sourceLabel = isResource ? source.replace('resource:', 'Recurso: ') : 'Newsletter'
