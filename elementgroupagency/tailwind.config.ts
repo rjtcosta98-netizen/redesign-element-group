@@ -5,20 +5,20 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        bg:        '#0E0E0E',
-        'bg-card': '#141414',
+        bg:        '#0A0B0D',
+        'bg-card': '#111318',
         white:     '#FFFFFF',
         accent:    'rgb(var(--accent-rgb) / <alpha-value>)',
-        link:      '#0000EE',
+        link:      '#4D7EFF',
         'btn-light': '#D5D5D5',
-        muted:     '#ACACB9',
-        dark:      '#606165',
+        muted:     '#9EA5AE',
+        dark:      '#7A838F',
         'strip-bg': '#B8B8B8',
       },
       fontFamily: {
-        heading: ['var(--font-inter-tight)', 'sans-serif'],
-        body:    ['var(--font-inter-tight)', 'sans-serif'],
-        display: ['var(--font-instrument)', 'sans-serif'],
+        heading: ['var(--font-poppins)', 'sans-serif'],
+        body:    ['var(--font-poppins)', 'sans-serif'],
+        display: ['var(--font-poppins)', 'sans-serif'],
       },
       fontSize: {
         'h1': ['70px', { lineHeight: '1.1', letterSpacing: '-1.4px', fontWeight: '500' }],
