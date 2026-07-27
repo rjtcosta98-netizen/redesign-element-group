@@ -13,6 +13,61 @@ async function verifyTurnstile(token: string | undefined): Promise<boolean> {
   return data.success === true
 }
 
+/**
+ * Grava o contacto em `public.leads` (Supabase).
+ *
+ * Porquê: até 27/07/2026 este formulário só enviava o email pela Brevo. O
+ * contacto existia enquanto esse email não fosse arquivado ou esquecido, e não
+ * havia como contar quantos houve no mês passado. A Brevo continua a ser a
+ * NOTIFICAÇÃO; isto é o REGISTO. O cockpit lê-o e o Ricardo decide se entra no
+ * CRM.
+ *
+ * Usa a chave ANON, não a service_role: a porta que a base abriu é só de INSERT
+ * e com a forma validada pela policy `site pode inserir leads validadas`
+ * (consent obrigatório, email com formato, limites de comprimento, source de
+ * lista fechada). Esta chave não lê o que lá está, não altera e não apaga —
+ * nem sequer o que acabou de inserir. Pôr aqui a service_role daria a este
+ * projeto acesso à base inteira para gravar um formulário.
+ *
+ * NUNCA faz o pedido falhar: se o Supabase estiver em baixo, o email da Brevo
+ * segue na mesma e a pessoa não vê erro nenhum. Perder o registo é mau; perder
+ * o contacto é pior.
+ */
+async function registarLead(lead: {
+  name: string
+  email: string
+  message: string
+  service?: string
+}): Promise<void> {
+  const url = process.env.SUPABASE_URL
+  const key = process.env.SUPABASE_ANON_KEY
+  if (!url || !key) return
+
+  try {
+    const res = await fetch(`${url}/rest/v1/leads`, {
+      method: 'POST',
+      headers: {
+        apikey: key,
+        Authorization: `Bearer ${key}`,
+        'Content-Type': 'application/json',
+        Prefer: 'return=minimal',
+      },
+      body: JSON.stringify({
+        name: lead.name,
+        email: lead.email,
+        message: lead.message,
+        service: lead.service || null,
+        source: 'website-contact',
+        // Só se chega aqui com o consentimento dado — a policy também o exige.
+        consent: true,
+      }),
+    })
+    if (!res.ok) console.error('Supabase lead insert:', res.status, await res.text())
+  } catch (e) {
+    console.error('Supabase lead insert falhou:', e)
+  }
+}
+
 export async function POST(req: Request) {
   let data: Record<string, string>
   try {
@@ -45,6 +100,16 @@ export async function POST(req: Request) {
       { status: 503 },
     )
   }
+
+  // Antes da Brevo, de propósito: se o envio falhar, o contacto fica na mesma
+  // registado — que é exatamente o buraco que isto veio fechar. Não é awaited
+  // com try/catch aqui porque a própria função nunca lança.
+  await registarLead({
+    name: name.trim(),
+    email: email.trim(),
+    message: message.trim(),
+    service: service?.trim(),
+  })
 
   const serviceLabel = service ? `<tr><td style="padding:4px 0;color:#888;width:100px">Serviço</td><td style="padding:4px 0">${service}</td></tr>` : ''
 
