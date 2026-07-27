@@ -1,24 +1,21 @@
 'use client'
 import { useState } from 'react'
 import Turnstile from '@/components/ui/Turnstile'
+import { useTurnstileGate } from '@/components/ui/useTurnstileGate'
 
 // Captura de email para um recurso gated → grava em `subscribers` (com consentimento).
 export default function GetByEmail({ cta = 'Obter por email', source = 'resource' }: { cta?: string; source?: string }) {
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'done' | 'error'>('idle')
   const [error, setError] = useState('')
-  const [cfToken, setCfToken] = useState('')
-
-  async function submit(e: React.FormEvent) {
-    e.preventDefault()
-    if (!email.includes('@')) return
-    setStatus('loading')
-    setError('')
+  // Sem isto o token nunca era pedido e o pedido do recurso levava 403 — ver
+  // components/ui/useTurnstileGate.ts.
+  const gate = useTurnstileGate(async (_dados: null, token: string) => {
     try {
       const res = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, source, consent: true, cfToken }),
+        body: JSON.stringify({ email, source, consent: true, cfToken: token }),
       })
       const json = await res.json().catch(() => ({}))
       if (!res.ok) {
@@ -31,6 +28,18 @@ export default function GetByEmail({ cta = 'Obter por email', source = 'resource
       setError('Sem ligação. Tenta de novo.')
       setStatus('error')
     }
+  })
+
+  function submit(e: React.FormEvent) {
+    e.preventDefault()
+    if (!email.includes('@')) return
+    setError('')
+    if (gate.submeter(null) === 'nao-pronto') {
+      setError('Verificação de segurança ainda a carregar. Tenta outra vez daqui a um momento.')
+      setStatus('error')
+      return
+    }
+    setStatus('loading')
   }
 
   if (status === 'done') {
@@ -62,7 +71,17 @@ export default function GetByEmail({ cta = 'Obter por email', source = 'resource
         </span>
       </label>
       {status === 'error' && <p className="text-[12px] text-[#ff9a9a]">{error}</p>}
-      <Turnstile onToken={setCfToken} onExpire={() => setCfToken('')} />
+      <Turnstile
+        ref={gate.ref}
+        onToken={gate.receberToken}
+        onExpire={gate.limparToken}
+        onError={() => {
+          if (gate.cancelarPendente()) {
+            setError('Verificação de segurança falhou. Recarrega a página.')
+            setStatus('error')
+          }
+        }}
+      />
     </form>
   )
 }
