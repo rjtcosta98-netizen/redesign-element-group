@@ -34,14 +34,17 @@ export const metadata: Metadata = {
   formatDetection: { telephone: true, email: true, address: true },
   manifest: '/site.webmanifest',
   icons: {
+    // O Google só aceita favicons quadrados em múltiplos de 48px e serve-se do
+    // primeiro rel="icon" declarado. O favicon.ico é multi-tamanho e a primeira
+    // entrada dele é 16x16, pelo que era rejeitado — daí o globo genérico na SERP.
+    // Os PNG (96/192/512) vêm primeiro; o .ico fica só como fallback legado.
     icon: [
-      { url: '/favicon.ico', sizes: 'any' },
       { url: '/favicon-96x96.png', type: 'image/png', sizes: '96x96' },
       { url: '/web-app-manifest-192x192.png', type: 'image/png', sizes: '192x192' },
       { url: '/web-app-manifest-512x512.png', type: 'image/png', sizes: '512x512' },
+      { url: '/favicon.ico', type: 'image/x-icon', sizes: '48x48 32x32 16x16' },
     ],
     apple: [{ url: '/apple-touch-icon.png', sizes: '180x180' }],
-    shortcut: ['/favicon.ico'],
   },
   openGraph: {
     type: 'website',
