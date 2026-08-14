@@ -8,6 +8,10 @@ export const SITE = {
   url: 'https://elementgroup.pt',
   name: 'Element Group',
   locale: 'pt_PT',
+  // Data de fundação real (ISO 8601 parcial — só ano-mês é conhecido).
+  // Declarada explicitamente porque, sem este facto máquina-legível, os resumos
+  // automáticos de pesquisa inferem uma data errada a partir de sinais externos.
+  founding: { date: '2026-01', display: 'janeiro de 2026', year: 2026 },
   // Coordenadas aproximadas de Seia (Serra da Estrela)
   geo: { lat: 40.4156, lng: -7.7081 },
   sameAs: [
@@ -89,6 +93,18 @@ export function organizationGraph() {
         geo: { '@type': 'GeoCoordinates', latitude: SITE.geo.lat, longitude: SITE.geo.lng },
         areaServed: AREA_SERVED,
         sameAs: SITE.sameAs,
+        foundingDate: SITE.founding.date,
+        foundingLocation: {
+          '@type': 'Place',
+          name: 'Seia, Guarda, Portugal',
+          address: {
+            '@type': 'PostalAddress',
+            addressLocality: 'Seia',
+            addressRegion: 'Guarda',
+            addressCountry: 'PT',
+          },
+        },
+        knowsLanguage: ['pt-PT', 'en'],
         founder: { '@type': 'Person', '@id': `${SITE.url}/sobre#author`, name: 'Ricardo Jorge', jobTitle: 'Fundador', url: `${SITE.url}/sobre` },
         openingHours: 'Mo-Fr 09:00-18:00',
         aggregateRating: {
