@@ -4,7 +4,7 @@ import AnimateOnScroll from '@/components/ui/AnimateOnScroll'
 import CoverArt from '@/components/blog/CoverArt'
 import BlogList from '@/components/blog/BlogList'
 import NewsletterSignup from '@/components/blog/NewsletterSignup'
-import { POSTS, CATEGORIES, formatDate } from '@/lib/posts'
+import { POSTS, CATEGORIES, formatDate, readingMinutes } from '@/lib/posts'
 import JsonLd from '@/components/JsonLd'
 import { SITE, breadcrumbSchema } from '@/lib/seo'
 
@@ -36,7 +36,14 @@ export const metadata: Metadata = {
 
 export default function BlogIndex() {
   const [featured, ...rest] = POSTS
-  const cards = rest.map(({ slug, title, excerpt, category, date, readingMinutes }) => ({ slug, title, excerpt, category, date, readingMinutes }))
+  const cards = rest.map((p) => ({
+    slug: p.slug,
+    title: p.title,
+    excerpt: p.excerpt,
+    category: p.category,
+    date: p.date,
+    readingMinutes: readingMinutes(p),
+  }))
 
   const blogSchema = {
     '@context': 'https://schema.org',
@@ -112,7 +119,7 @@ export default function BlogIndex() {
                 </div>
                 <h2 className="text-white font-heading text-2xl md:text-[30px] font-medium leading-tight tracking-[-0.02em]">{featured.title}</h2>
                 <p className="mt-3 text-muted leading-relaxed">{featured.excerpt}</p>
-                <p className="mt-5 text-[11px] text-dark">{formatDate(featured.date)} · {featured.readingMinutes} min de leitura</p>
+                <p className="mt-5 text-[11px] text-dark">{formatDate(featured.date)} · {readingMinutes(featured)} min de leitura</p>
                 <span className="mt-6 inline-flex items-center gap-1.5 text-sm text-white">
                   Ler artigo <span className="transition-transform group-hover:translate-x-0.5" aria-hidden>→</span>
                 </span>

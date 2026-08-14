@@ -26,6 +26,10 @@
 - [AD São Romão](https://elementgroup.pt/portfolio/ad-sao-romao): Website institucional do clube — saiu do Facebook para uma presença digital com inscrições de jogadores, sócios, merch e patrocínios.
 - [Estrela Detail Wash](https://elementgroup.pt/portfolio/estrela-detail-wash): Design e branding — identidade de marca criada de raiz (logótipo, cores e sistema visual) para uma empresa de detailing automóvel.
 
+## Guias de referência
+- [Quanto custa um site para uma pequena empresa em Portugal](https://elementgroup.pt/blog/quanto-custa-site-pequena-empresa-portugal): Faixas de preço praticadas em Portugal em 2026 por tipo de site (landing page, institucional, loja online), custos recorrentes de domínio, alojamento e manutenção, e tabela de preços públicos da Element Group.
+- [Como escolher uma agência de marketing digital](https://elementgroup.pt/blog/como-escolher-agencia-marketing-digital): Critérios de avaliação, sinais de alarme (fidelização, garantias de 1.º lugar, preço opaco), método de verificação em cinco passos e comparação entre freelancer, agência e equipa interna.
+
 ## Recursos
 - [Blog](https://elementgroup.pt/blog): Artigos sobre websites, SEO, redes sociais e negócio.
 - [Recursos gratuitos](https://elementgroup.pt/recursos): Guias, checklists e templates.
