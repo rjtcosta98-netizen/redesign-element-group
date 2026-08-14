@@ -16,8 +16,10 @@ export const SITE = {
     'https://www.tiktok.com/@elementgroup.pt',
     'https://maps.app.goo.gl/1fk3WM9AXPJGD7YK9',
   ],
-  // Avaliações reais do Perfil de Empresa do Google (confirmado: 5,0 · 9 reviews)
-  rating: { value: '5', count: '9' },
+  // Avaliações reais do Perfil de Empresa do Google (confirmado 2026-08: 5,0 · 8 reviews).
+  // Único sítio a atualizar quando entrarem avaliações novas — GOOGLE_RATING (abaixo)
+  // propaga o valor para todo o texto visível e para o JSON-LD.
+  rating: { value: '5', count: '8' },
 } as const
 
 // ── Prova social do Google ───────────────────────────────────────────────────
