@@ -6,6 +6,7 @@ import { motion, animate, useInView } from 'framer-motion'
 import Link from 'next/link'
 import AnimateOnScroll from '@/components/ui/AnimateOnScroll'
 import GlowButton from '@/components/ui/GlowButton'
+import { GOOGLE_RATING } from '@/lib/seo'
 
 // ─── Emerald accent — "ganho / crescimento" ──────────────────────────────
 const EMERALD = {
@@ -1277,7 +1278,7 @@ export default function ParceriasContent() {
                     className="text-[11px] mt-5"
                     style={{ color: 'rgba(255,255,255,0.22)' }}
                   >
-                    5.0 no Google · resposta em &lt; 2h
+                    {GOOGLE_RATING.display} no Google · resposta em &lt; 2h
                   </p>
                 </div>
               </AnimateOnScroll>

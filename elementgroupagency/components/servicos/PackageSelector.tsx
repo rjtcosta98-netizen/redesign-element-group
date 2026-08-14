@@ -2,6 +2,7 @@
 import { useState, type ReactNode } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import GlowButton from '@/components/ui/GlowButton'
+import { GOOGLE_RATING } from '@/lib/seo'
 
 export type ServicePackage = {
   name: string
@@ -78,7 +79,7 @@ export default function PackageSelector({
                 ))}
               </span>
               <span className="text-[12px] text-white/80">
-                <span className="text-white font-medium">5,0</span> no Google · 7 avaliações
+                <span className="text-white font-medium">{GOOGLE_RATING.display}</span> no Google · {GOOGLE_RATING.countLabel}
               </span>
             </div>
           </div>

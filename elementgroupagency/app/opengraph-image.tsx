@@ -1,4 +1,5 @@
 import { ImageResponse } from 'next/og'
+import { GOOGLE_RATING } from '@/lib/seo'
 
 export const alt = 'Element Group — Websites & Marketing Digital para PMEs'
 export const size = { width: 1200, height: 630 }
@@ -50,7 +51,7 @@ export default function OgImage() {
           <span style={{ color: '#606165' }}>·</span>
           <span>Top 3 Google Maps</span>
           <span style={{ color: '#606165' }}>·</span>
-          <span>5,0 no Google</span>
+          <span>{GOOGLE_RATING.display} no Google</span>
         </div>
       </div>
     ),

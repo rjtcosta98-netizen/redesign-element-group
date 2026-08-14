@@ -9,7 +9,7 @@ import Quotes from '@/components/sections/Quotes'
 import ValuesStack from '@/components/about/ValuesStack'
 import { getReviews } from '@/lib/reviews'
 import JsonLd from '@/components/JsonLd'
-import { SITE, breadcrumbSchema } from '@/lib/seo'
+import { SITE, GOOGLE_RATING, breadcrumbSchema } from '@/lib/seo'
 
 // Reviews são cacheadas 1h no servidor — página regenera no máximo de hora a hora.
 export const revalidate = 3600
@@ -248,7 +248,7 @@ export default async function About() {
                 <div className="absolute bottom-6 left-6 rounded-2xl border border-white/10 bg-bg-card/85 backdrop-blur-md px-4 py-3 shadow-[0_20px_50px_rgba(0,0,0,0.55)]">
                   <div className="flex items-center gap-1 text-accent text-xs tracking-widest" aria-hidden>★★★★★</div>
                   <div className="flex items-baseline gap-1.5 mt-1">
-                    <span className="text-white font-heading text-lg font-medium leading-none">5,0</span>
+                    <span className="text-white font-heading text-lg font-medium leading-none">{GOOGLE_RATING.display}</span>
                     <span className="text-[11px] text-muted">no Google</span>
                   </div>
                 </div>
@@ -459,7 +459,7 @@ const FLOW = [
 // Real stats — concrete weight for the story (animated count-up).
 const STATS = [
   { value: 7,    suffix: '+', label: 'Projetos entregues',     sub: 'desde 2026' },
-  { value: 5.0,  decimals: 1, suffix: '★', label: 'Avaliação no Google', sub: '9 avaliações' },
+  { value: GOOGLE_RATING.value, decimals: 1, suffix: '★', label: 'Avaliação no Google', sub: GOOGLE_RATING.countLabel },
   { value: 2026, from: 2010, grouping: false, label: 'Ano de fundação',  sub: 'o primeiro dia' },
   { value: 3.2,  decimals: 1, suffix: '×', label: 'Mais tráfego orgânico', sub: 'média dos projetos SEO' },
 ]

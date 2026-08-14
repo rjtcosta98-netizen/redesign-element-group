@@ -3,7 +3,7 @@ import Link from 'next/link'
 import AnimateOnScroll from '@/components/ui/AnimateOnScroll'
 import GlowButton from '@/components/ui/GlowButton'
 import JsonLd from '@/components/JsonLd'
-import { SITE, breadcrumbSchema } from '@/lib/seo'
+import { SITE, GOOGLE_RATING, breadcrumbSchema } from '@/lib/seo'
 import { PROJECTS, ACCENTS, ProjectCover } from './projects'
 
 
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
 }
 
 const STATS = [
-  { v: '5,0★', l: 'Avaliação no Google', s: '9 avaliações' },
+  { v: `${GOOGLE_RATING.display}★`, l: 'Avaliação no Google', s: GOOGLE_RATING.countLabel },
   { v: '95+', l: 'PageSpeed médio', s: 'nos sites entregues' },
   { v: '3,2×', l: 'Tráfego médio (SEO)', s: 'média dos projetos' },
   { v: '< 2h', l: 'Tempo de resposta', s: 'em dias úteis' },
