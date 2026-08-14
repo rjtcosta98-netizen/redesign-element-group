@@ -10,6 +10,7 @@ import ValuesStack from '@/components/about/ValuesStack'
 import { getReviews } from '@/lib/reviews'
 import JsonLd from '@/components/JsonLd'
 import { SITE, GOOGLE_RATING, breadcrumbSchema } from '@/lib/seo'
+import { PROJECT_COUNT } from '@/app/portfolio/projects'
 
 // Reviews são cacheadas 1h no servidor — página regenera no máximo de hora a hora.
 export const revalidate = 3600
@@ -470,7 +471,7 @@ const FLOW = [
 
 // Real stats — concrete weight for the story (animated count-up).
 const STATS = [
-  { value: 7,    suffix: '+', label: 'Projetos entregues',     sub: 'desde 2026' },
+  { value: PROJECT_COUNT, label: 'Projetos entregues',     sub: 'casos publicados no portefólio' },
   { value: GOOGLE_RATING.value, decimals: 1, suffix: '★', label: 'Avaliação no Google', sub: GOOGLE_RATING.countLabel },
   { value: 2026, from: 2010, grouping: false, label: 'Ano de fundação',  sub: 'o primeiro dia' },
   { value: 3.2,  decimals: 1, suffix: '×', label: 'Mais tráfego orgânico', sub: 'média dos projetos SEO' },

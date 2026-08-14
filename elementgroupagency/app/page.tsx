@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { getReviews } from '@/lib/reviews'
+import { PROJECT_COUNT } from '@/app/portfolio/projects'
 import Hero           from '@/components/sections/Hero'
 import LogoTicker     from '@/components/sections/LogoTicker'
 import FeatureStack   from '@/components/sections/FeatureStack'
@@ -38,7 +39,7 @@ export default async function Home() {
       {/* Preload explícito: o Hero é 'use client', o Next.js não emite
           <link rel="preload"> server-side automaticamente para imagens de Client Components. */}
       <link rel="preload" as="image" href="/photorealistic-earth-planet.jpg" fetchPriority="high" />
-      <Hero />
+      <Hero projectCount={PROJECT_COUNT} />
       <LogoTicker />
       <FeatureStack />
       <HowItWorks />

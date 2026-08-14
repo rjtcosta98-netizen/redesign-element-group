@@ -35,7 +35,9 @@ function CardShell({ className, children, delay }: { className: string; children
   )
 }
 
-export default function Hero() {
+// projectCount chega por prop a partir de app/page.tsx (server): importar
+// PROJECTS aqui arrastaria o portefólio inteiro para o bundle de cliente da home.
+export default function Hero({ projectCount }: { projectCount: number }) {
   const [bgLoaded, setBgLoaded] = useState(false)
 
   return (
@@ -142,7 +144,9 @@ export default function Hero() {
         >
           <p className="inline-flex items-center gap-2 rounded-pill border border-white/10 bg-white/[0.04] px-4 py-1.5 backdrop-blur-sm">
             <span className="text-accent text-xs" aria-hidden>★</span>
-            <span className="text-xs text-muted">5,0 no Google · 7+ projetos entregues desde 2026</span>
+            <span className="text-xs text-muted">
+              {GOOGLE_RATING.display} no Google · {projectCount} projetos entregues
+            </span>
           </p>
 
           <h1 className="mt-7 text-white font-semibold tracking-[-0.04em] leading-[1.04]">
