@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import GlowButton from '@/components/ui/GlowButton'
 import CoverArt from '@/components/blog/CoverArt'
-import { POSTS, getPost, relatedPosts, formatDate } from '@/lib/posts'
+import { POSTS, getPost, relatedPosts, formatDate, readingMinutes } from '@/lib/posts'
 import JsonLd from '@/components/JsonLd'
 import { SITE, breadcrumbSchema } from '@/lib/seo'
 
@@ -52,7 +52,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
     headline: post.title,
     description: post.excerpt,
     datePublished: post.date,
-    dateModified: post.date,
+    dateModified: post.updated ?? post.date,
     inLanguage: 'pt-PT',
     url: `${SITE.url}/blog/${post.slug}`,
     image: `${SITE.url}/opengraph-image`,
@@ -92,7 +92,10 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
 
             <div className="mt-6 flex flex-wrap items-center gap-3">
               <span className="rounded-full border border-accent/30 bg-accent/10 px-2.5 py-0.5 text-[10px] uppercase tracking-[0.12em] text-accent font-medium">{post.category}</span>
-              <span className="text-[11px] text-dark">{formatDate(post.date)} · {post.readingMinutes} min de leitura</span>
+              <span className="text-[11px] text-dark">
+                {formatDate(post.date)} · {readingMinutes(post)} min de leitura
+                {post.updated && <> · atualizado a {formatDate(post.updated)}</>}
+              </span>
             </div>
 
             <h1 className="mt-4 text-white tracking-[-0.03em] leading-[1.05]">{post.title}</h1>
@@ -117,8 +120,20 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
         <div className="px-6 py-14">
           <div className="max-w-[700px] mx-auto">
             {post.body.map((b, i) => {
+              // Resposta destacada — fica no topo, curta e auto-suficiente, para
+              // poder ser lida (e citada) sem o resto do artigo à volta.
+              if (b.type === 'answer') {
+                return (
+                  <div key={i} className="my-6 rounded-[20px] border border-accent/30 bg-accent/[0.06] p-6 md:p-7">
+                    <p className="text-white/90 leading-relaxed">{b.text}</p>
+                  </div>
+                )
+              }
               if (b.type === 'h2') {
                 return <h2 key={i} className="text-white font-heading text-xl md:text-2xl font-medium tracking-[-0.01em] mt-10 mb-3">{b.text}</h2>
+              }
+              if (b.type === 'h3') {
+                return <h3 key={i} className="text-white font-heading text-base md:text-lg font-medium tracking-[-0.01em] mt-7 mb-2">{b.text}</h3>
               }
               if (b.type === 'ul') {
                 return (
@@ -130,6 +145,47 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
                       </li>
                     ))}
                   </ul>
+                )
+              }
+              if (b.type === 'ol') {
+                return (
+                  <ol key={i} className="my-4 flex flex-col gap-2.5">
+                    {b.items.map((it, j) => (
+                      <li key={j} className="flex gap-3 text-muted leading-relaxed">
+                        <span className="mt-0.5 shrink-0 w-5 h-5 rounded-full border border-accent/40 text-accent text-[11px] grid place-items-center" aria-hidden>{j + 1}</span>
+                        {it}
+                      </li>
+                    ))}
+                  </ol>
+                )
+              }
+              if (b.type === 'table') {
+                return (
+                  <figure key={i} className="my-7 -mx-6 md:mx-0">
+                    <div className="overflow-x-auto px-6 md:px-0">
+                      <table className="w-full min-w-[520px] border-collapse text-sm">
+                        <thead>
+                          <tr className="border-b border-white/15">
+                            {b.headers.map((h, j) => (
+                              <th key={j} scope="col" className="text-left font-medium text-white py-3 pr-4 align-bottom">{h}</th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {b.rows.map((row, j) => (
+                            <tr key={j} className="border-b border-white/[0.07]">
+                              {row.map((cell, k) => (
+                                <td key={k} className={`py-3 pr-4 align-top leading-relaxed ${k === 0 ? 'text-white/90' : 'text-muted'}`}>{cell}</td>
+                              ))}
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                    {b.caption && (
+                      <figcaption className="mt-3 px-6 md:px-0 text-[11px] text-dark">{b.caption}</figcaption>
+                    )}
+                  </figure>
                 )
               }
               return <p key={i} className="text-muted leading-relaxed my-4">{b.text}</p>
@@ -166,7 +222,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
                     <div className="p-6">
                       <span className="text-[11px] uppercase tracking-[0.14em] text-accent/90">{r.category}</span>
                       <h3 className="mt-2 text-white font-heading text-base font-medium leading-snug">{r.title}</h3>
-                      <p className="mt-3 text-[11px] text-dark">{formatDate(r.date)} · {r.readingMinutes} min</p>
+                      <p className="mt-3 text-[11px] text-dark">{formatDate(r.date)} · {readingMinutes(r)} min</p>
                     </div>
                   </Link>
                 ))}
