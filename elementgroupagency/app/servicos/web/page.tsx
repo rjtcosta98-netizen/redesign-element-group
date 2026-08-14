@@ -353,7 +353,7 @@ const WEB_FAQS = [
   { q: 'E a manutenção e o alojamento?', a: 'Trato do domínio e do alojamento por ti e deixo o site a funcionar. Para evoluções contínuas (alterações, SEO, conteúdo) há planos mensais — mas sem obrigação.' },
   { q: 'Tenho de escrever os textos?', a: 'Não precisas. Ajudo-te com os textos e o conteúdo, escritos para SEO e para converter — só validas.' },
   { q: 'Já tenho um site. Aproveitas ou fazes de novo?', a: 'Depende do que tens. Posso fazer um redesign (a partir de 590€) ou criar um novo de raiz — digo-te com honestidade o que faz mais sentido para os teus objetivos e orçamento.' },
-  { q: 'Como começo?', a: 'Pedes um orçamento no formulário (2 minutos). Respondo em menos de 2 horas, sem compromisso.' },
+  { q: 'Quanto custa um site?', a: 'Uma landing page fica em 297€, um site institucional de 3 a 5 páginas em 790€ e um site profissional até 8 páginas em 1.290€ — pagamento único. Um redesign começa nos 590€ e uma loja online nos 1.500€. Domínio e alojamento são à parte (cerca de 60€ a 180€ por ano). Pedes orçamento no formulário e respondo em menos de 2 horas, sem compromisso.' },
 ]
 
 const FAQ_SCHEMA = {

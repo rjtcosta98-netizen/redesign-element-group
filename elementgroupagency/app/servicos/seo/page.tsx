@@ -353,7 +353,7 @@ const SEO_FAQS = [
   { q: 'Funciona para o meu setor e zona?', a: 'O SEO local funciona muito bem para negócios que servem uma zona. Em setores muito competitivos ajusto a estratégia e digo-te, à cabeça, o que é realista.' },
   { q: 'Preciso de ter um site?', a: 'Sim — o SEO trabalha sobre o teu site. Se não tiveres um bom site, trato disso primeiro ou em conjunto.' },
   { q: 'E se eu parar o SEO?', a: 'Ao contrário dos anúncios, os resultados não desaparecem de um dia para o outro. Mas o SEO precisa de manutenção para se manter e continuar a crescer.' },
-  { q: 'Como começo?', a: 'Pedes um diagnóstico gratuito. Analiso a tua situação e respondo em menos de 2 horas, sem compromisso.' },
+  { q: 'Qual a diferença entre SEO e anúncios pagos (Google Ads)?', a: 'Os anúncios compram visibilidade: aparecem no dia em que pagas e desaparecem no dia em que deixas de pagar. O SEO constrói-a: demora 2 a 3 meses a dar sinal, mas o que ganhas fica. Para a maioria das PME, o SEO é a base e os anúncios servem para acelerar campanhas pontuais. Se quiseres, faço-te um diagnóstico gratuito e digo qual faz sentido no teu caso.' },
 ]
 
 const FAQ_SCHEMA = {
