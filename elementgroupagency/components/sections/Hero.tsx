@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 import GlowButton from '@/components/ui/GlowButton'
+import { GOOGLE_RATING } from '@/lib/seo'
 
 // A few faint twinkling stars layered over the upper sky for a touch of life
 // (deterministic positions → no SSR/hydration mismatch).
@@ -118,10 +119,10 @@ export default function Hero() {
         <CardShell className="top-[15%] right-[2%] 2xl:right-[6%] w-[186px]" delay={0.6}>
           <div className="flex items-center gap-1 text-accent text-sm tracking-widest">★★★★★</div>
           <div className="flex items-baseline gap-2">
-            <span className="text-2xl font-heading font-medium text-white leading-none">5,0</span>
+            <span className="text-2xl font-heading font-medium text-white leading-none">{GOOGLE_RATING.display}</span>
             <span className="text-[11px] text-muted">no Google</span>
           </div>
-          <p className="text-[10px] text-dark">7 avaliações verificadas</p>
+          <p className="text-[10px] text-dark">{GOOGLE_RATING.countLabel} verificadas</p>
         </CardShell>
 
         <CardShell className="bottom-[13%] right-[3%] 2xl:right-[7%] w-[206px]" delay={0.8}>

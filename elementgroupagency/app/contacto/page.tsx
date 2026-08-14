@@ -3,7 +3,7 @@ import AnimateOnScroll from '@/components/ui/AnimateOnScroll'
 import ContactForm from '@/components/contact/ContactForm'
 import { COMPANY } from '@/lib/company'
 import JsonLd from '@/components/JsonLd'
-import { SITE, breadcrumbSchema } from '@/lib/seo'
+import { SITE, GOOGLE_RATING, breadcrumbSchema } from '@/lib/seo'
 
 export const metadata: Metadata = {
   alternates: { canonical: '/contacto' },
@@ -66,8 +66,8 @@ export default function Contact({ searchParams }: { searchParams: { servico?: st
                 {/* Prova social no momento da decisão */}
                 <div className="flex items-center gap-2 mb-6">
                   <span className="text-accent text-sm tracking-widest" aria-hidden>★★★★★</span>
-                  <span className="text-white text-sm font-medium">5,0</span>
-                  <span className="text-muted text-[13px]">· 9 avaliações no Google</span>
+                  <span className="text-white text-sm font-medium">{GOOGLE_RATING.display}</span>
+                  <span className="text-muted text-[13px]">· {GOOGLE_RATING.countLabel} no Google</span>
                 </div>
                 <ContactForm initialService={initialService} />
               </div>

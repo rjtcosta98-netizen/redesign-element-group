@@ -20,6 +20,22 @@ export const SITE = {
   rating: { value: '5', count: '9' },
 } as const
 
+// ── Prova social do Google ───────────────────────────────────────────────────
+// Fonte única para TODO o texto visível de avaliações. O Google exige que o
+// aggregateRating do JSON-LD corresponda ao número mostrado na página, por isso
+// nenhuma página deve escrever a contagem à mão — importa daqui.
+export const GOOGLE_RATING = {
+  /** Nota média formatada em PT-PT (vírgula decimal). */
+  display: Number(SITE.rating.value).toLocaleString('pt-PT', { minimumFractionDigits: 1 }),
+  /** Nota média como número, para contadores animados. */
+  value: Number(SITE.rating.value),
+  /** Número de avaliações no Perfil de Empresa. */
+  count: Number(SITE.rating.count),
+  /** Ex.: "9 avaliações" — singular tratado. */
+  countLabel:
+    Number(SITE.rating.count) === 1 ? '1 avaliação' : `${Number(SITE.rating.count)} avaliações`,
+} as const
+
 const ABS = (path: string) => (path === '/' ? SITE.url : `${SITE.url}${path}`)
 
 // ── Meta description builder ─────────────────────────────────────────────────
