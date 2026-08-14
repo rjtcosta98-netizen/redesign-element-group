@@ -57,6 +57,127 @@ export const ACCENTS: Record<AccentKey, CSSProperties> = {
 
 export const PROJECTS: Project[] = [
   {
+    slug: '100-montanhas',
+    client: '100Montanhas',
+    category: 'Website & Sistema de Reservas · Turismo de Aventura',
+    kind: 'web',
+    accent: 'green',
+    year: '2026',
+    url: 'https://100montanhas.pt',
+    urlLabel: '100montanhas.pt',
+    summary: 'Redesign, reservas diretas no site e um painel único que substituiu a gestão espalhada por várias plataformas.',
+    intro:
+      'Um operador de experiências na Serra da Estrela e no Douro Superior com um site que existia — mas por onde ninguém reservava. Foi esse o ponto de partida.',
+    challenge:
+      'Ter site não é o mesmo que ter reservas. A 100Montanhas tinha uma página construída numa ferramenta de arrastar-e-largar que não colocava a empresa no lugar que merecia: sem otimização para o Google, sem nada que a tornasse legível para os motores de IA e sem qualquer forma de reservar diretamente. Quem chegava lá não conseguia avançar — e a gestão das reservas vivia espalhada por várias plataformas.',
+    challengeHeadline: 'Tinha um site. Só que ninguém reservava por lá.',
+    challengePoints: [
+      { pain: 'O site anterior, feito numa ferramenta de arrastar-e-largar, não colocava a empresa no lugar que merecia.', cost: 'Havia presença online, mas sem peso nem posição.' },
+      { pain: 'Sem otimização para o Google nem para os motores de IA, não aparecia a quem procurava experiências na região.', cost: 'A procura passava ao lado do negócio.' },
+      { pain: 'Não havia forma de reservar diretamente no site, e a gestão vivia espalhada por várias plataformas.', cost: 'Cada reserva dependia de intermediários e de trabalho manual.' },
+    ],
+    solution:
+      'Refizemos o site de raiz — design, estrutura e desempenho — e tratámos a camada de descoberta por inteiro: SEO técnico, AEO, GEO e Schema, para a 100Montanhas ser encontrada tanto no Google como pelos motores de IA que hoje respondem por ele. Construímos um sistema de reservas diretas no próprio site e um painel de administração pensado para o telemóvel, onde o cliente gere tudo num só lugar: reservas, preços, atividades, datas disponíveis, datas a fechar, o perfil do Google e os resultados das redes sociais. O resultado mede-se: 98 em Performance e 100 em SEO no PageSpeed Insights, 100/100 numa auditoria de AEO e 86/100 de visibilidade em motores de IA. Do arranque ao lançamento foram 15 dias. Online em agosto de 2026.',
+    approach: [
+      { title: 'Redesign com desempenho máximo', desc: 'Site refeito de raiz para computador e telemóvel: 98 em Performance no PageSpeed Insights, com a maior imagem a aparecer em 1,0 s e praticamente zero deslocação de layout (CLS 0,002).' },
+      { title: 'Descoberta em toda a frente', desc: 'SEO técnico, AEO, GEO e Schema — 100 em SEO no PageSpeed e 100/100 de AEO, com dados estruturados e FAQ que os motores de resposta conseguem ler e citar.' },
+      { title: 'Reservas diretas no site', desc: 'Catálogo de 19 experiências com pedido de reserva no próprio site, sem intermediários. Quem chega já consegue ir até ao fim.' },
+      { title: 'Um painel para gerir tudo, do telemóvel', desc: 'Reservas, calendário, passeios, conteúdo do site, blog, fotografias, visitas, redes e medição — tudo numa só aba, a partir do telemóvel e de qualquer sítio.' },
+    ],
+    scope: [
+      'Redesign completo do website',
+      'SEO técnico e otimização para o Google',
+      'AEO, GEO e Schema (motores de IA)',
+      'Sistema de reservas diretas',
+      'Painel de administração mobile-first',
+      'Otimização de velocidade (PageSpeed)',
+    ],
+    highlights: [
+      { metric: '98/100', label: 'PageSpeed Performance — com SEO a 100' },
+      { metric: '100/100', label: 'AEO — legível para motores de resposta' },
+      { metric: '15 dias', label: 'do arranque ao site no ar' },
+    ],
+    before: [
+      { label: 'Site que não convertia', icon: (<><rect x="3" y="4" width="18" height="17" rx="2" /><path d="M8 2v4M16 2v4M3 10h18" /><path d="m3 3 18 18" /></>) },
+      { label: 'Invisível na pesquisa', icon: (<><circle cx="11" cy="11" r="7" /><path d="m20 20-3-3" /><path d="m3 3 18 18" /></>) },
+      { label: 'Gestão em várias plataformas', icon: (<><rect x="3" y="3" width="7" height="7" rx="1.5" /><rect x="14" y="3" width="7" height="7" rx="1.5" /><rect x="3" y="14" width="7" height="7" rx="1.5" /><rect x="14" y="14" width="7" height="7" rx="1.5" /></>) },
+    ],
+    engineChips: ['Redesign', 'SEO & IA', 'Reservas', 'Painel admin'],
+    resultLine: 'Como a 100Montanhas passou de um site sem reservas a reservas diretas e gestão num só painel',
+    servicesUsed: [
+      { label: 'Criação de Websites & Lojas Online', href: '/servicos/web' },
+      { label: 'SEO técnico', href: '/servicos/seo' },
+    ],
+    snapshot: {
+      industria: 'Turismo de aventura · Experiências na Serra da Estrela e Douro Superior',
+      desafio: 'Tinha site, mas ninguém reservava por lá',
+      resultado: 'Site refeito de raiz com reservas diretas e um painel único de gestão a partir do telemóvel, entregue em 15 dias — com 98 de Performance e 100 de SEO no PageSpeed Insights e 100/100 de AEO para motores de resposta',
+    },
+    quote: {
+      text: 'Todo o acompanhamento, desde o primeiro dia em diante, é sensacional! O Ricardo é uma pessoa que está presente em tudo, é alguém que atende aos nossos pedidos e tenta adequar tudo para que resulte. Desde o início que sabíamos que seria a melhor opção e não estamos enganados! Continuaremos, pois confiança, rigor e dedicação é aquilo que nos faz ficar. Grande abraço!',
+      author: 'Sérgio Santos',
+      role: 'CEO · 100Montanhas',
+      url: 'https://share.google/z32aUKwYS1XlMc3HM',
+    },
+    cover: { src: '/Projetos/100montanhas/web-01-hero.webp', alt: 'Website da 100Montanhas — experiências de aventura na Serra da Estrela e Douro Superior', frame: 'browser' },
+    showcase: { desktop: '/Projetos/100montanhas/web-01-hero.webp', mobile: '/Projetos/100montanhas/mob-01-hero.webp' },
+    // Percurso do site novo: primeiro desktop, depois telemóvel, e no fim as
+    // auditorias que sustentam os números dos destaques.
+    gallery: [
+      { src: '/Projetos/100montanhas/web-02-experiencias.webp', alt: 'Categorias de experiências — Serra da Estrela, Douro, expedições de trekking e 4x4', frame: 'browser' },
+      { src: '/Projetos/100montanhas/web-03-precos.webp', alt: 'Secção «Os mais pedidos» — experiências com preço e botão de reserva em cada cartão', frame: 'browser' },
+      { src: '/Projetos/100montanhas/web-07-catalogo.webp', alt: 'Catálogo completo de experiências, com filtros por destino e por tipo de atividade', frame: 'browser' },
+      { src: '/Projetos/100montanhas/web-08-catalogo-grelha.webp', alt: 'Grelha das 19 experiências, cada uma com duração, preço e pedido de reserva direto', frame: 'browser' },
+      { src: '/Projetos/100montanhas/web-04-sobre.webp', alt: 'Secção «Sobre nós» com fotografia real das saídas e os compromissos da empresa', frame: 'browser' },
+      { src: '/Projetos/100montanhas/web-05-testemunhos.webp', alt: 'Testemunhos reais de clientes da 100Montanhas', frame: 'browser' },
+      { src: '/Projetos/100montanhas/web-06-faq.webp', alt: 'Perguntas frequentes — conteúdo estruturado que alimenta o FAQPage e os motores de resposta', frame: 'browser' },
+      { src: '/Projetos/100montanhas/mob-01-hero.webp', alt: 'Telemóvel — ecrã de entrada com prova social, preço inicial e reserva à distância de um toque', frame: 'phone' },
+      { src: '/Projetos/100montanhas/mob-02-experiencias.webp', alt: 'Telemóvel — categorias de experiências em carrossel', frame: 'phone' },
+      { src: '/Projetos/100montanhas/mob-03-precos.webp', alt: 'Telemóvel — experiências mais pedidas com preço e botão «Ver e Reservar»', frame: 'phone' },
+      { src: '/Projetos/100montanhas/mob-04-catalogo.webp', alt: 'Telemóvel — catálogo com filtros por destino e tipo, e confirmação em menos de 24 horas', frame: 'phone' },
+      { src: '/Projetos/100montanhas/admin-01-resumo-desktop.webp', alt: 'Painel de administração — resumo com reservas por confirmar, reservas confirmadas, pessoas previstas e próximos dias fechados', frame: 'plain' },
+      { src: '/Projetos/100montanhas/admin-03-menu-mobile.webp', alt: 'Painel de administração no telemóvel — menu com reservas, calendário, passeios, blog, fotografias, visitas, redes e medição', frame: 'plain' },
+      { src: '/Projetos/100montanhas/admin-02-resumo-mobile.webp', alt: 'Painel de administração no telemóvel — resumo de reservas confirmadas e receita prevista', frame: 'plain' },
+      { src: '/Projetos/100montanhas/prova-pagespeed.webp', alt: 'PageSpeed Insights do site: 98 em Performance, 96 em Acessibilidade, 96 em Boas Práticas e 100 em SEO', frame: 'plain' },
+      { src: '/Projetos/100montanhas/prova-aeo.webp', alt: 'Auditoria de AEO: 100/100, com Schema e secção de FAQ detetados', frame: 'plain' },
+      { src: '/Projetos/100montanhas/prova-ai-visibility.webp', alt: 'Auditoria de visibilidade em IA: 86/100 de alcance da marca em motores de IA', frame: 'plain' },
+    ],
+    seoKeywords: [
+      'website com reservas diretas',
+      'criação de site para turismo',
+      'sistema de reservas online',
+      'painel de gestão de reservas',
+      'SEO para turismo de aventura',
+      'otimização para motores de IA',
+      'GEO generative engine optimization',
+      'AEO answer engine optimization',
+      'redesign de website turismo',
+      'agência digital Serra da Estrela',
+    ],
+    faq: [
+      {
+        q: 'Vale a pena ter reservas diretas no site em vez de depender de plataformas?',
+        a: 'Sim. No caso da 100Montanhas, as reservas passaram a entrar diretamente no site, sem intermediários, e toda a gestão — reservas, preços, atividades e disponibilidade — passou a viver num só painel. Deixou de haver várias plataformas a gerir em paralelo.',
+      },
+      {
+        q: 'O que é otimizar um site para motores de IA (AEO e GEO)?',
+        a: 'É estruturar o site para que assistentes como o ChatGPT, o Perplexity ou os resumos de IA do Google consigam ler, entender e citar a informação. Na prática envolve dados estruturados (Schema), respostas diretas e citáveis dentro do conteúdo, e permitir explicitamente o acesso aos crawlers de IA. É diferente do SEO clássico, que otimiza para a lista de resultados.',
+      },
+      {
+        q: 'Quanto tempo demora a refazer um site com sistema de reservas?',
+        a: 'O site da 100Montanhas — redesign completo, sistema de reservas diretas, painel de administração e todas as otimizações de SEO e de motores de IA — ficou pronto em 15 dias, do arranque ao lançamento.',
+      },
+      {
+        q: 'Porque é que um site feito numa ferramenta de arrastar-e-largar não gera reservas?',
+        a: 'Porque resolve a aparência e ignora tudo o resto. Foi o ponto de partida da 100Montanhas: existia um site, mas sem otimização para pesquisa, sem estrutura que os motores de IA conseguissem ler e sem qualquer forma de reservar. Ter presença online e converter visitas em clientes são dois problemas diferentes.',
+      },
+      {
+        q: 'Quem faz websites com sistema de reservas para turismo em Portugal?',
+        a: 'A Element Group é um estúdio digital em Seia (Guarda) que cria websites, sistemas de reservas e painéis de gestão à medida para operadores turísticos, alojamento local e empresas de experiências — na Serra da Estrela, no Douro e no resto de Portugal.',
+      },
+    ],
+  },
+  {
     slug: 'apiarios-terras-da-pulga',
     client: 'Apiários Terras da Pulga',
     category: 'Website & Loja Online',
@@ -759,6 +880,10 @@ export const PROJECTS: Project[] = [
 ]
 
 export const getProject = (slug: string) => PROJECTS.find((p) => p.slug === slug)
+
+// Número de casos publicados. Derivado — o texto de prova social na home e em
+// /sobre importa daqui, para nunca ficar desalinhado do portefólio real.
+export const PROJECT_COUNT = PROJECTS.length
 
 // ── Capa do projeto: moldura de browser com a captura real, OU o resultado
 //    real do Google (SEO). Reutilizada no índice e na página de caso. ────────

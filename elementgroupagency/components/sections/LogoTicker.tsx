@@ -4,6 +4,10 @@ import ClientLogo from './ClientLogo'
 // Fallback (nomes reais) enquanto a tabela `clients` no Supabase estiver vazia.
 // Quando adicionares clientes (name + logo) à BD, estes são substituídos.
 const FALLBACK: Client[] = [
+  // Símbolo da marca, não o lockup: o ClientLogo já escreve o nome ao lado, e o
+  // lockup completo repetiria "100 montanhas" duas vezes seguidas. O lockup fica
+  // em /clientes/100montanhas-lockup.webp caso se prefira trocar.
+  { name: '100Montanhas', logo: '/clientes/100montanhas-simbolo.webp' },
   { name: 'Matias Nature', logo: '' },
   { name: 'Apiários Terras da Pulga', logo: '' },
   { name: 'Maria Mendes Massagens', logo: '' },
