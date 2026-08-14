@@ -82,7 +82,7 @@ export const PROJECTS: Project[] = [
       { title: 'Redesign com desempenho máximo', desc: 'Site refeito de raiz para computador e telemóvel: 98 em Performance no PageSpeed Insights, com a maior imagem a aparecer em 1,0 s e praticamente zero deslocação de layout (CLS 0,002).' },
       { title: 'Descoberta em toda a frente', desc: 'SEO técnico, AEO, GEO e Schema — 100 em SEO no PageSpeed e 100/100 de AEO, com dados estruturados e FAQ que os motores de resposta conseguem ler e citar.' },
       { title: 'Reservas diretas no site', desc: 'Catálogo de 19 experiências com pedido de reserva no próprio site, sem intermediários. Quem chega já consegue ir até ao fim.' },
-      { title: 'Um painel para gerir tudo, do telemóvel', desc: 'Reservas, preços, atividades, disponibilidade, perfil do Google e resultados de redes sociais numa só aba — acessível de qualquer sítio.' },
+      { title: 'Um painel para gerir tudo, do telemóvel', desc: 'Reservas, calendário, passeios, conteúdo do site, blog, fotografias, visitas, redes e medição — tudo numa só aba, a partir do telemóvel e de qualquer sítio.' },
     ],
     scope: [
       'Redesign completo do website',
@@ -135,6 +135,9 @@ export const PROJECTS: Project[] = [
       { src: '/Projetos/100montanhas/mob-02-experiencias.webp', alt: 'Telemóvel — categorias de experiências em carrossel', frame: 'phone' },
       { src: '/Projetos/100montanhas/mob-03-precos.webp', alt: 'Telemóvel — experiências mais pedidas com preço e botão «Ver e Reservar»', frame: 'phone' },
       { src: '/Projetos/100montanhas/mob-04-catalogo.webp', alt: 'Telemóvel — catálogo com filtros por destino e tipo, e confirmação em menos de 24 horas', frame: 'phone' },
+      { src: '/Projetos/100montanhas/admin-01-resumo-desktop.webp', alt: 'Painel de administração — resumo com reservas por confirmar, reservas confirmadas, pessoas previstas e próximos dias fechados', frame: 'plain' },
+      { src: '/Projetos/100montanhas/admin-03-menu-mobile.webp', alt: 'Painel de administração no telemóvel — menu com reservas, calendário, passeios, blog, fotografias, visitas, redes e medição', frame: 'plain' },
+      { src: '/Projetos/100montanhas/admin-02-resumo-mobile.webp', alt: 'Painel de administração no telemóvel — resumo de reservas confirmadas e receita prevista', frame: 'plain' },
       { src: '/Projetos/100montanhas/prova-pagespeed.webp', alt: 'PageSpeed Insights do site: 98 em Performance, 96 em Acessibilidade, 96 em Boas Práticas e 100 em SEO', frame: 'plain' },
       { src: '/Projetos/100montanhas/prova-aeo.webp', alt: 'Auditoria de AEO: 100/100, com Schema e secção de FAQ detetados', frame: 'plain' },
       { src: '/Projetos/100montanhas/prova-ai-visibility.webp', alt: 'Auditoria de visibilidade em IA: 86/100 de alcance da marca em motores de IA', frame: 'plain' },
