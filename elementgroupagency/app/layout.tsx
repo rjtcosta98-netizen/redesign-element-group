@@ -1,9 +1,11 @@
 import type { Metadata } from 'next'
+import { headers } from 'next/headers'
 import { Inter_Tight, Instrument_Sans } from 'next/font/google'
 import './globals.css'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import CookieConsent from '@/components/CookieConsent'
+import GoogleAnalytics from '@/components/GoogleAnalytics'
 import WhatsAppFab from '@/components/WhatsAppFab'
 import JsonLd from '@/components/JsonLd'
 import { SITE, organizationGraph } from '@/lib/seo'
@@ -70,9 +72,41 @@ export const metadata: Metadata = {
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  // Nonce do CSP (definido no middleware) — sem ele o 'strict-dynamic' bloqueia
+  // os scripts do gtag.
+  const nonce = headers().get('x-nonce') ?? undefined
   return (
     <html lang="pt-PT" className={`${interTight.variable} ${instrumentSans.variable}`}>
       <body className="bg-bg text-white font-body antialiased">
+        {/* Google tag (gtag.js) — GA4 com Consent Mode v2. Server-rendered para
+            garantir que está no HTML e dispara o pageview. Consentimento arranca
+            em 'denied'; o componente GoogleAnalytics atualiza no aceite. */}
+        <script
+          async
+          nonce={nonce}
+          src="https://www.googletagmanager.com/gtag/js?id=G-RNWM2MQTRT"
+        />
+        <script
+          id="gtag-init"
+          nonce={nonce}
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              window.gtag = gtag;
+              gtag('consent', 'default', {
+                ad_storage: 'denied',
+                analytics_storage: 'denied',
+                ad_user_data: 'denied',
+                ad_personalization: 'denied',
+                wait_for_update: 500
+              });
+              gtag('js', new Date());
+              gtag('config', 'G-RNWM2MQTRT');
+            `,
+          }}
+        />
+        <GoogleAnalytics />
         <JsonLd data={organizationGraph()} />
         <Nav />
         {children}
