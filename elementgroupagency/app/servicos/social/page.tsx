@@ -346,7 +346,7 @@ const SOCIAL_FAQS = [
   { q: 'Quantos posts por mês?', a: 'Depende do plano — definimos um volume controlado à cabeça, para garantir qualidade e não saturar nem o teu feed nem o teu tempo.' },
   { q: 'As redes vão fazer o meu negócio explodir?', a: 'Sinceramente, não sozinhas. As redes são um complemento — o motor do crescimento é o teu site e o SEO. O que fazem é manter-te presente, credível e na memória de quem te segue.' },
   { q: 'Posso pedir só um pack pontual?', a: 'Sim. Tens o Pack de Posts (avulso) e o Pack Vídeo Vertical (pagamento único), sem teres de assinar uma avença mensal.' },
-  { q: 'Como começo?', a: 'Pedes um orçamento no formulário (2 minutos). Respondo em menos de 2 horas, sem compromisso.' },
+  { q: 'Quanto custa a gestão de redes sociais?', a: 'A gestão contínua fica em 197€ por mês, com volume de conteúdo definido à cabeça. Se preferires sem avença, tens o Pack de Posts em 190€ e o Pack Vídeo Vertical (6 vídeos com legendas) em 397€, ambos pagamento único. Pedes orçamento no formulário e respondo em menos de 2 horas.' },
 ]
 
 const FAQ_SCHEMA = {

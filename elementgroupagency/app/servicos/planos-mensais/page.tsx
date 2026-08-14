@@ -360,7 +360,7 @@ const PLAN_FAQS = [
   { q: 'Preciso de ter um site feito por ti?', a: 'Não obrigatoriamente. Posso assumir a manutenção de um site existente — faço primeiro uma avaliação para garantir que está em condições.' },
   { q: 'As alterações ao site estão incluídas?', a: 'Pequenas alterações e atualizações regulares estão incluídas. Mudanças grandes (novas secções, funcionalidades) levam orçamento à parte, sempre transparente e aprovado por ti.' },
   { q: 'Qual a diferença entre os planos?', a: 'Sobem em camadas: Essencial = manutenção e segurança; Crescimento = + SEO e conteúdo; Performance = + social e email marketing. Cada plano inclui tudo o que está no anterior.' },
-  { q: 'Como começo?', a: 'Escolhes um plano ou pedes-me ajuda a escolher no formulário. Respondo em menos de 2 horas, sem compromisso.' },
+  { q: 'O que acontece ao meu site se eu cancelar?', a: 'Fica teu e continua no ar — o site e o domínio estão no teu nome, não no meu. O que termina é a manutenção: atualizações, backups, monitorização e o trabalho contínuo de SEO e conteúdo. Não há taxa de saída nem site refém. Se não souberes qual o plano certo, escolho contigo no formulário e respondo em menos de 2 horas.' },
 ]
 
 const FAQ_SCHEMA = {
