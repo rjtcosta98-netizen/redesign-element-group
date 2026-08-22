@@ -6,6 +6,7 @@ import LogoTicker     from '@/components/sections/LogoTicker'
 import FeatureStack   from '@/components/sections/FeatureStack'
 import HowItWorks     from '@/components/sections/HowItWorks'
 import Portfolio      from '@/components/sections/Portfolio'
+import MidCTA         from '@/components/sections/MidCTA'
 import WhyUs          from '@/components/sections/WhyUs'
 import Testimonials   from '@/components/sections/Testimonials'
 import FAQ            from '@/components/sections/FAQ'
@@ -44,6 +45,7 @@ export default async function Home() {
       <FeatureStack />
       <HowItWorks />
       <Portfolio />
+      <MidCTA />
       <WhyUs />
       <Testimonials reviews={reviews} />
       <FAQ />

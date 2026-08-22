@@ -238,7 +238,7 @@ export default function AssistenteIaPage() {
               quantas delas podem ser respondidas sem ti — e se compensa, ou se o teu volume ainda não justifica.
             </p>
             <div className="mt-10 flex justify-center">
-              <GlowButton href={CTA}>Marcar chamada gratuita</GlowButton>
+              <GlowButton href={CTA}>Pedir orçamento grátis</GlowButton>
             </div>
             <p className="mt-6 text-xs text-muted">
               Quem responde a este pedido sou eu, não um robô ·{' '}

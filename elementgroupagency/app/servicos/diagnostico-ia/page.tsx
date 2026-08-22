@@ -218,7 +218,7 @@ export default function DiagnosticoIaPage() {
               perceber se o diagnóstico te serve — e para te dizer se não serve.
             </p>
             <div className="mt-10 flex justify-center">
-              <GlowButton href={CTA}>Marcar chamada gratuita</GlowButton>
+              <GlowButton href={CTA}>Pedir orçamento grátis</GlowButton>
             </div>
             <p className="mt-6 text-xs text-muted">Resposta em menos de 2 horas · Falas comigo, não com um comercial</p>
           </AnimateOnScroll>

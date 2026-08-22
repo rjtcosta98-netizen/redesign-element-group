@@ -260,7 +260,7 @@ export default function ReservasPagamentosPage() {
               números e digo-te com honestidade se este sistema compensa — ou se, no teu volume, ainda não.
             </p>
             <div className="mt-10 flex justify-center">
-              <GlowButton href={CTA}>Marcar chamada gratuita</GlowButton>
+              <GlowButton href={CTA}>Pedir orçamento grátis</GlowButton>
             </div>
             <p className="mt-6 text-xs text-muted">Resposta em menos de 2 horas · Falas comigo, não com um comercial</p>
           </AnimateOnScroll>

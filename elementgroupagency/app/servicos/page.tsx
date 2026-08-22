@@ -5,6 +5,7 @@ import GlowButton from '@/components/ui/GlowButton'
 import JsonLd from '@/components/JsonLd'
 import { breadcrumbSchema, SITE } from '@/lib/seo'
 import CorporateBlock from '@/components/servicos/CorporateBlock'
+import SpotlightCard from '@/components/ui/SpotlightCard'
 import { FAMILIES, PLANS_LINK } from '@/lib/servicos'
 
 export const dynamic = 'force-static'
@@ -86,7 +87,7 @@ export default function ServicosHubPage() {
               Cada peça faz sentido sozinha, mas é quando trabalham juntas que o negócio muda de patamar.
             </p>
             <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-              <GlowButton href={CTA}>Marcar chamada gratuita</GlowButton>
+              <GlowButton href={CTA} variant="solid">Pedir orçamento grátis</GlowButton>
               <Link
                 href="#familias"
                 className="group inline-flex items-center gap-1.5 text-sm text-white/90 hover:text-white transition-colors"
@@ -137,13 +138,51 @@ export default function ServicosHubPage() {
             </p>
           </AnimateOnScroll>
 
+          {/* Porta de entrada. A pergunta que chega a esta página quase sempre não é
+              "qual destes dez serviços quero" — é "por onde começo". Sem uma resposta
+              visível, o catálogo obriga a escolher às cegas. */}
+          <AnimateOnScroll className="mb-4">
+            <SpotlightCard className="rounded-[26px]" style={{ ['--accent-rgb' as string]: '169 138 212' }}>
+              <div className="relative overflow-hidden rounded-[26px] border border-accent/30 bg-bg-card p-7 sm:p-8">
+                <span
+                  aria-hidden
+                  className="absolute inset-0 pointer-events-none"
+                  style={{ background: 'radial-gradient(90% 120% at 100% 0%, rgb(var(--accent-rgb) / 0.16), transparent 60%)' }}
+                />
+                <div className="relative flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+                  <div className="max-w-xl">
+                    <p className="inline-flex items-center gap-2 rounded-pill border border-accent/30 bg-accent/10 px-3 py-1 text-[10px] uppercase tracking-[0.16em] text-accent">
+                      Ponto de partida recomendado
+                    </p>
+                    <h3 className="mt-4 text-white font-heading text-xl sm:text-2xl font-medium tracking-[-0.01em]">
+                      Não sabes por onde começar? Começa pelo diagnóstico.
+                    </h3>
+                    <p className="mt-3 text-[13px] text-muted leading-relaxed">
+                      Meia jornada a olhar para o negócio. No fim sabes o que corrigir, por que ordem,
+                      e o que automatizar primeiro — mesmo que o resto o faças sem nós.
+                    </p>
+                  </div>
+                  <div className="shrink-0 md:text-right">
+                    <p className="font-heading text-[28px] leading-none font-medium text-white tabular-nums">490-890 €</p>
+                    <p className="mt-1.5 text-[11px] text-dark">sem IVA</p>
+                    <Link
+                      href="/servicos/diagnostico-ia"
+                      className="group mt-4 inline-flex items-center gap-1.5 rounded-pill bg-white px-5 py-2.5 text-[13px] font-medium text-black transition-all hover:bg-white/90"
+                    >
+                      Ver o diagnóstico
+                      <span className="transition-transform group-hover:translate-x-0.5" aria-hidden>→</span>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </SpotlightCard>
+          </AnimateOnScroll>
+
           <div className="grid lg:grid-cols-2 gap-4">
             {FAMILIES.map((family, i) => (
               <AnimateOnScroll key={family.key} delay={i * 0.06}>
-                <div
-                  style={{ ['--accent-rgb' as string]: family.rgb }}
-                  className="relative h-full overflow-hidden rounded-[26px] border border-white/10 bg-bg-card p-7 sm:p-8"
-                >
+                <SpotlightCard className="h-full rounded-[26px]" style={{ ['--accent-rgb' as string]: family.rgb }}>
+                <div className="relative h-full overflow-hidden rounded-[26px] border border-white/10 bg-bg-card p-7 sm:p-8">
                   <span
                     aria-hidden
                     className="absolute inset-0 pointer-events-none"
@@ -194,8 +233,17 @@ export default function ServicosHubPage() {
                         )
                       })}
                     </ul>
+
+                    <Link
+                      href={CTA}
+                      className="group mt-6 inline-flex items-center gap-1.5 text-[13px] text-muted transition-colors hover:text-white"
+                    >
+                      Falar sobre {family.label}
+                      <span className="transition-transform group-hover:translate-x-0.5" aria-hidden>→</span>
+                    </Link>
                   </div>
                 </div>
+                </SpotlightCard>
               </AnimateOnScroll>
             ))}
           </div>
@@ -247,7 +295,7 @@ export default function ServicosHubPage() {
               queres trabalhar comigo. Sem compromisso e sem apresentação comercial.
             </p>
             <div className="mt-10 flex justify-center">
-              <GlowButton href={CTA}>Marcar chamada gratuita</GlowButton>
+              <GlowButton href={CTA} variant="solid">Pedir orçamento grátis</GlowButton>
             </div>
             <p className="mt-6 text-xs text-muted">Resposta em menos de 2 horas · Falas comigo, não com um comercial</p>
           </AnimateOnScroll>

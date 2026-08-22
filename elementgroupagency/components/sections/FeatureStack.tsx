@@ -293,9 +293,11 @@ export default function FeatureStack({ showIntro = true }: { showIntro?: boolean
                   }}
                 />
 
+                {/* Alternar o lado do visual: quatro cartões com a mesma composição
+                    seguidos leem-se como um só bloco repetido e o olho desliga. */}
                 <div className="relative grid md:grid-cols-2 gap-8 items-center p-8 md:p-12">
                   {/* Text */}
-                  <div className="max-w-md">
+                  <div className={`max-w-md ${i % 2 === 1 ? 'md:order-2' : ''}`}>
                     <p className="text-[11px] uppercase tracking-[0.18em] text-accent/90 mb-4">{s.eyebrow}</p>
                     <h3 className="text-white">{s.title}</h3>
                     <p className="mt-4 text-muted text-sm leading-relaxed">{s.body}</p>
@@ -311,10 +313,12 @@ export default function FeatureStack({ showIntro = true }: { showIntro?: boolean
                       ))}
                     </ul>
 
+                    {/* Ação secundária em texto: a pílula branca é a ação primária
+                        do site (orçamento) e não deve ser gasta quatro vezes aqui. */}
                     <Link
                       href={s.href}
-                      className="group mt-7 inline-flex items-center gap-1.5 rounded-pill bg-white text-black
-                                 text-sm font-medium px-5 py-2.5 transition-all hover:bg-white/90"
+                      className="group mt-7 inline-flex items-center gap-1.5 text-sm font-medium text-white
+                                 border-b border-white/25 pb-1 transition-colors hover:border-accent hover:text-accent"
                     >
                       {s.ctaLabel}
                       <span className="transition-transform group-hover:translate-x-0.5" aria-hidden>→</span>
@@ -322,7 +326,9 @@ export default function FeatureStack({ showIntro = true }: { showIntro?: boolean
                   </div>
 
                   {/* Branded visual */}
-                  <ServiceVisual kind={s.visual} />
+                  <div className={i % 2 === 1 ? 'md:order-1' : ''}>
+                    <ServiceVisual kind={s.visual} />
+                  </div>
                 </div>
               </article>
             </div>

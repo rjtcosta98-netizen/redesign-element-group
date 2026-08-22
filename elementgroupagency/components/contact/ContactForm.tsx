@@ -112,8 +112,23 @@ export default function ContactForm({ initialService = '' }: { initialService?: 
         <textarea id="message" name="message" required rows={4} className={`${inputCls} resize-none`} placeholder="Conta-me o que precisas…" />
       </div>
 
-      <label className="flex items-start gap-2.5 text-[12px] text-muted leading-relaxed">
-        <input type="checkbox" name="consent" required className="mt-0.5 w-4 h-4 accent-[#7FA8D9] cursor-pointer" />
+      <label className="group flex items-start gap-3 text-[12px] text-muted leading-relaxed cursor-pointer">
+        {/* Checkbox desenhada: a nativa era um quadrado branco do sistema no meio
+            de um formulário escuro — o único elemento não desenhado da página. */}
+        <span className="relative mt-px shrink-0">
+          <input type="checkbox" name="consent" required className="peer sr-only" />
+          <span
+            aria-hidden
+            className="grid place-items-center w-[18px] h-[18px] rounded-md border border-white/20 bg-white/[0.04]
+                       transition-all duration-200 group-hover:border-white/35
+                       peer-checked:border-accent peer-checked:bg-accent peer-checked:[&_svg]:opacity-100
+                       peer-focus-visible:ring-2 peer-focus-visible:ring-accent/60 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-bg-card"
+          >
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none" className="opacity-0 transition-opacity duration-150">
+              <path d="M2.5 6.2 4.8 8.5 9.5 3.8" stroke="#0E0E0E" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </span>
+        </span>
         <span>
           Li e aceito a <a href="/politica-de-privacidade" className="text-white underline underline-offset-4 hover:text-accent">Política de Privacidade</a> e
           autorizo o tratamento dos meus dados para resposta a este contacto.

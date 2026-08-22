@@ -50,7 +50,7 @@ export default function PackageSelector({
   includes,
   packages,
   ctaHref,
-  ctaLabel = 'Marcar chamada gratuita',
+  ctaLabel = 'Pedir orçamento grátis',
   includesTitle = 'Incluído em todos os pacotes',
   ctaFootnote = 'Chamada de 30 minutos, sem compromisso',
 }: Props) {

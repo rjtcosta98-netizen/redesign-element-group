@@ -221,7 +221,7 @@ export default function VisibilidadeIaPage() {
               juntos quem é citado. É a fotografia de partida — e às vezes é desconfortável.
             </p>
             <div className="mt-10 flex justify-center">
-              <GlowButton href={CTA}>Marcar chamada gratuita</GlowButton>
+              <GlowButton href={CTA}>Pedir orçamento grátis</GlowButton>
             </div>
             <p className="mt-6 text-xs text-muted">Resposta em menos de 2 horas · Falas comigo, não com um comercial</p>
           </AnimateOnScroll>
