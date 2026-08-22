@@ -50,11 +50,9 @@ const nextConfig = {
       },
     ]
   },
-  async redirects() {
-    return [
-      { source: '/servicos', destination: '/servicos/web', permanent: true },
-    ]
-  },
+  // Sem redirect de /servicos: existia um 308 para /servicos/web enquanto o hub
+  // não existia. Agora /servicos é a página que apresenta o catálogo completo,
+  // e o redirect engolia-a.
   images: {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
