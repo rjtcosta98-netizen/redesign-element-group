@@ -4,6 +4,7 @@ import AnimateOnScroll from '@/components/ui/AnimateOnScroll'
 import GlowButton from '@/components/ui/GlowButton'
 import JsonLd from '@/components/JsonLd'
 import { breadcrumbSchema, SITE } from '@/lib/seo'
+import CorporateBlock from '@/components/servicos/CorporateBlock'
 import { FAMILIES, PLANS_LINK } from '@/lib/servicos'
 
 export const dynamic = 'force-static'
@@ -228,32 +229,7 @@ export default function ServicosHubPage() {
         </div>
       </section>
 
-      {/* Empresas e instituições — o segmento que a mensagem atual não servia */}
-      <section className="bg-bg border-t border-white/10 py-24 px-6" aria-labelledby="empresas-h">
-        <div className="max-w-[880px] mx-auto">
-          <AnimateOnScroll>
-            <p className="text-[11px] uppercase tracking-[0.22em] text-dark mb-4">Empresas e instituições</p>
-            <h2 id="empresas-h" className="text-white">Trabalho com equipas que nunca me vão ver ao vivo</h2>
-            <p className="mt-5 text-muted leading-relaxed">
-              Uma parte do trabalho é para empresas fora da região, e algumas fora do país. O processo é
-              o mesmo: âmbito escrito antes de começar, um interlocutor único, entregas por fases com
-              aprovação em cada uma, e faturação com IVA e NIF regularizados. Reuniões por videochamada,
-              documentação partilhada, e um prazo de resposta que não depende do fuso horário.
-            </p>
-            <p className="mt-4 text-muted leading-relaxed">
-              Para projetos de software e painéis à medida há regras que digo à cabeça, porque protegem
-              os dois lados: um projeto de cada vez e 40% adiantado. Prefiro perder um pedido a aceitar
-              dois em simultâneo e falhar os dois.
-            </p>
-            <div className="mt-8">
-              <Link href={CTA} className="group inline-flex items-center gap-1.5 text-sm text-white hover:text-accent transition-colors">
-                Enviar um pedido de proposta
-                <span className="transition-transform group-hover:translate-x-0.5" aria-hidden>→</span>
-              </Link>
-            </div>
-          </AnimateOnScroll>
-        </div>
-      </section>
+      <CorporateBlock />
 
       {/* CTA final */}
       <section className="relative overflow-hidden bg-gradient-to-b from-bg to-[#08090b] border-t border-white/10 py-28 px-6" aria-labelledby="cta">

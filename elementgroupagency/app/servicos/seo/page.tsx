@@ -300,6 +300,38 @@ export default function SeoPage() {
           </AnimateOnScroll>
         </div>
       </section>
+      {/* O GEO saiu do seletor de pacotes para página própria — aqui fica a ponte */}
+      <section className="bg-bg border-t border-white/10 py-24 px-6" aria-labelledby="geo">
+        <div className="max-w-[880px] mx-auto">
+          <AnimateOnScroll>
+            <div className="relative overflow-hidden rounded-[26px] border border-white/10 bg-bg-card p-7 sm:p-9">
+              <span
+                aria-hidden
+                className="absolute -top-24 -right-16 w-72 h-72 pointer-events-none"
+                style={{ background: 'radial-gradient(circle at 60% 40%, rgba(111,179,154,0.16), transparent 65%)' }}
+              />
+              <div className="relative">
+                <p className="text-[11px] uppercase tracking-[0.22em] text-dark mb-4">E depois do Google?</p>
+                <h2 id="geo" className="text-white font-heading text-2xl font-medium tracking-[-0.01em]">
+                  Cada vez mais gente pergunta ao ChatGPT em vez de pesquisar
+                </h2>
+                <p className="mt-5 text-muted leading-relaxed">
+                  O SEO desta página trabalha a lista de resultados, que continua a trazer clientes. Mas
+                  quando alguém faz a pergunta a um assistente de IA, o que decide é quem é citado na
+                  resposta — e isso é trabalho diferente, com medição própria.
+                </p>
+                <div className="mt-7">
+                  <Link href="/servicos/visibilidade-ia" className="group inline-flex items-center gap-1.5 text-sm text-white hover:text-accent transition-colors">
+                    Ver Visibilidade em IA (GEO)
+                    <span className="transition-transform group-hover:translate-x-0.5" aria-hidden>→</span>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </AnimateOnScroll>
+        </div>
+      </section>
+
       <RelatedServices current="seo" />
     </main>
   )

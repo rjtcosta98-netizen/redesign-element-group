@@ -43,7 +43,7 @@ export const FAMILIES: ServiceFamily[] = [
     services: [
       { key: 'web', label: 'Websites & Lojas Online', sub: 'Sites e lojas que convertem', href: '/servicos/web', price: '2.500-7.500 €', status: 'live' },
       { key: 'reservas', label: 'Reservas & Pagamentos', sub: 'Deixa de pagar comissão em cada reserva', href: '/servicos/reservas-pagamentos', price: '2.500-4.500 €', status: 'live' },
-      { key: 'software', label: 'Software à Medida', sub: 'Quando a folha de Excel já não chega', href: '/servicos/software', price: '4.000-12.000 €', status: 'planned' },
+      { key: 'software', label: 'Software à Medida', sub: 'Quando a folha de Excel já não chega', href: '/servicos/software', price: '4.000-12.000 €', status: 'live' },
     ],
   },
   {
@@ -63,7 +63,7 @@ export const FAMILIES: ServiceFamily[] = [
     rgb: '169 138 212',
     services: [
       { key: 'diagnostico', label: 'Diagnóstico Digital & IA', sub: 'Saber o que automatizar primeiro', href: '/servicos/diagnostico-ia', price: '490-890 €', status: 'live' },
-      { key: 'assistente', label: 'Assistente de IA', sub: 'Responde e qualifica, no site e no WhatsApp', href: '/servicos/assistente-ia', price: '1.200-2.500 €', status: 'planned' },
+      { key: 'assistente', label: 'Assistente de IA', sub: 'Responde e qualifica, no site e no WhatsApp', href: '/servicos/assistente-ia', price: '1.200-2.500 €', status: 'live' },
     ],
   },
   {
@@ -72,7 +72,7 @@ export const FAMILIES: ServiceFamily[] = [
     question: 'Pareço amador.',
     rgb: '215 176 116',
     services: [
-      { key: 'design', label: 'Marca & Design', sub: 'Uma marca que não parece feita à pressa', href: '/servicos/design', price: '490-2.500 €', status: 'planned' },
+      { key: 'design', label: 'Marca & Design', sub: 'Uma marca que não parece feita à pressa', href: '/servicos/design', price: '490-2.500 €', status: 'live' },
       { key: 'social', label: 'Conteúdo & Marketing', sub: 'Conteúdo que serve o resultado', href: '/servicos/social', status: 'live' },
     ],
   },

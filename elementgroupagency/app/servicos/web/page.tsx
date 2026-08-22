@@ -11,6 +11,7 @@ import ResultsFlow from '@/components/servicos/ResultsFlow'
 import JsonLd from '@/components/JsonLd'
 import { serviceSchema, breadcrumbSchema } from '@/lib/seo'
 import RelatedServices from '@/components/servicos/RelatedServices'
+import CorporateBlock from '@/components/servicos/CorporateBlock'
 
 const CTA = `/contacto?servico=${encodeURIComponent('Websites & Lojas Online')}`
 
@@ -280,6 +281,15 @@ export default function WebsitesPage() {
           </AnimateOnScroll>
         </div>
       </section>
+
+      <CorporateBlock
+        rules={[
+          'Âmbito e mapa de páginas escritos e aprovados antes de desenhar.',
+          'Entregas por fases, com aprovação em cada uma.',
+          'Faturação com IVA e NIF regularizados, e recibo para contabilidade.',
+          'O site, o domínio e os conteúdos são teus, no teu nome.',
+        ]}
+      />
 
       <RelatedServices current="web" />
 
