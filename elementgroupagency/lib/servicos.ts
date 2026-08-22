@@ -42,7 +42,7 @@ export const FAMILIES: ServiceFamily[] = [
     rgb: '127 168 217',
     services: [
       { key: 'web', label: 'Websites & Lojas Online', sub: 'Sites e lojas que convertem', href: '/servicos/web', price: '2.500-7.500 €', status: 'live' },
-      { key: 'reservas', label: 'Reservas & Pagamentos', sub: 'Deixa de pagar comissão em cada reserva', href: '/servicos/reservas-pagamentos', price: '2.500-4.500 €', status: 'planned' },
+      { key: 'reservas', label: 'Reservas & Pagamentos', sub: 'Deixa de pagar comissão em cada reserva', href: '/servicos/reservas-pagamentos', price: '2.500-4.500 €', status: 'live' },
       { key: 'software', label: 'Software à Medida', sub: 'Quando a folha de Excel já não chega', href: '/servicos/software', price: '4.000-12.000 €', status: 'planned' },
     ],
   },
@@ -53,7 +53,7 @@ export const FAMILIES: ServiceFamily[] = [
     rgb: '111 179 154',
     services: [
       { key: 'seo', label: 'SEO & Otimização', sub: 'Aparecer no Google', href: '/servicos/seo', price: '890-1.200 €', status: 'live' },
-      { key: 'geo', label: 'Visibilidade em IA (GEO)', sub: 'Ser citado pelo ChatGPT e pelo Perplexity', href: '/servicos/visibilidade-ia', price: '690-1.200 €', status: 'planned' },
+      { key: 'geo', label: 'Visibilidade em IA (GEO)', sub: 'Ser citado pelo ChatGPT e pelo Perplexity', href: '/servicos/visibilidade-ia', price: '690-1.200 €', status: 'live' },
     ],
   },
   {
@@ -62,7 +62,7 @@ export const FAMILIES: ServiceFamily[] = [
     question: 'Gasto tempo em coisas repetidas.',
     rgb: '169 138 212',
     services: [
-      { key: 'diagnostico', label: 'Diagnóstico Digital & IA', sub: 'Saber o que automatizar primeiro', href: '/servicos/diagnostico-ia', price: '490-890 €', status: 'planned' },
+      { key: 'diagnostico', label: 'Diagnóstico Digital & IA', sub: 'Saber o que automatizar primeiro', href: '/servicos/diagnostico-ia', price: '490-890 €', status: 'live' },
       { key: 'assistente', label: 'Assistente de IA', sub: 'Responde e qualifica, no site e no WhatsApp', href: '/servicos/assistente-ia', price: '1.200-2.500 €', status: 'planned' },
     ],
   },
