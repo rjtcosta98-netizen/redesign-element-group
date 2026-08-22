@@ -2,15 +2,16 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
+import { FAMILIES, PLANS_LINK } from '@/lib/servicos'
 
-// Each service carries its own brand accent (same palette as the FeatureStack
-// cards) so the mobile menu cards glow in their category colour.
-const SERVICES = [
-  { label: 'Websites & Lojas Online', short: 'Websites',     sub: 'Sites & lojas online',  href: '/servicos/web',            rgb: '127 168 217' },
-  { label: 'SEO & Otimização',        short: 'SEO',          sub: 'Apareça no Google',     href: '/servicos/seo',            rgb: '111 179 154' },
-  { label: 'Social Media',            short: 'Social Media', sub: 'Redes & campanhas',     href: '/servicos/social',         rgb: '169 138 212' },
-  { label: 'Planos Mensais',          short: 'Planos',       sub: 'Parceria mensal',       href: '/servicos/planos-mensais', rgb: '215 176 116' },
-]
+// O catálogo vem de lib/servicos.ts. Antes desta versão estava declarado aqui e
+// outra vez em RelatedServices.tsx, em listas paralelas que divergiam.
+// Só entram no menu os serviços com página publicada — os restantes aparecem
+// no hub /servicos como "brevemente", sem ligação, para não gerar 404.
+const MENU_FAMILIES = FAMILIES.map((f) => ({
+  ...f,
+  services: f.services.filter((s) => s.status === 'live'),
+})).filter((f) => f.services.length > 0)
 
 const NAV_LINKS = [
   { label: 'Sobre',      href: '/sobre' },
@@ -53,6 +54,9 @@ export default function Nav() {
     transitionTimingFunction: EASE,
   })
 
+  // Índice linear para o stagger do overlay, que atravessa famílias e serviços.
+  let row = 0
+
   return (
     <>
     <header className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-b from-bg/70 to-transparent backdrop-blur-[2px]">
@@ -67,23 +71,55 @@ export default function Nav() {
 
         {/* Desktop links */}
         <nav className="hidden md:flex items-center gap-7">
-          {/* Serviços dropdown */}
+          {/* Serviços — mega-menu por famílias */}
           <div className="relative group">
-            <button className={`flex items-center gap-1 ${linkCls}`}>
+            <Link href="/servicos" className={`flex items-center gap-1 ${linkCls}`}>
               Serviços
               <svg width="11" height="11" viewBox="0 0 12 12" fill="none" className="mt-px opacity-70">
                 <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
-            </button>
+            </Link>
             <div className="absolute left-1/2 -translate-x-1/2 top-full pt-3 opacity-0 invisible translate-y-1
                             transition-all duration-200 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0
                             group-focus-within:opacity-100 group-focus-within:visible group-focus-within:translate-y-0">
-              <div className="bg-bg-card border border-white/10 rounded-xl min-w-[220px] py-2 shadow-[0_20px_40px_rgba(0,0,0,0.5)]">
-                {SERVICES.map((s) => (
-                  <Link key={s.href} href={s.href} className="block px-5 py-2.5 text-sm text-muted hover:text-white hover:bg-white/5 transition-colors">
-                    {s.label}
+              <div className="bg-bg-card border border-white/10 rounded-2xl w-[min(90vw,720px)] p-5 shadow-[0_28px_60px_rgba(0,0,0,0.6)]">
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-5 gap-y-6">
+                  {MENU_FAMILIES.map((family) => (
+                    <div key={family.key} style={{ ['--accent-rgb' as string]: family.rgb }}>
+                      <p className="flex items-center gap-2 text-[10px] uppercase tracking-[0.16em] text-dark mb-3">
+                        <span className="w-1.5 h-1.5 rounded-[2px] rotate-45 bg-accent shrink-0" aria-hidden />
+                        {family.label}
+                      </p>
+                      <ul role="list" className="space-y-1">
+                        {family.services.map((s) => (
+                          <li key={s.key}>
+                            <Link
+                              href={s.href}
+                              className="block rounded-lg px-2.5 py-2 -mx-2.5 transition-colors hover:bg-white/[0.05]"
+                            >
+                              <span className="block text-[13px] text-white leading-tight">{s.label}</span>
+                              <span className="mt-0.5 block text-[11px] text-muted leading-snug">{s.sub}</span>
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-5 pt-4 border-t border-white/10 flex items-center justify-between gap-4">
+                  <Link href="/servicos" className="group/all inline-flex items-center gap-1.5 text-[12px] text-muted hover:text-white transition-colors">
+                    Ver todos os serviços
+                    <span className="transition-transform group-hover/all:translate-x-0.5" aria-hidden>→</span>
                   </Link>
-                ))}
+                  <Link
+                    href={PLANS_LINK.href}
+                    className="inline-flex items-center gap-2 rounded-pill border border-accent/30 bg-accent/10 px-4 py-2 transition-colors hover:bg-accent/15"
+                  >
+                    <span className="text-[12px] font-medium text-white">{PLANS_LINK.label}</span>
+                    <span className="text-[11px] text-muted tabular-nums">{PLANS_LINK.price}</span>
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
@@ -101,7 +137,7 @@ export default function Nav() {
           className="hidden md:inline-flex items-center justify-center rounded-pill bg-white text-black
                      text-sm font-medium px-6 py-2.5 transition-all duration-300 hover:bg-white/90"
         >
-          Pedir orçamento
+          Marcar chamada
         </Link>
 
         {/* Mobile hamburger → morphs into an X */}
@@ -152,43 +188,64 @@ export default function Nav() {
             <span className="grid place-items-center w-3.5 h-3.5 rounded-full border border-accent/60 shrink-0">
               <span className="w-1.5 h-1.5 rounded-full bg-accent" />
             </span>
-            <span className="text-[11px] uppercase tracking-[0.22em] text-dark">Serviços</span>
+            <Link href="/servicos" onClick={close} className="text-[11px] uppercase tracking-[0.22em] text-dark hover:text-white transition-colors">
+              Serviços
+            </Link>
             <span className="flex-1 h-px bg-white/10" />
           </div>
 
-          {/* service cards — each glows in its own brand accent */}
-          <div className="grid grid-cols-2 gap-3">
-            {SERVICES.map((s, i) => (
-              <Link
-                key={s.href}
-                href={s.href}
-                onClick={close}
-                style={{ ...enter(i), ['--accent-rgb' as string]: s.rgb }}
-                className={`group relative overflow-hidden rounded-2xl border border-white/10 bg-[#0f1216] p-4
-                            transition-all duration-500 hover:border-[rgb(var(--accent-rgb)/0.5)]
-                            ${open ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}
-              >
-                {/* accent wash */}
-                <span
-                  aria-hidden
-                  className="absolute inset-0 opacity-80 transition-opacity duration-500 group-hover:opacity-100"
-                  style={{ background: 'radial-gradient(120% 100% at 85% 0%, rgb(var(--accent-rgb) / 0.20), transparent 58%)' }}
-                />
-                <span className="relative flex items-center justify-between">
-                  {/* faceted node — same crystal language as the globe */}
-                  <span
-                    className="block w-3.5 h-3.5 rounded-[4px] rotate-45 shadow-[0_0_12px_rgb(var(--accent-rgb)/0.7)]"
-                    style={{ background: 'linear-gradient(135deg, var(--accent-light), var(--accent) 55%, var(--accent-deep))' }}
-                  />
-                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="text-muted transition-all duration-300 group-hover:text-white group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
-                    <path d="M5 11L11 5M11 5H6M11 5V10" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </span>
-                <span className="relative block mt-6 font-heading font-medium text-white text-[17px] leading-tight">{s.short}</span>
-                <span className="relative block text-[12px] text-muted mt-0.5">{s.sub}</span>
-              </Link>
+          {/* serviços agrupados por família — escala para todo o catálogo */}
+          <div className="space-y-6">
+            {MENU_FAMILIES.map((family) => (
+              <div key={family.key} style={{ ['--accent-rgb' as string]: family.rgb }}>
+                <p className="flex items-center gap-2.5 mb-2 text-[10px] uppercase tracking-[0.18em] text-dark">
+                  <span className="w-1.5 h-1.5 rounded-[2px] rotate-45 bg-accent shrink-0" aria-hidden />
+                  {family.label}
+                </p>
+                <div className="flex flex-col">
+                  {family.services.map((s) => {
+                    const style = enter(row++)
+                    return (
+                      <Link
+                        key={s.key}
+                        href={s.href}
+                        onClick={close}
+                        style={style}
+                        className={`group flex items-center gap-3 py-3 border-b border-white/[0.06] transition-all duration-500
+                                    ${open ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}
+                      >
+                        <span className="w-4 h-px bg-white/25 transition-all duration-300 group-hover:w-7 group-hover:bg-accent group-active:w-7 group-active:bg-accent" />
+                        <span className="min-w-0">
+                          <span className="block font-heading text-white/90 text-[16px] leading-tight transition-transform duration-300 group-hover:translate-x-1 group-active:translate-x-1">
+                            {s.label}
+                          </span>
+                          <span className="block text-[12px] text-muted mt-0.5">{s.sub}</span>
+                        </span>
+                        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="ml-auto shrink-0 text-dark transition-all duration-300 group-hover:text-accent group-hover:translate-x-0.5">
+                          <path d="M6 4L10 8L6 12" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </Link>
+                    )
+                  })}
+                </div>
+              </div>
             ))}
           </div>
+
+          {/* planos — destacado, é o recorrente que sustenta o resto */}
+          <Link
+            href={PLANS_LINK.href}
+            onClick={close}
+            style={enter(row++)}
+            className={`mt-6 flex items-center justify-between gap-3 rounded-2xl border border-accent/30 bg-accent/10 px-5 py-4
+                        transition-all duration-500 ${open ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}
+          >
+            <span>
+              <span className="block font-heading text-white text-[16px] leading-tight">{PLANS_LINK.label}</span>
+              <span className="block text-[12px] text-muted mt-0.5">{PLANS_LINK.sub}</span>
+            </span>
+            <span className="shrink-0 text-[12px] text-white/80 tabular-nums">{PLANS_LINK.price}</span>
+          </Link>
 
           {/* eyebrow — páginas */}
           <div className="flex items-center gap-3 mt-8 mb-1.5">
@@ -198,19 +255,19 @@ export default function Nav() {
 
           {/* compact page list */}
           <nav className="flex flex-col">
-            {NAV_LINKS.map((row, i) => (
+            {NAV_LINKS.map((link) => (
               <Link
-                key={row.href}
-                href={row.href}
+                key={link.href}
+                href={link.href}
                 onClick={close}
-                style={enter(SERVICES.length + i)}
+                style={enter(row++)}
                 className={`group flex items-center gap-3 py-3.5 border-b border-white/[0.06] transition-all duration-500
                             ${open ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}
               >
                 {/* accent marker grows on press */}
                 <span className="w-4 h-px bg-white/25 transition-all duration-300 group-hover:w-7 group-hover:bg-accent group-active:w-7 group-active:bg-accent" />
                 <span className="font-heading text-white/90 text-[17px] transition-transform duration-300 group-hover:translate-x-1 group-active:translate-x-1">
-                  {row.label}
+                  {link.label}
                 </span>
                 <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="ml-auto text-dark transition-all duration-300 group-hover:text-accent group-hover:translate-x-0.5">
                   <path d="M6 4L10 8L6 12" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
@@ -222,7 +279,7 @@ export default function Nav() {
           {/* footer of overlay — CTA + contact + socials */}
           <div
             className={`mt-auto pt-8 transition-all duration-500 ${open ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}
-            style={{ transitionDelay: open ? `${110 + (SERVICES.length + NAV_LINKS.length) * 50}ms` : '0ms', transitionTimingFunction: EASE }}
+            style={{ transitionDelay: open ? `${110 + row * 50}ms` : '0ms', transitionTimingFunction: EASE }}
           >
             <Link
               href="/contacto"
@@ -230,7 +287,7 @@ export default function Nav() {
               className="flex w-full items-center justify-center rounded-pill bg-white text-black text-[15px] font-medium px-6 py-3.5
                          shadow-[0_18px_40px_-12px_rgba(255,255,255,0.18)] transition-transform duration-300 active:scale-[0.985]"
             >
-              Pedir orçamento
+              Marcar chamada gratuita
             </Link>
 
             <div className="mt-6 flex items-center justify-between">

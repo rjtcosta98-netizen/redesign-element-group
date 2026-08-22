@@ -107,13 +107,10 @@ export function organizationGraph() {
         knowsLanguage: ['pt-PT', 'en'],
         founder: { '@type': 'Person', '@id': `${SITE.url}/sobre#author`, name: 'Ricardo Jorge', jobTitle: 'Fundador', url: `${SITE.url}/sobre` },
         openingHours: 'Mo-Fr 09:00-18:00',
-        aggregateRating: {
-          '@type': 'AggregateRating',
-          ratingValue: Number(SITE.rating.value),
-          reviewCount: Number(SITE.rating.count),
-          bestRating: 5,
-          worstRating: 1,
-        },
+        // Sem aggregateRating de propósito. O Google não aceita, para rich results,
+        // avaliações que a própria entidade recolhe e publica sobre si mesma, e
+        // marcá-las arrisca ação manual. A prova social mantém-se onde vale: como
+        // texto visível (GOOGLE_RATING) com ligação ao Perfil de Empresa.
       },
       {
         '@type': 'WebSite',

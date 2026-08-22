@@ -5,7 +5,7 @@
 export const FAQS = [
   {
     q: 'Quanto custa um website?',
-    a: 'Os nossos websites começam em 297€, com preço fixo definido à cabeça — sem custos escondidos. O valor final depende do que precisas (site institucional, loja online, número de páginas) e dizemos-te tudo na proposta gratuita, antes de avançares.',
+    a: 'Um site institucional de 5 a 8 páginas fica entre 2.500 € e 3.500 €. Uma loja online entre 3.500 € e 6.000 €, e um site com reservas e pagamentos entre 4.500 € e 7.500 €. Valores sem IVA. Começamos sempre por uma chamada gratuita de 30 minutos; o valor exato fecha-se depois do diagnóstico e a partir daí é fixo, sem custos escondidos.',
   },
   {
     q: 'Quanto tempo demora a ter o meu site pronto?',

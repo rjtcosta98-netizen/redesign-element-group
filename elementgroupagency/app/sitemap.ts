@@ -9,6 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Páginas principais — prioridade por importância de negócio.
   const core: MetadataRoute.Sitemap = [
     { url: url('/'),                          changeFrequency: 'weekly',  priority: 1.0 },
+    { url: url('/servicos'),                  changeFrequency: 'monthly', priority: 0.95 },
     { url: url('/servicos/web'),              changeFrequency: 'monthly', priority: 0.9 },
     { url: url('/servicos/seo'),              changeFrequency: 'monthly', priority: 0.9 },
     { url: url('/servicos/social'),           changeFrequency: 'monthly', priority: 0.9 },

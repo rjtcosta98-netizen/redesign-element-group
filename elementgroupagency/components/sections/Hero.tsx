@@ -154,9 +154,9 @@ export default function Hero({ projectCount }: { projectCount: number }) {
           </h1>
 
           <p className="mt-6 text-white/80 text-base md:text-lg max-w-xl leading-relaxed">
-            Criamos <strong className="font-bold text-white/90">websites à medida, lojas online, SEO e marketing
-            digital para PMEs em Portugal</strong> — ultra-rápidos (PageSpeed 95+) e por um terço do preço
-            de uma agência. A partir de 297€. De Seia para todo o país.
+            Criamos <strong className="font-bold text-white/90">websites à medida, lojas online, SEO e sistemas
+            com IA para PMEs em Portugal</strong> — sites que carregam em menos de 1 segundo e aparecem no
+            Google, e no ChatGPT. De Seia para todo o país.
           </p>
 
           <div className="mt-10 flex flex-col sm:flex-row items-center gap-4">

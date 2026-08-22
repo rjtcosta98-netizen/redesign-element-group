@@ -59,10 +59,14 @@ function EarnCounter({ to, active }: { to: number; active: boolean }) {
 }
 
 // ─── Earn filmstrip data ──────────────────────────────────────────────────
+// Catálogo 2026-08. A comissão mantém-se nos 10%; o que subiu foi o preço, e
+// com ele o que o parceiro leva — de 79 € para 250 € num site institucional.
+// Os valores de preço são o piso de cada intervalo do catálogo.
 const EARN_SCENARIOS = [
-  { service: 'Landing Page', desc: 'Uma página única, focada em converter visitas em contactos.', price: 490, earn: 49, badge: null as string | null },
-  { service: 'Website Profissional', desc: 'Site institucional completo, à medida e otimizado para o Google.', price: 790, earn: 79, badge: 'Mais comum' as string | null },
-  { service: 'Loja Online', desc: 'E-commerce pronto a vender 24/7, sem comissões de marketplace.', price: 2500, earn: 250, badge: null as string | null },
+  { service: 'Site Institucional', desc: 'Site completo de 5 a 8 páginas, à medida e otimizado para o Google.', price: 2500, earn: 250, badge: 'Mais comum' as string | null },
+  { service: 'Reservas e Pagamentos', desc: 'Motor de marcações e checkout no site que o negócio já tem.', price: 3500, earn: 350, badge: null as string | null },
+  { service: 'Loja Online', desc: 'E-commerce pronto a vender 24/7, sem comissões de marketplace.', price: 3500, earn: 350, badge: null as string | null },
+  { service: 'Marca e Design', desc: 'Identidade completa, do logótipo à aplicação em site e redes.', price: 900, earn: 90, badge: null as string | null },
 ]
 
 // ─── Earn filmstrip component ─────────────────────────────────────────────
@@ -1041,10 +1045,10 @@ export default function ParceriasContent() {
                       className="text-[68px] font-heading font-medium leading-none tabular-nums mb-1"
                       style={{ color: '#34d399' }}
                     >
-                      <Counter to={150} suffix="€" />
+                      <Counter to={250} suffix="€" />
                     </div>
                     <p className="text-xs mb-7" style={{ color: 'rgba(172,172,185,0.6)' }}>
-                      comissão · Projeto Website 1.500€
+                      comissão · Site institucional 2.500€
                     </p>
 
                     {/* Rule */}

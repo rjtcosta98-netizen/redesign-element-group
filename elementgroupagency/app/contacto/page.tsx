@@ -152,7 +152,7 @@ export default function Contact({ searchParams }: { searchParams: { servico?: st
           <div className="grid md:grid-cols-3 gap-5">
             {([
               { n: '01', title: 'Envias a mensagem', desc: 'Preenche o formulário ou contacta-me diretamente por email, telefone ou WhatsApp. Explica o teu projeto em poucas palavras — quanto mais detalhes deres, mais precisa fica a proposta.' },
-              { n: '02', title: 'Respondo em menos de 2h', desc: 'Analiso o pedido e respondo pessoalmente. Se precisar de mais informação, pergunto diretamente. Sem chatbots, sem respostas automáticas genéricas — falas sempre com o Ricardo.' },
+              { n: '02', title: 'Respondo em menos de 2h', desc: 'Analiso o pedido e respondo pessoalmente. Quem responde sou eu, não um robô. A automação que construo é para o teu negócio poupar tempo — não para eu fugir de ti.' },
               { n: '03', title: 'Orçamento claro e sem surpresas', desc: 'Envio uma proposta detalhada com prazos, preços e tudo o que está incluído. Só avançamos quando estiveres totalmente satisfeito com o plano. Sem custos escondidos.' },
             ] as const).map(({ n, title, desc }) => (
               <div key={n} className="rounded-[20px] border border-white/10 bg-bg-card p-6">

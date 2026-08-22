@@ -69,7 +69,7 @@ export default function FinalCTA() {
           <p className="mt-12 text-xs text-muted flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1">
             <span><span className="text-accent" aria-hidden>★</span> 5,0 no Google</span>
             <span className="text-dark" aria-hidden>·</span>
-            <span>a partir de 297€</span>
+            <span>preço fixo, fechado após diagnóstico</span>
             <span className="text-dark" aria-hidden>·</span>
             <span>sem mensalidades obrigatórias</span>
             <span className="text-dark" aria-hidden>·</span>

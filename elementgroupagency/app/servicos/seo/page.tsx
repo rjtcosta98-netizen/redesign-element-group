@@ -334,16 +334,12 @@ const STEPS = [
     metric: 'Mensal', metricLabel: 'relatórios transparentes', icon: (<><path d="M3 3v18h18" /><path d="m19 9-5 5-4-4-3 3" /></>) },
 ]
 
-// Preços reais (one-off / projeto / add-on).
+// Catálogo 2026-08 (B1). Os quatro pacotes anteriores viraram um só: o setup a
+// 297 € não cobria a auditoria real que já se executava. O GEO saiu daqui para
+// página própria — era um serviço que se vendia e que ninguém conseguia encontrar.
 const PRICES = [
-  { name: 'Setup Google + Perfis', desc: 'Google Business Profile + Instagram/Facebook criados e otimizados.',  price: '297€',       type: 'Pagamento único', highlight: true,
-    features: ['Google Business Profile otimizado', 'Instagram + Facebook configurados', 'Categorias, fotos e contactos', 'Base pronta para SEO local'] },
-  { name: 'Setup SEO Técnico',     desc: 'Auditoria, correções on-page e indexação para arrancar bem no Google.', price: '390€',       type: 'Pagamento único',
-    features: ['Auditoria SEO completa', 'Correções on-page', 'Indexação nos motores de busca', 'Estrutura e velocidade otimizadas'] },
-  { name: 'Copywriting',           desc: 'Textos de venda para páginas, campanhas ou perfis.',                    price: 'desde 190€', type: 'Por projeto',
-    features: ['Textos de venda à medida', 'Otimizados para SEO', 'Para páginas, campanhas ou perfis', 'Na linguagem do teu cliente'] },
-  { name: 'SEO para IAs (GEO)',    desc: 'Otimização para apareceres no Google AI, ChatGPT e Perplexity.',        price: '290€',       type: 'Add-on', tag: 'Diferenciador',
-    features: ['Otimização para o Google AI', 'Apareces no ChatGPT e Perplexity', 'Conteúdo pronto para IAs', 'Vantagem face à concorrência'] },
+  { name: 'SEO — Setup Técnico + Local', desc: 'O trabalho de base para o negócio aparecer nas pesquisas certas.', price: '890-1.200 €', type: 'Pagamento único', highlight: true,
+    features: ['Auditoria SEO completa', 'SEO técnico, com JSON-LD e dados estruturados', 'SEO local — Google Maps e Perfil de Empresa', 'Pesquisa de palavras-chave', 'Conteúdo otimizado', 'Indexação e verificação nos motores'] },
 ]
 
 // Objeções específicas de SEO.

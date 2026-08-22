@@ -12,7 +12,7 @@ type Column = {
 }
 
 // Comparação honesta e equilibrada (cada concorrente ganha nalgum ponto).
-// Element = o melhor dos dois mundos. Só factos reais: preço fixo desde 297€,
+// Element = o melhor dos dois mundos. Só factos reais: preço fixo pós-diagnóstico,
 // resposta <2h, contacto direto, equipa completa (web/SEO/social), planos mensais.
 const COLUMNS: Column[] = [
   {
@@ -31,10 +31,10 @@ const COLUMNS: Column[] = [
     tag: 'O equilíbrio ideal',
     highlight: true,
     rows: [
-      { v: 'yes', text: 'Preço fixo e justo, desde 297€' },
+      { v: 'yes', text: 'Preço fixo, fechado depois do diagnóstico' },
       { v: 'yes', text: 'Resposta em menos de 2h' },
       { v: 'yes', text: 'Falas diretamente com quem faz' },
-      { v: 'yes', text: 'Equipa completa: web, SEO e social' },
+      { v: 'yes', text: 'Web, SEO, visibilidade em IA e automação' },
       { v: 'yes', text: 'Planos mensais de suporte' },
     ],
   },

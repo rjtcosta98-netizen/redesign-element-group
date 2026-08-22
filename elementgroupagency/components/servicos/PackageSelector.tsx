@@ -7,11 +7,14 @@ import { GOOGLE_RATING } from '@/lib/seo'
 export type ServicePackage = {
   name: string
   desc: string
+  /** Intervalo ou valor. Sempre sem IVA — ver `priceNote`. */
   price: string
   type: string
   features: string[]
   highlight?: boolean
   tag?: string
+  /** Linha por baixo do valor. Por omissão declara IVA e a regra do diagnóstico. */
+  priceNote?: string
 }
 
 export type ServiceInclude = {
@@ -26,7 +29,14 @@ type Props = {
   ctaHref: string
   ctaLabel?: string
   includesTitle?: string
+  /** Reforço por baixo do CTA. Por omissão: a chamada é gratuita, o diagnóstico não. */
+  ctaFootnote?: string
 }
+
+// Regra R2 do catálogo: o preço é fixo e sem surpresas, mas fecha-se depois do
+// diagnóstico — não se publica à cabeça. A nota acompanha SEMPRE o valor, por
+// isso vive aqui e não em cada página, onde acabaria por divergir.
+const DEFAULT_PRICE_NOTE = 'Sem IVA · valor fixo fechado após diagnóstico'
 
 const Check = ({ className = '' }: { className?: string }) => (
   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className={className}>
@@ -40,8 +50,9 @@ export default function PackageSelector({
   includes,
   packages,
   ctaHref,
-  ctaLabel = 'Pedir orçamento grátis',
+  ctaLabel = 'Marcar chamada gratuita',
   includesTitle = 'Incluído em todos os pacotes',
+  ctaFootnote = 'Chamada de 30 minutos, sem compromisso',
 }: Props) {
   const reduce = useReducedMotion()
   const hi = packages.findIndex((p) => p.highlight)
@@ -117,7 +128,12 @@ export default function PackageSelector({
                 <p className="mt-2 text-muted text-sm leading-relaxed min-h-[40px]">{pkg.desc}</p>
 
                 <div className="mt-5">
-                  <span className="text-white font-heading text-[40px] leading-none font-medium tracking-[-0.02em]">{pkg.price}</span>
+                  <span className="block text-white font-heading text-[30px] sm:text-[36px] leading-none font-medium tracking-[-0.02em] tabular-nums">
+                    {pkg.price}
+                  </span>
+                  <span className="mt-2 block text-[11px] leading-snug text-dark">
+                    {pkg.priceNote ?? DEFAULT_PRICE_NOTE}
+                  </span>
                 </div>
 
                 <ul role="list" className="mt-6 space-y-3">
@@ -133,8 +149,8 @@ export default function PackageSelector({
               </motion.div>
             </AnimatePresence>
 
-            {/* seletor de pacotes */}
-            <div className="mt-7">
+            {/* seletor de pacotes — escondido quando só há uma linha a mostrar */}
+            <div className="mt-7" hidden={packages.length < 2}>
               <p className="text-[11px] uppercase tracking-[0.16em] text-dark mb-3">Escolhe o pacote</p>
               <div className="flex flex-wrap gap-2">
                 {packages.map((p, i) => (
@@ -160,7 +176,7 @@ export default function PackageSelector({
             </div>
             <p className="mt-4 flex items-center justify-center gap-2 text-[12px] text-muted">
               <Check className="text-accent" />
-              Orçamento e diagnóstico gratuitos
+              {ctaFootnote}
             </p>
           </div>
         </div>
