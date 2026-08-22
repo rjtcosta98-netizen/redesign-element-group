@@ -26,12 +26,17 @@ export default function CookieConsent() {
     const onScroll = () => window.scrollY > 240 && reveal()
 
     window.addEventListener('scroll', onScroll, { passive: true })
-    const timer = window.setTimeout(reveal, 12000)
+
+    // O temporizador de recurso só corre em ecrã grande. Num telemóvel pequeno
+    // (375×667) o hero inteiro cabe no ecrã e o banner aterrava exatamente em
+    // cima do CTA primário — aí só o scroll o faz aparecer.
+    const grande = window.matchMedia('(min-width: 768px)').matches
+    const timer = grande ? window.setTimeout(reveal, 12000) : undefined
     onScroll()
 
     return () => {
       window.removeEventListener('scroll', onScroll)
-      window.clearTimeout(timer)
+      if (timer) window.clearTimeout(timer)
     }
   }, [])
 
