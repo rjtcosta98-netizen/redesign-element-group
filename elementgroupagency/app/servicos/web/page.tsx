@@ -81,7 +81,7 @@ export default function WebsitesPage() {
             </p>
 
             <div className="mt-10 flex flex-col sm:flex-row items-center gap-4">
-              <GlowButton href={CTA}>Quero o meu website</GlowButton>
+              <GlowButton href={CTA} variant="solid">Quero o meu website</GlowButton>
               <Link
                 href="/portfolio"
                 className="group inline-flex items-center gap-1.5 text-sm text-white/90 hover:text-white transition-colors"
@@ -308,7 +308,7 @@ export default function WebsitesPage() {
               Conta-me o que precisas — respondo pessoalmente em menos de 2 horas, sem compromisso.
             </p>
             <div className="mt-10 flex flex-col items-center gap-5">
-              <GlowButton href={CTA}>Quero o meu website</GlowButton>
+              <GlowButton href={CTA} variant="solid">Quero o meu website</GlowButton>
               <span className="text-sm text-white/70">
                 ou escreve-me para{' '}
                 <Link href="mailto:info@elementgroup.pt" className="text-white/90 underline underline-offset-4 hover:text-white transition-colors">

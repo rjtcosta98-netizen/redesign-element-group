@@ -85,7 +85,7 @@ export default function PlanosMensaisPage() {
             </p>
 
             <div className="mt-10 flex flex-col sm:flex-row items-center gap-4">
-              <GlowButton href={CTA}>Quero um parceiro contínuo</GlowButton>
+              <GlowButton href={CTA} variant="solid">Quero um parceiro contínuo</GlowButton>
               <Link href="#preco" className="group inline-flex items-center gap-1.5 text-sm text-white/90 hover:text-white transition-colors">
                 Ver planos
                 <span className="transition-transform group-hover:translate-x-0.5" aria-hidden>→</span>
@@ -305,7 +305,7 @@ export default function PlanosMensaisPage() {
               Respondo pessoalmente em menos de 2 horas.
             </p>
             <div className="mt-10 flex flex-col items-center gap-5">
-              <GlowButton href={CTA}>Quero um parceiro contínuo</GlowButton>
+              <GlowButton href={CTA} variant="solid">Quero um parceiro contínuo</GlowButton>
               <span className="text-sm text-white/70">
                 ou escreve-me para{' '}
                 <Link href="mailto:info@elementgroup.pt" className="text-white/90 underline underline-offset-4 hover:text-white transition-colors">info@elementgroup.pt</Link>

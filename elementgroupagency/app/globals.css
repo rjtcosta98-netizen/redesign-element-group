@@ -372,3 +372,8 @@ h4, .text-h4 { font-family: var(--font-inter-tight), sans-serif; font-size: clam
 @media (hover: none) {
   .spotlight::before, .spotlight::after { display: none; }
 }
+
+/* Barra de secções: as âncoras deslizam na horizontal em ecrã estreito, sem a
+   barra de scroll do sistema por cima do texto. */
+.no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }

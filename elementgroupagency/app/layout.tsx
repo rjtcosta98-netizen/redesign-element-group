@@ -8,6 +8,7 @@ import CookieConsent from '@/components/CookieConsent'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
 import WhatsAppFab from '@/components/WhatsAppFab'
 import MobileCtaBar from '@/components/ui/MobileCtaBar'
+import ServiceSubNav from '@/components/servicos/ServiceSubNav'
 import JsonLd from '@/components/JsonLd'
 import { SITE, organizationGraph } from '@/lib/seo'
 
@@ -117,6 +118,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Footer />
         <WhatsAppFab />
         <MobileCtaBar />
+        <ServiceSubNav />
         <CookieConsent />
       </body>
     </html>

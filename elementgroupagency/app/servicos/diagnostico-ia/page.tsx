@@ -76,7 +76,7 @@ export default function DiagnosticoIaPage() {
               um documento no fim que fica contigo, quer avancemos quer não.
             </p>
             <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-              <GlowButton href={CTA}>Quero o diagnóstico</GlowButton>
+              <GlowButton href={CTA} variant="solid">Quero o diagnóstico</GlowButton>
             </div>
             <p className="mt-6 text-[12px] text-muted">
               490-890 € sem IVA · abatido na totalidade se avançares para projeto
@@ -218,7 +218,7 @@ export default function DiagnosticoIaPage() {
               perceber se o diagnóstico te serve — e para te dizer se não serve.
             </p>
             <div className="mt-10 flex justify-center">
-              <GlowButton href={CTA}>Pedir orçamento grátis</GlowButton>
+              <GlowButton href={CTA} variant="solid">Pedir orçamento grátis</GlowButton>
             </div>
             <p className="mt-6 text-xs text-muted">Resposta em menos de 2 horas · Falas comigo, não com um comercial</p>
           </AnimateOnScroll>

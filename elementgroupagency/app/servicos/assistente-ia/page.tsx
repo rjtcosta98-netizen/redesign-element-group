@@ -77,7 +77,7 @@ export default function AssistenteIaPage() {
               contexto reunido.
             </p>
             <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-              <GlowButton href={CTA}>Quero ver se faz sentido</GlowButton>
+              <GlowButton href={CTA} variant="solid">Quero ver se faz sentido</GlowButton>
             </div>
             <p className="mt-6 text-[12px] text-muted">1.200-2.500 € sem IVA · mais 99-199 €/mês de operação e revisão</p>
           </AnimateOnScroll>
@@ -238,7 +238,7 @@ export default function AssistenteIaPage() {
               quantas delas podem ser respondidas sem ti — e se compensa, ou se o teu volume ainda não justifica.
             </p>
             <div className="mt-10 flex justify-center">
-              <GlowButton href={CTA}>Pedir orçamento grátis</GlowButton>
+              <GlowButton href={CTA} variant="solid">Pedir orçamento grátis</GlowButton>
             </div>
             <p className="mt-6 text-xs text-muted">
               Quem responde a este pedido sou eu, não um robô ·{' '}

@@ -78,7 +78,7 @@ export default function VisibilidadeIaPage() {
               sequer saber que existiu uma pesquisa.
             </p>
             <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-              <GlowButton href={CTA}>Quero ser citado</GlowButton>
+              <GlowButton href={CTA} variant="solid">Quero ser citado</GlowButton>
               <Link href="/servicos/seo" className="group inline-flex items-center gap-1.5 text-sm text-white/90 hover:text-white transition-colors">
                 Ver também o SEO clássico
                 <span className="transition-transform group-hover:translate-x-0.5" aria-hidden>→</span>
@@ -221,7 +221,7 @@ export default function VisibilidadeIaPage() {
               juntos quem é citado. É a fotografia de partida — e às vezes é desconfortável.
             </p>
             <div className="mt-10 flex justify-center">
-              <GlowButton href={CTA}>Pedir orçamento grátis</GlowButton>
+              <GlowButton href={CTA} variant="solid">Pedir orçamento grátis</GlowButton>
             </div>
             <p className="mt-6 text-xs text-muted">Resposta em menos de 2 horas · Falas comigo, não com um comercial</p>
           </AnimateOnScroll>

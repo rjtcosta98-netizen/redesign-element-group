@@ -76,7 +76,7 @@ export default function DesignPage() {
               antes de te conhecer.
             </p>
             <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-              <GlowButton href={CTA}>Quero uma marca a sério</GlowButton>
+              <GlowButton href={CTA} variant="solid">Quero uma marca a sério</GlowButton>
               <Link href="/portfolio/estrela-detail-wash" className="group inline-flex items-center gap-1.5 text-sm text-white/90 hover:text-white transition-colors">
                 Ver um caso
                 <span className="transition-transform group-hover:translate-x-0.5" aria-hidden>→</span>
@@ -203,7 +203,7 @@ export default function DesignPage() {
               marca nova, de arrumar a que tens, ou de nenhuma das duas coisas para já.
             </p>
             <div className="mt-10 flex justify-center">
-              <GlowButton href={CTA}>Pedir orçamento grátis</GlowButton>
+              <GlowButton href={CTA} variant="solid">Pedir orçamento grátis</GlowButton>
             </div>
             <p className="mt-6 text-xs text-muted">Resposta em menos de 2 horas · Falas comigo, não com um comercial</p>
           </AnimateOnScroll>

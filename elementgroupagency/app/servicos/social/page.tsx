@@ -83,7 +83,7 @@ export default function SocialMediaPage() {
             </p>
 
             <div className="mt-10 flex flex-col sm:flex-row items-center gap-4">
-              <GlowButton href={CTA}>Quero as minhas redes ativas</GlowButton>
+              <GlowButton href={CTA} variant="solid">Quero as minhas redes ativas</GlowButton>
               <Link href="/portfolio" className="group inline-flex items-center gap-1.5 text-sm text-white/90 hover:text-white transition-colors">
                 Ver portefólio
                 <span className="transition-transform group-hover:translate-x-0.5" aria-hidden>→</span>
@@ -305,7 +305,7 @@ export default function SocialMediaPage() {
               sem compromisso.
             </p>
             <div className="mt-10 flex flex-col items-center gap-5">
-              <GlowButton href={CTA}>Quero as minhas redes ativas</GlowButton>
+              <GlowButton href={CTA} variant="solid">Quero as minhas redes ativas</GlowButton>
               <span className="text-sm text-white/70">
                 ou escreve-me para{' '}
                 <Link href="mailto:info@elementgroup.pt" className="text-white/90 underline underline-offset-4 hover:text-white transition-colors">info@elementgroup.pt</Link>

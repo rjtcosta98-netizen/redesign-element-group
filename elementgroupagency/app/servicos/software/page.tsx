@@ -78,7 +78,7 @@ export default function SoftwarePage() {
               ser um luxo e passa a ser mais barata do que o caos.
             </p>
             <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-              <GlowButton href={CTA}>Falar sobre o meu caso</GlowButton>
+              <GlowButton href={CTA} variant="solid">Falar sobre o meu caso</GlowButton>
               <Link href="/portfolio/adsr-cup-app" className="group inline-flex items-center gap-1.5 text-sm text-white/90 hover:text-white transition-colors">
                 Ver uma aplicação entregue
                 <span className="transition-transform group-hover:translate-x-0.5" aria-hidden>→</span>
@@ -262,7 +262,7 @@ export default function SoftwarePage() {
               última é gratuita.
             </p>
             <div className="mt-10 flex justify-center">
-              <GlowButton href={CTA}>Pedir orçamento grátis</GlowButton>
+              <GlowButton href={CTA} variant="solid">Pedir orçamento grátis</GlowButton>
             </div>
             <p className="mt-6 text-xs text-muted">Resposta em menos de 2 horas · Falas comigo, não com um comercial</p>
           </AnimateOnScroll>
