@@ -3,7 +3,7 @@
 **Data:** 2026-08-22
 **Âmbito:** arquitetura de serviços, preços e páginas do site elementgroup.pt
 **Origem:** `EG - INFOS-IDEIAS`, `element-group-catalogo-servicos-precos` (12/08), `element-group-fase2-portfolio-servicos` (11/08), `LACUNAS A CORRIGIR`, `CONCORRENTES DETETADOS`, `EG - Novos preços e serviços`
-**Estado:** Fase 1 implementada (commit 4bc74d6). Desenho aprovado nas dezassete decisões da §1. Secções 7 e 8 reescritas a 22/08 após reauditoria contra `origin/main`. Arranque aprovado na Fase 1.
+**Estado:** Fases 1 a 4 implementadas (commits 4bc74d6, 79cb343, 87d1dc0, 59b63ff). As onze páginas de serviço estão publicadas. Desenho aprovado nas dezassete decisões da §1. Secções 7 e 8 reescritas a 22/08 após reauditoria contra `origin/main`. Arranque aprovado na Fase 1.
 
 ---
 
@@ -396,17 +396,33 @@ No fim desta fase o site deixa de contradizer o catálogo novo, mesmo sem uma ú
 
 </details>
 
-### Fase 2 — as três prioridades
+### Fase 2 — as três prioridades · **CONCLUÍDA (commit 87d1dc0)**
 
-`/servicos/reservas-pagamentos` com a calculadora de comissões, `/servicos/visibilidade-ia` e `/servicos/diagnostico-ia`. Já sem bloqueios: a prova da 100 Montanhas está publicada e os crawlers passam.
+`/servicos/reservas-pagamentos` com a calculadora de comissões, `/servicos/visibilidade-ia` e `/servicos/diagnostico-ia`.
 
-### Fase 3 — completar o catálogo
+Decisões de execução que vale a pena registar:
 
-`/servicos/design`, `/servicos/software`, `/servicos/assistente-ia`.
+- **A calculadora mostra os pressupostos.** Uma calculadora que esconde como chega ao número é marketing, não argumento. Assume 30% de recuperação para canal direto e o piso de 2.500 € de investimento, ambos escritos na página.
+- **A página de GEO publica a nossa própria linha de base**, incluindo o facto de serem cinco perguntas com zero citações. Mostrar o ponto de partida verdadeiro é mais credível do que mostrar um caso ideal, e é coerente com a promessa de medir antes de mexer.
+- **O bloqueio dos crawlers passou de risco a argumento**: como já está resolvido, a página usa o próprio site como primeiro caso de aplicação.
 
-### Fase 4 — reformular o existente
+### Fase 3 — completar o catálogo · **CONCLUÍDA (commit 59b63ff)**
 
-`/servicos/web`, `/servicos/seo`, conversão de `/servicos/social`, `/servicos/planos-mensais`, `/parcerias`, sitemap e FAQ das páginas novas.
+`/servicos/design`, `/servicos/software` e `/servicos/assistente-ia`. O hub deixou de ter serviços marcados como "brevemente" — as dez páginas do catálogo estão publicadas.
+
+- **Design** trata a objeção da IA generativa de frente: responde "sim, consegues gerar um símbolo" e explica o que isso não dá. O pacote de aplicação é o destacado, seguindo a ressalva de abrir a linha como captador e não como principal.
+- **Software** publica as regras de aceitação na própria página — um projeto de cada vez, 40% adiantado — porque publicá-las filtra o cliente errado antes da chamada.
+- **Assistente de IA** resolve em voz alta a contradição com o `/contacto`, em vez de a esconder: quem responde a um pedido continua a ser o Ricardo, e todos os assistentes têm saída visível para humano. A mensalidade é assumida como obrigatória, com a razão dada.
+
+### Fase 4 — reformular o existente · **CONCLUÍDA, distribuída pelas outras fases**
+
+Esta fase deixou de existir como bloco próprio, porque o seu conteúdo migrou por necessidade:
+
+- `/servicos/web`, `/servicos/seo`, `/servicos/social`, `/servicos/planos-mensais` e `/parcerias` foram feitos na **Fase 1**, pela razão dada acima: preço é uma unidade atómica.
+- O sitemap, as FAQ das páginas novas e o bloco de remissão do GEO em `/servicos/seo` foram feitos na **Fase 3**.
+- O `aggregateRating` saiu do schema na **Fase 1**.
+
+Da §7.2 não fica nada por fazer dentro do repositório.
 
 ### Nota de base de código
 
