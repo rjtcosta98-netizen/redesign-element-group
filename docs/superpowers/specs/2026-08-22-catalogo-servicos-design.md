@@ -3,7 +3,7 @@
 **Data:** 2026-08-22
 **Âmbito:** arquitetura de serviços, preços e páginas do site elementgroup.pt
 **Origem:** `EG - INFOS-IDEIAS`, `element-group-catalogo-servicos-precos` (12/08), `element-group-fase2-portfolio-servicos` (11/08), `LACUNAS A CORRIGIR`, `CONCORRENTES DETETADOS`, `EG - Novos preços e serviços`
-**Estado:** desenho aprovado nas oito decisões da §1; implementação por aprovar
+**Estado:** desenho aprovado nas dezassete decisões da §1. Secções 7 e 8 reescritas a 22/08 após reauditoria contra `origin/main`. Arranque aprovado na Fase 1.
 
 ---
 
@@ -26,7 +26,16 @@ Duas frases no site bloqueiam tudo o resto e saem primeiro: **"por um terço do 
 | Q5 | Diagnóstico | **Produto único pago** — "Diagnóstico Digital & Prontidão para IA", 490-890 €, abatido no projeto. Funde a lista do INFOS-IDEIAS com o C1 do catálogo. A chamada de 30 min continua gratuita e serve para qualificar. |
 | Q6 | Navegação | **Hub `/servicos` + quatro famílias** no mega-menu, com Planos Mensais destacado à parte. |
 | Q7 | Corporativo | **Sim, sem página nova.** Linguagem e um bloco dedicado no hub e em A1/A6. `/empresas` fica para quando houver caso publicado. |
-| Q8 | 100 Montanhas | **Entra no plano como bloqueante**, com material a fornecer pelo Ricardo (§9). |
+| Q8 | 100 Montanhas | Levantado. A reauditoria de 22/08 mostrou que o caso **já está publicado** (PR #14), com métricas e provas. Deixa de ser pré-condição — ver §7.1. |
+| Q9 | Preço do assistente de IA (G1) | **1.200-2.500 € de setup mais 99-199 €/mês.** Escalão entre o diagnóstico e o motor de reservas, com recorrente obrigatório — um assistente sem revisão de respostas degrada-se. |
+| Q10 | Grátis vs pago | **Chamada de 30 minutos gratuita; diagnóstico pago e 100% abatido no projeto.** Risco zero para quem ia comprar, e filtra quem só queria a análise à borla. Cumpre R3. |
+| Q11 | IVA | **Preços sem IVA**, com a menção "valores sem IVA à taxa legal em vigor" junto a cada tabela. Prática normal em B2B e evita a surpresa no fecho — que com tickets de 2.500 € passa a ser de centenas de euros. |
+| Q12 | Comissões de parcerias | **Manter os 10%.** O valor sobe sozinho com o preço: 250 € por site institucional, 350 € por motor de reservas ou loja. |
+| Q13 | Nome da página de GEO | **URL `/servicos/visibilidade-ia`** como o catálogo fixa; H1 e navegação dizem "Visibilidade em IA (GEO)" e o corpo usa as expressões que as pessoas escrevem — aparecer no ChatGPT, ser citado pelo Perplexity. |
+| Q14 | Versão em inglês | **Não.** Só PT-PT. Duplicar onze páginas duplicaria a manutenção de preços e a hipótese de incoerências — exatamente o problema que este plano resolve. |
+| Q15 | `aggregateRating` | **Remover do JSON-LD**, manter 5,0 com 8 avaliações como texto visível e link ao perfil Google. |
+| Q16 | PR #5 Design System v2 | **Descartar sem merge.** Parado desde 15/07, 198 ficheiros, e o site já está dark. As páginas novas constroem-se sobre os tokens atuais. |
+| Q17 | Arranque | **Fase 1 — fundação.** Não depende de pré-condições nem de terceiros. |
 
 ---
 
@@ -75,11 +84,13 @@ Duas frases no site bloqueiam tudo o resto e saem primeiro: **"por um terço do 
 | D1 | Logótipo | 490-790 € | — |
 | D2 | Identidade completa | 900-1.800 € | — |
 | D3 | Identidade + aplicação a site e redes | 1.500-2.500 € | — |
-| G1 | Assistente de IA para qualificação de leads (site + WhatsApp) | *proposta:* 1.200-2.500 € setup + 99-199 €/mês | **decisão pendente D4** |
+| G1 | Assistente de IA para qualificação de leads (site + WhatsApp) | 1.200-2.500 € setup + 99-199 €/mês | fixado na decisão Q9 |
 | E3 | Plano Sistema | 649 €/mês | — |
 | F1 | Módulo: operação do motor de reservas | 149-249 €/mês | — |
 | F2 | Módulo: monitorização de citações em IA | 199-349 €/mês | — |
 | F3 | Módulo: manutenção de software à medida | 249-449 €/mês | — |
+
+**Todos os valores deste documento são sem IVA** (decisão Q11). Cada tabela publicada leva a menção "valores sem IVA à taxa legal em vigor".
 
 **Regra R5 a respeitar no design das páginas:** os módulos F1-F3 nunca aparecem lado a lado com os planos como se fossem alternativas somáveis. Aparecem numa secção separada, rotulada *"só para quem não leva plano"*. O E2 já contém F2; o E3 já contém F1. Cobrar os dois é cobrar duas vezes a mesma coisa.
 
@@ -111,7 +122,7 @@ Duas frases no site bloqueiam tudo o resto e saem primeiro: **"por um terço do 
 │
 └── /servicos/planos-mensais           ← ALTERAR · E1/E2/E3 + módulos F1-F3
 
-/portfolio/100-montanhas               ← NOVO · pré-condição P3, hoje 404
+/portfolio/100-montanhas               ← JÁ EXISTE · publicado no PR #14
 ```
 
 Onze páginas de serviço mais o hub, contra as quatro de hoje.
@@ -159,7 +170,7 @@ Todas seguem o esqueleto que as páginas atuais já provaram — Hero, PainPoint
 - **Componente novo: calculadora de comissões.** O visitante indica a receita mensal via plataformas e a comissão que paga; a página devolve o que gasta por ano, a poupança ao recuperar 30% para canal direto, e em quantos meses o sistema se paga. O exemplo do catálogo já lá está: 2.000 €/mês a 25% são 500 €/mês de comissão, e recuperar 30% poupa 150 €/mês.
 - **Para quem é** — alojamento, atividades, clínicas, estética, ginásios, formação, restauração com reserva. Horizontal por setor, e a página deve dizê-lo.
 - **O que inclui** — motor de marcações com agenda em base de dados, checkout Stripe (sinal ou pagamento integral), painel de gestão, confirmações automáticas, autenticação e regras de acesso (RLS).
-- **Prova** — 100 Montanhas: Stripe com edge functions, RLS provada, oito provas ponta-a-ponta. **Bloqueado por P3.**
+- **Prova** — 100 Montanhas: Stripe com edge functions, RLS provada, oito provas ponta-a-ponta. O caso já está publicado em `/portfolio/100-montanhas`, com painel de administração e provas de PageSpeed, AEO e visibilidade em IA. Esta página deve remeter para lá, não repetir o caso.
 - **Limites ditos em voz alta** — suporte de pagamentos é responsabilidade a sério; falhas de checkout são urgentes e o SLA é honesto e com horário limitado. Dizer isto na página é sinal de competência, não fraqueza.
 - **Preço** — 2.500-4.500 €, valor fixo fechado após diagnóstico. Plano proposto no fecho: E3 Sistema, ou módulo F1 se recusar plano.
 - **Venda cruzada obrigatória** — vende-se sempre com SEO/GEO no mesmo pacote: sem tráfego direto o motor fica vazio e a culpa cai em ti. A página liga a `/servicos/seo` e `/servicos/visibilidade-ia`.
@@ -174,7 +185,7 @@ Todas seguem o esqueleto que as páginas atuais já provaram — Hero, PainPoint
 - **O que inclui** — acesso de crawlers de IA (desbloqueio e verificação), `llms.txt`, dados estruturados, conteúdo em formato de resposta, consistência de entidade (NAP, Google Business, diretórios), medição de citações com linha de base.
 - **Limite rígido, escrito na página** — não se pode garantir citação. Vende-se processo e medição, nunca posição.
 - **Preço** — 690-1.200 €. Plano no fecho: E2, ou módulo F2.
-- **Pré-condição bloqueante P2** — desbloquear ClaudeBot, GPTBot, ChatGPT-User e PerplexityBot no Cloudflare. Vender GEO com o próprio site a devolver 403 aos crawlers de IA é indefensável, e está assim há dois meses.
+- **A pré-condição dos crawlers está fechada** — ClaudeBot, GPTBot e PerplexityBot devolvem 200 em produção (testado 22/08) e o `robots.ts` declara 20 agentes um a um. Isto passa de bloqueio a argumento de venda: a página pode mostrar o próprio site como o primeiro caso de aplicação do serviço.
 
 ### 4.3 `/servicos/diagnostico-ia` — C1 · prioridade 3
 
@@ -197,7 +208,7 @@ O único serviço deste plano que o catálogo não fixou. Entra porque a procura
 - Reutiliza o componente **antes e depois** de 4.3.
 - **A tensão a resolver na copy** — `/contacto` promete hoje *"Sem chatbots, sem respostas automáticas genéricas"*. A página tem de dizer a versão nova, sem contradição: *quem responde ao teu pedido sou eu, não um robô; a automação que construo é para o teu negócio poupar tempo, não para eu fugir de ti.*
 - **Menção ao financiamento** — factual e sem promessa: existe financiamento IAPMEI para projetos de IA; a Element Group não trata da candidatura.
-- **Preço** — **decisão pendente D4**, proposta de 1.200-2.500 € de setup mais 99-199 €/mês. Não publicar sem confirmação.
+- **Preço** — 1.200-2.500 € de setup mais 99-199 €/mês (Q9). O recorrente não é opcional: um assistente sem revisão de respostas degrada-se, e a página deve dizê-lo em vez de o esconder.
 
 ### 4.5 `/servicos/design` — D1-D3
 
@@ -285,13 +296,17 @@ Também `ParceriasContent.tsx:1043-1046` ("150 € · Projeto Website 1.500 €"
 
 | Ficheiro | Linha | Está | Passa a |
 |---|---|---|---|
-| `components/sections/Hero.tsx` | 153-154 | "por um terço do preço de uma agência. A partir de 297€" | Âncora de resultado: "sites que carregam em menos de 1 segundo e aparecem no Google — e no ChatGPT." |
+| `components/sections/Hero.tsx` | 159 | "por um terço do preço de uma agência. A partir de 297€" | Âncora de resultado: "sites que carregam em menos de 1 segundo e aparecem no Google — e no ChatGPT." |
 | `components/sections/FinalCTA.tsx` | 72 | "a partir de 297€" | Mesma âncora, ou remover o selo de preço |
 | `components/sections/WhyUs.tsx` | 34 | "Preço fixo e justo, desde 297€" | "Preço fixo, fechado depois do diagnóstico" |
-| `lib/faq-home.ts` | 8 | "começam em 297€ (…) proposta gratuita" | Novo piso 2.500 € e diagnóstico pago abatido no projeto |
+| `lib/faq-home.ts` | 8 | "começam em 297€ (…) proposta gratuita" | Novo piso 2.500 €; chamada de 30 min gratuita e diagnóstico pago 100% abatido no projeto (Q10) |
 | `app/contacto/page.tsx` | 155 | "Sem chatbots, sem respostas automáticas genéricas" | "Quem responde ao teu pedido sou eu, não um robô. A automação que construo é para o teu negócio poupar tempo — não para eu fugir de ti." |
+| `app/servicos/web/page.tsx` | 356 | FAQ "Quanto custa um site?" recita 297/790/1.290/590/1.500 € | Reescrever com os intervalos novos e a menção de IVA |
+| `app/servicos/social/page.tsx` | 349 | FAQ "Quanto custa a gestão de redes sociais?" recita 197/190/397 € | Reescrever: o conteúdo passa a componente do plano, sem preço próprio |
 
 A alteração ao passo 02 do contacto não é cosmética: é a frase que hoje proíbe a Element Group de vender a categoria de IA sem se contradizer.
+
+As duas últimas linhas são as mais urgentes de todas. Foram acrescentadas no PR #13 e recitam a tabela de preços antiga em texto corrido, dentro de blocos marcados como `FAQPage` — precisamente o formato que os motores de resposta extraem e citam. Enquanto lá estiverem, o ChatGPT aprende os preços que estás a abandonar.
 
 ---
 
@@ -313,69 +328,88 @@ Componentes existentes que se reutilizam sem alteração nas páginas novas: `Pa
 
 ---
 
-## 7. Higiene técnica que acompanha a mudança
+## 7. Higiene técnica — estado real
 
-Estes pontos vêm das lacunas e não são opcionais — vários bloqueiam serviços deste catálogo.
+Esta secção foi reescrita depois de uma reauditoria. A primeira versão comparou o site com o `main` local, que estava seis commits atrás do `origin/main`: os PR #10 a #15 foram merged a 14 de agosto e resolvem quase toda a Fase 0. O que se segue é o estado verificado a 22 de agosto.
 
-1. **Desbloquear crawlers de IA no Cloudflare/WAF** — ClaudeBot, ChatGPT-User, PerplexityBot, GPTBot. Manter o bloqueio de treino (CCBot) via robots.txt, se se quiser essa linha. Retestar com um pedido que envie cada user-agent. **Bloqueia B2.**
-2. **Remover `aggregateRating` do schema** (`lib/seo.ts:76-79`) — é self-serving contra as guidelines do Google. Manter 5,0 estrelas como texto com link ao perfil.
-3. **Reconciliar o número de avaliações** — `SITE.rating.count` está a 9 (`lib/seo.ts:20`) e há uma página a dizer 7. Escolher o número certo e uniformizar.
-4. **Adicionar `FAQPage` ao JSON-LD** de cada página de serviço — `lib/seo.ts` já exporta `faqSchema()` e o `@graph` já é bom (NIF, geo, founder); falta ligar o FAQPage às páginas. Hoje só `/servicos/planos-mensais` tem FAQ estruturada.
-5. **Expandir a FAQ** — 4 a 6 perguntas por página de serviço, em formato extraível. É o que alimenta as citações em IA que se está a vender.
-6. **`app/sitemap.ts`** — acrescentar as sete rotas novas, com prioridade 0.9 para as três prioritárias e 0.95 para o hub.
-7. **Ficha do Google Maps** — corrigir a localização (está no meio do Atlântico) e os horários contraditórios.
-8. **Pedir indexação da raiz no Search Console** — pendente desde 29/07.
+### 7.1 Já feito
+
+| O quê | Onde | Verificação |
+|---|---|---|
+| Crawlers de IA desbloqueados | `app/robots.ts` declara 20 agentes um a um; Cloudflare já não bloqueia | ClaudeBot, GPTBot e PerplexityBot devolvem **200** em produção (testado 22/08) |
+| Caso 100 Montanhas publicado | `app/portfolio/projects.tsx:60`, slug `100-montanhas` | 18 imagens, painel de administração, provas de PageSpeed, AEO e visibilidade em IA; logótipo no ticker da home |
+| Contagem de avaliações reconciliada | `lib/seo.ts:26` e a constante `GOOGLE_RATING` | Valor real **8**, com fonte única para texto visível e JSON-LD |
+| Erro de entidade "fundada em 2024" | `lib/seo.ts`, `foundingDate` e `foundingLocation` | Declarado janeiro de 2026 como facto máquina-legível |
+| `FAQPage` nas páginas de serviço | web, seo, social e planos-mensais | Seis perguntas por página, todas com schema |
+| Conteúdo-pilar para motores de IA | `lib/posts.ts` | Artigos-pilar e blocos citáveis (PR #12) |
+
+**P3 e P2 estão fechadas.** A subida de preço de A1, A2 e A3 deixa de estar bloqueada, e a página de GEO deixa de ser indefensável.
+
+### 7.2 Por fazer, dentro do repositório
+
+1. **Remover `aggregateRating` do JSON-LD** (`lib/seo.ts:110`) — decisão Q15. As guidelines do Google não aceitam avaliações que a própria entidade recolhe sobre si mesma, e marcá-las arrisca ação manual. O 5,0 com 8 avaliações fica como texto visível com link ao perfil; a prova social não se perde, só sai da marcação.
+2. **Reescrever as FAQ que recitam preços** — `servicos/web:356` e `servicos/social:349`. É o item mais urgente da Fase 1, pelas razões da §5.6.
+3. **`app/sitemap.ts`** — acrescentar as sete rotas novas: 0.95 para o hub, 0.9 para as três prioritárias. O caso 100 Montanhas já entra automaticamente, via `PROJECTS`.
+4. **FAQ das páginas novas** — quatro a seis perguntas por página, com `faqSchema()`, seguindo o padrão que as quatro existentes já usam.
+
+### 7.3 Por confirmar, fora do repositório
+
+Não consigo verificar estes pontos daqui, e a pergunta ficou sem resposta. Ficam registados como abertos:
+
+- ficha do Google Maps — localização e horários contraditórios;
+- indexação da raiz no Search Console, pendente desde 29/07;
+- as 11 leads da Zaask (P1), 36% das quais pediram design;
+- registo de horas (P4) e assinatura da Bella Essência (P5).
 
 ---
 
 ## 8. Ordem de execução
 
-Cada fase é aprovada antes de começar.
+### Fase 0 — o que resta das pré-condições
 
-### Fase 0 — pré-condições (não se publica um preço novo sem estas)
+Reduzida a quatro pontos, todos fora do repositório: Maps, Search Console, leads Zaask, horas e Bella Essência. **Nenhum bloqueia a Fase 1.** As duas pré-condições que bloqueavam preço — crawlers e 100 Montanhas — estão fechadas.
 
-| # | O quê | Esforço | Bloqueia |
-|---|---|---|---|
-| P2 | Desbloquear crawlers de IA no Cloudflare | 1h | B2 |
-| P3 | Publicar `/portfolio/100-montanhas` | 4h | A1, A2, A3 |
-| P6 | Corrigir incoerências públicas (avaliações, Maps, horários, duplo sentido do 790 €) | 3h | tudo |
-| P1 | Responder às 11 leads Zaask | 3h | fora do site, mas 36% pediram design |
-| P4 | Registar horas nos projetos | 30 min/projeto | decisão sobre social |
-| P5 | Resolver a assinatura da Bella Essência | 15 min | saber o MRR de partida |
+O registo de horas (P4) continua a ser o único dado que falta para decidir o destino do social com fundamento: se a gestão de redes ficar abaixo de 4h/mês por cliente, é rentável a 197 € e a decisão de a cortar deve ser revista.
 
-### Fase 1 — fundação
+### Fase 1 — fundação · **arranque aprovado (Q17)**
 
-Hub `/servicos`, mega-menu, `RelatedServices` por famílias, `PriceRange`, limpeza dos preços antigos nos oito ficheiros da §5.6, as duas âncoras da home, passo 02 do contacto. **No fim desta fase o site já não contradiz o catálogo novo, mesmo sem uma única página nova.**
+1. Reescrever as duas FAQ com preços antigos — é o que está a ser servido aos motores de resposta agora.
+2. Limpar os preços antigos nos restantes ficheiros da §5.6, incluindo as duas âncoras da home e o passo 02 do contacto.
+3. Remover o `aggregateRating`.
+4. Criar o hub `/servicos`.
+5. Mega-menu de quatro famílias em `components/Nav.tsx`.
+6. `RelatedServices` por famílias.
+7. Componente `PriceRange`, com intervalos e menção de IVA.
+
+No fim desta fase o site deixa de contradizer o catálogo novo, mesmo sem uma única página de serviço nova.
 
 ### Fase 2 — as três prioridades
 
-`/servicos/reservas-pagamentos` (com calculadora), `/servicos/visibilidade-ia`, `/servicos/diagnostico-ia`. É a fase de maior retorno: prioridades 1, 2 e 3 do catálogo.
+`/servicos/reservas-pagamentos` com a calculadora de comissões, `/servicos/visibilidade-ia` e `/servicos/diagnostico-ia`. Já sem bloqueios: a prova da 100 Montanhas está publicada e os crawlers passam.
 
 ### Fase 3 — completar o catálogo
 
-`/servicos/design`, `/servicos/software`, `/servicos/assistente-ia` (depois de D4 fechada).
+`/servicos/design`, `/servicos/software`, `/servicos/assistente-ia`.
 
 ### Fase 4 — reformular o existente
 
-`/servicos/web`, `/servicos/seo`, conversão de `/servicos/social`, `/servicos/planos-mensais`, `/parcerias`, mais a higiene técnica da §7 (schema, FAQ, sitemap).
+`/servicos/web`, `/servicos/seo`, conversão de `/servicos/social`, `/servicos/planos-mensais`, `/parcerias`, sitemap e FAQ das páginas novas.
+
+### Nota de base de código
+
+O PR #5 (Design System v2) é descartado sem merge, por decisão Q16: 198 ficheiros parados desde 15 de julho, a mexer no `tailwind.config.ts`, contra um site que já está dark. As páginas novas constroem-se sobre os tokens atuais. Convém fechar o PR no GitHub para não ficar a sinalizar trabalho em curso.
 
 ---
 
-## 9. Decisões pendentes e o que é preciso de ti
+## 9. O que continua em aberto
 
-**D4 · Preço do assistente de IA (G1).** Não existe no catálogo. Proposta: 1.200-2.500 € de setup mais 99-199 €/mês. Precisa de confirmação antes de publicar.
+Todas as decisões de produto estão fechadas (§1, Q1-Q17). Resta:
 
-**D5 · Comissões de parcerias.** A §5.5 propõe manter os 10% sobre os preços novos. Confirmar a percentagem, ou fixar valores.
+**Verificação factual antes de publicar.** Os números de mercado deste documento — 48% de AI Overviews, −61% de CTR orgânico, +35% de cliques para marcas citadas, comissões de OTA, 11,5% de adoção de IA em PME portuguesas, cerca de 30% de PME com chatbot — vêm dos documentos da Fase 2 e não foram reverificados. Antes de irem para uma página pública com fonte citada, convém confirmar a origem de cada um. Os números da 100 Montanhas são exceção: estão publicados no caso e vêm de provas capturadas.
 
-**D6 · Destino da promessa "proposta gratuita".** Aparece em `lib/faq-home.ts` e no contacto. Com o diagnóstico pago (Q5), a chamada de 30 minutos continua gratuita mas a análise deixa de ser. É preciso escolher a formulação exata.
+**Os quatro pontos fora do repositório** da §7.3.
 
-**Material para `/portfolio/100-montanhas` (P3, bloqueante):**
-- capturas do painel de gestão e do checkout;
-- número de reservas ou receita processada, ou uma faixa publicável;
-- o que o cliente pagava em comissões antes;
-- autorização do cliente para publicar nome e números.
-
-**Verificação factual antes de publicar.** Os números de mercado deste documento (48% de AI Overviews, −61% de CTR orgânico, +35% de cliques para marcas citadas, comissões de OTA, 11,5% de adoção de IA em PME portuguesas, cerca de 30% de PME com chatbot) vêm dos documentos da Fase 2 e não foram reverificados nesta sessão. Antes de irem para uma página pública com fonte citada, convém confirmar a origem de cada um.
+**Métricas do social (P4).** Enquanto não houver registo de horas, a conversão de `/servicos/social` assenta na decisão do catálogo e não em dados próprios.
 
 ---
 
@@ -386,13 +420,15 @@ Hub `/servicos`, mega-menu, `RelatedServices` por famílias, `PriceRange`, limpe
 | §2.1 cortes | Catálogo §4.1; Fase 2 §4.2 C1-C3 |
 | §2.2 subidas | Catálogo §1; Fase 2 §4.4 |
 | §2.3 linhas novas A2-A6, B2, C1, D1-D3, E1-E3, F1-F3 | Catálogo §1 e §2; Fase 2 §4.5 e §4.6 |
-| G1 assistente de IA | `EG - Novos preços e serviços` (veredicto "Avançar"); INFOS-IDEIAS; sem preço de origem |
+| G1 assistente de IA, e o seu preço | `EG - Novos preços e serviços` (veredicto "Avançar") e INFOS-IDEIAS para o serviço; preço fixado na decisão Q9 desta sessão |
 | §3 famílias e navegação | Deste documento, a partir do mapa de páginas do Catálogo §5.2 |
 | §4 fichas de página | Catálogo §2 — argumentos e limites literais |
-| §4.3 fusão dos diagnósticos | Decisão Q5 desta sessão, sobre INFOS-IDEIAS e Catálogo C1 |
+| §4.3 fusão dos diagnósticos | Decisão Q5, sobre INFOS-IDEIAS e Catálogo C1 |
 | §5.3 marketing com IA supervisionada | INFOS-IDEIAS |
 | §5.6 âncoras da home e contacto | Catálogo §0 e §4.2 |
-| §7 higiene técnica | `LACUNAS A CORRIGIR`; auditoria SEO 13/07; dossier 10/08 |
-| §8 Fase 0 | Catálogo §5.1 P1-P6 |
+| §5.6 FAQ com preços antigos | Reauditoria de 22/08 — não consta de nenhum documento anterior |
+| §7.1 estado já feito | Reauditoria de 22/08 contra `origin/main`; PR #10 a #15 |
+| §7.2 e §7.3 | `LACUNAS A CORRIGIR`; auditoria SEO 13/07; dossier 10/08, filtrados pelo que já está resolvido |
+| §8 fases e arranque | Decisão Q17 |
 | Posicionamento do hub | INFOS-IDEIAS |
 | Contexto competitivo (Wechase, JELLY, Somos6Digital) | `CONCORRENTES DETETADOS` |
