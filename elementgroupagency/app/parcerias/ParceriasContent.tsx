@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import Turnstile, { type TurnstileHandle } from '@/components/ui/Turnstile'
 import { motion, animate, useInView } from 'framer-motion'
 import Link from 'next/link'
+import MidCTA from '@/components/sections/MidCTA'
 import AnimateOnScroll from '@/components/ui/AnimateOnScroll'
 import GlowButton from '@/components/ui/GlowButton'
 import { GOOGLE_RATING } from '@/lib/seo'
@@ -1212,6 +1213,19 @@ export default function ParceriasContent() {
             </AnimateOnScroll>
           </div>
         </section>
+
+        {/* A seguir a ver quanto se ganha é o ponto de maior intenção da
+            página — e o formulário de adesão só aparecia 3.000 px depois. */}
+        <MidCTA
+          eyebrow="Programa de parceiros"
+          title="Recomendas. Ganhas 10%. Sempre."
+          body="A adesão são três passos e entramos em contacto em 24 horas para confirmar os detalhes."
+          primaryLabel="Aderir ao programa"
+          primaryHref="#aderir"
+          secondary={null}
+          quote={false}
+          reassurance={[]}
+        />
 
         {/* ── 4. FOR WHOM — profile cards with emerald hover ───── */}
         <section className="bg-bg border-t border-white/10 py-24 px-6">

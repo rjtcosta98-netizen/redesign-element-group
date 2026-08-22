@@ -7,6 +7,7 @@ import NewsletterSignup from '@/components/blog/NewsletterSignup'
 import { POSTS, CATEGORIES, formatDate, readingMinutes } from '@/lib/posts'
 import JsonLd from '@/components/JsonLd'
 import { SITE, breadcrumbSchema } from '@/lib/seo'
+import MidCTA from '@/components/sections/MidCTA'
 
 export const dynamic = 'force-static'
 
@@ -135,6 +136,16 @@ export default function BlogIndex() {
           <BlogList posts={cards} categories={CATEGORIES} />
         </div>
       </section>
+
+      {/* Ponte artigo → serviço. O blog não tinha um único caminho para
+          contacto: lia-se tudo e a única ação possível era subscrever. */}
+      <MidCTA
+        eyebrow="Depois de ler"
+        title="Ler é uma coisa. Ter isto feito é outra."
+        body="Se preferes que trate disto por ti — o site, o SEO, a automação — diz-me o que precisas e recebes um plano com preço à cabeça."
+        secondary={{ label: 'Ver os serviços', href: '/servicos' }}
+        quote={false}
+      />
 
       {/* Newsletter */}
       <section className="bg-bg px-6 pb-28">

@@ -12,6 +12,7 @@ import ResultsFlow from '@/components/servicos/ResultsFlow'
 import JsonLd from '@/components/JsonLd'
 import { caseStudySchema, breadcrumbSchema, itemPageSchema, faqSchema, metaDescription } from '@/lib/seo'
 import { PROJECTS, ACCENTS, getProject, ProjectCover } from '../projects'
+import MidCTA from '@/components/sections/MidCTA'
 
 export function generateStaticParams() {
   return PROJECTS.map((p) => ({ slug: p.slug }))
@@ -543,6 +544,21 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           </div>
         )}
       </section>
+
+      {/* Ponto de maior intenção do caso: acabou de se ver o que mudou, e o
+          CTA seguinte só aparecia depois do testemunho, dos serviços e da FAQ.
+          Só entra quando há mesmo cauda a atravessar — em casos sem testemunho
+          nem FAQ ficaria a 700 px do CTA final, e dois pedidos colados lêem-se
+          como insistência, não como oportunidade. */}
+      {(project.quote || (project.quotes && project.quotes.length > 0) || (project.faq && project.faq.length > 0)) && (
+      <MidCTA
+        eyebrow="O mesmo para ti"
+        title="Queres um resultado destes no teu negócio?"
+        body="Cada um destes casos começou com uma conversa e um diagnóstico. Diz-me onde estás e recebes um plano com preço à cabeça."
+        secondary={{ label: 'Ver todos os casos', href: '/portfolio' }}
+        quote={false}
+      />
+      )}
 
       {/* ── 7 · TESTEMUNHO(S) ────────────────────────────────────── */}
       {(project.quote || (project.quotes && project.quotes.length > 0)) && (
