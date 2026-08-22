@@ -3,7 +3,7 @@
 **Data:** 2026-08-22
 **Âmbito:** arquitetura de serviços, preços e páginas do site elementgroup.pt
 **Origem:** `EG - INFOS-IDEIAS`, `element-group-catalogo-servicos-precos` (12/08), `element-group-fase2-portfolio-servicos` (11/08), `LACUNAS A CORRIGIR`, `CONCORRENTES DETETADOS`, `EG - Novos preços e serviços`
-**Estado:** desenho aprovado nas dezassete decisões da §1. Secções 7 e 8 reescritas a 22/08 após reauditoria contra `origin/main`. Arranque aprovado na Fase 1.
+**Estado:** Fase 1 implementada (commit 4bc74d6). Desenho aprovado nas dezassete decisões da §1. Secções 7 e 8 reescritas a 22/08 após reauditoria contra `origin/main`. Arranque aprovado na Fase 1.
 
 ---
 
@@ -371,7 +371,18 @@ Reduzida a quatro pontos, todos fora do repositório: Maps, Search Console, lead
 
 O registo de horas (P4) continua a ser o único dado que falta para decidir o destino do social com fundamento: se a gestão de redes ficar abaixo de 4h/mês por cliente, é rentável a 197 € e a decisão de a cortar deve ser revista.
 
-### Fase 1 — fundação · **arranque aprovado (Q17)**
+### Fase 1 — fundação · **CONCLUÍDA (commit 4bc74d6)**
+
+Executada a 22/08. Dois desvios ao plano original, ambos por coerência:
+
+1. **As tabelas de preço das quatro páginas de serviço entraram nesta fase**, e não na Fase 4. Tirar os 297 € da home e deixar `/servicos/web` a vender "Landing Page 297 €" seria trocar uma incoerência por outra — preço é uma unidade atómica.
+2. **Apareceu um oitavo sítio com as âncoras proibidas**, que a §5.6 não listava: `app/layout.tsx:26`, a `DEFAULT_DESC` herdada por todas as páginas sem metadata própria. Continha as duas frases juntas — "por um terço do preço de uma agência" e "a partir de 297 €" — e estava a ser servida em todo o site, não só na home. Só foi detetada ao varrer o HTML gerado depois do build; o grep aos ficheiros de página não a apanhava.
+
+Feito: preços novos nas quatro páginas e em `/parcerias`; FAQ reescritas; âncoras removidas nos oito ficheiros; `aggregateRating` fora do schema; `lib/servicos.ts` como fonte única; hub `/servicos`; mega-menu por famílias; `RelatedServices` por família; rodapé e sitemap.
+
+Verificação: `tsc --noEmit` sem erros, `next build` compila (`/servicos` prerenderizada), `next lint` sem avisos novos, e zero ocorrências dos preços antigos no HTML gerado.
+
+<details><summary>Passos originalmente planeados</summary>
 
 1. Reescrever as duas FAQ com preços antigos — é o que está a ser servido aos motores de resposta agora.
 2. Limpar os preços antigos nos restantes ficheiros da §5.6, incluindo as duas âncoras da home e o passo 02 do contacto.
@@ -382,6 +393,8 @@ O registo de horas (P4) continua a ser o único dado que falta para decidir o de
 7. Componente `PriceRange`, com intervalos e menção de IVA.
 
 No fim desta fase o site deixa de contradizer o catálogo novo, mesmo sem uma única página de serviço nova.
+
+</details>
 
 ### Fase 2 — as três prioridades
 
