@@ -12,7 +12,12 @@ const config: Config = {
         link:      '#0000EE',
         'btn-light': '#D5D5D5',
         muted:     '#ACACB9',
-        dark:      '#606165',
+        // Texto terciário (legendas, eyebrows, letra pequena). Estava em
+        // #606165: 3,0:1 sobre o fundo dos cartões, abaixo do mínimo de 4,5:1
+        // das WCAG AA para texto normal — e é o tom de 183 utilizações de
+        // letra pequena no site. #7C7E85 dá 4,5:1 e mantém-se claramente
+        // abaixo de `muted` (8,4:1) na hierarquia.
+        dark:      '#7C7E85',
         'strip-bg': '#B8B8B8',
       },
       fontFamily: {

@@ -16,24 +16,57 @@ const STARS = Array.from({ length: 22 }, (_, i) => ({
   delay: ((i * 9) % 40) / 10,
 }))
 
+// Prova acima da dobra. Antes eram quatro cartões decorativos — um deles um
+// gráfico de tráfego genérico, outro a repetir a mesma avaliação do Google que
+// já está no badge. Agora cada cartão é um resultado verificável de um cliente
+// real, com ligação para o caso, e nenhum repete outro elemento do ecrã.
+const PROOF = [
+  {
+    href: '/portfolio/matias-nature',
+    client: 'Matias Nature',
+    metric: '20% → 55%',
+    label: 'ocupação média anual',
+    pos: 'top-[14%] left-[2%] 2xl:left-[6%] w-[206px]',
+    delay: 0.5,
+  },
+  {
+    href: '/portfolio/apiarios-terras-da-pulga',
+    client: 'Apiários Terras da Pulga',
+    metric: '< 1 mês',
+    label: 'a esgotar o stock de mel',
+    pos: 'bottom-[12%] left-[3%] 2xl:left-[7%] w-[206px]',
+    delay: 0.7,
+  },
+  {
+    href: '/portfolio/100-montanhas',
+    client: '100Montanhas',
+    metric: '15 dias',
+    label: 'do arranque ao site no ar',
+    pos: 'top-[14%] right-[2%] 2xl:right-[6%] w-[206px]',
+    delay: 0.6,
+  },
+  {
+    href: '/portfolio/maria-mendes-massagens',
+    client: 'Maria Mendes Massagens',
+    metric: '#1',
+    label: 'no Google da sua zona',
+    pos: 'bottom-[12%] right-[3%] 2xl:right-[7%] w-[206px]',
+    delay: 0.8,
+  },
+]
+
+// A mesma prova, condensada, para os ecrãs onde os cartões flutuantes não cabem.
+const PROOF_STRIP = [
+  { metric: '20% → 55%', label: 'ocupação média · Matias Nature' },
+  { metric: '98/100', label: 'PageSpeed · 100Montanhas' },
+  { metric: '< 2h', label: 'resposta a cada pedido' },
+]
+
 const float = (delay: number) => ({
   initial: { opacity: 0, y: 24, scale: 0.96 },
   animate: { opacity: 1, y: 0, scale: 1 },
   transition: { duration: 0.6, delay, ease: [0.44, 0, 0.56, 1] as const },
 })
-
-function CardShell({ className, children, delay }: { className: string; children: React.ReactNode; delay: number }) {
-  return (
-    <motion.div
-      {...float(delay)}
-      aria-hidden
-      className={`absolute hidden xl:flex flex-col gap-2 rounded-2xl border border-white/10
-                  bg-bg-card/80 backdrop-blur-md p-4 shadow-[0_20px_50px_rgba(0,0,0,0.55)] ${className}`}
-    >
-      {children}
-    </motion.div>
-  )
-}
 
 // projectCount chega por prop a partir de app/page.tsx (server): importar
 // PROJECTS aqui arrastaria o portefólio inteiro para o bundle de cliente da home.
@@ -56,7 +89,7 @@ export default function Hero({ projectCount }: { projectCount: number }) {
       />
 
       {/* Global dark overlay — knocks the image back so the copy reads cleanly */}
-      <div className="absolute inset-0 bg-[#08090b]/50 pointer-events-none" />
+      <div className="absolute inset-0 bg-[#08090b]/55 pointer-events-none" />
 
       {/* Extra twinkling stars in the upper sky */}
       <div className="absolute inset-0 pointer-events-none">
@@ -81,66 +114,40 @@ export default function Hero({ projectCount }: { projectCount: number }) {
       {/* Soft scrim behind the headline (keeps text readable over the bright atmosphere) */}
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(58% 40% at 50% 46%, rgba(8,9,11,0.6) 0%, rgba(8,9,11,0) 64%)' }}
+        style={{ background: 'radial-gradient(58% 44% at 50% 46%, rgba(8,9,11,0.72) 0%, rgba(8,9,11,0) 66%)' }}
       />
       {/* Bottom fade so the hero melts into the next section */}
       <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-bg pointer-events-none" />
 
       {/* Content */}
-      <div className="relative z-10 max-w-[1200px] mx-auto px-6 min-h-screen min-h-dvh flex flex-col items-center justify-center text-center">
-        {/* Floating proof cards (decorative — kept clear of the text column, xl+ only) */}
-        <CardShell className="top-[15%] left-[2%] 2xl:left-[6%] w-[168px]" delay={0.5}>
-          <p className="text-[11px] text-muted">PageSpeed</p>
-          <div className="flex items-end gap-2">
-            <span className="text-3xl font-heading font-medium text-white leading-none">98</span>
-            <span className="text-[11px] text-accent mb-1">/ 100</span>
-          </div>
-          <div className="h-1.5 rounded-full bg-white/10 overflow-hidden">
-            <div className="h-full w-[98%] rounded-full bg-gradient-to-r from-accent to-[#4f7fb8]" />
-          </div>
-          <p className="text-[10px] text-dark">Performance por defeito</p>
-        </CardShell>
-
-        <CardShell className="bottom-[13%] left-[3%] 2xl:left-[7%] w-[196px]" delay={0.7}>
-          <div className="flex items-center justify-between">
-            <p className="text-[11px] text-muted">Tráfego orgânico</p>
-            <span className="text-[11px] text-accent font-medium">↑ 3,2×</span>
-          </div>
-          <svg viewBox="0 0 160 56" className="w-full h-12" fill="none" preserveAspectRatio="none">
-            <defs>
-              <linearGradient id="trafGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#7FA8D9" stopOpacity="0.35" />
-                <stop offset="100%" stopColor="#7FA8D9" stopOpacity="0" />
-              </linearGradient>
-            </defs>
-            <path d="M0 48 L32 40 L64 42 L96 26 L128 20 L160 6" stroke="#7FA8D9" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-            <path d="M0 48 L32 40 L64 42 L96 26 L128 20 L160 6 L160 56 L0 56 Z" fill="url(#trafGrad)" />
-          </svg>
-        </CardShell>
-
-        <CardShell className="top-[15%] right-[2%] 2xl:right-[6%] w-[186px]" delay={0.6}>
-          <div className="flex items-center gap-1 text-accent text-sm tracking-widest">★★★★★</div>
-          <div className="flex items-baseline gap-2">
-            <span className="text-2xl font-heading font-medium text-white leading-none">{GOOGLE_RATING.display}</span>
-            <span className="text-[11px] text-muted">no Google</span>
-          </div>
-          <p className="text-[10px] text-dark">{GOOGLE_RATING.countLabel} verificadas</p>
-        </CardShell>
-
-        <CardShell className="bottom-[13%] right-[3%] 2xl:right-[7%] w-[206px]" delay={0.8}>
-          <div className="flex items-center gap-2">
-            <span className="w-6 h-6 rounded-full bg-gradient-to-br from-accent to-[#4f7fb8] flex items-center justify-center text-black text-xs">✓</span>
-            <p className="text-sm text-white font-medium">Projeto entregue</p>
-          </div>
-          <p className="text-[11px] text-muted">SEO técnico incluído · Top 3 Google Maps</p>
-        </CardShell>
+      <div className="relative z-10 max-w-[1200px] mx-auto px-6 min-h-screen min-h-dvh flex flex-col items-center justify-center text-center py-28">
+        {/* Cartões de prova — resultados reais, cada um liga ao caso (xl+, onde há espaço) */}
+        {PROOF.map((p) => (
+          <motion.div key={p.href} {...float(p.delay)} className={`absolute hidden xl:block ${p.pos}`}>
+            <Link
+              href={p.href}
+              className="group block rounded-2xl border border-white/10 bg-bg-card/80 backdrop-blur-md p-4 text-left
+                         shadow-[0_20px_50px_rgba(0,0,0,0.55)] transition-all duration-300
+                         hover:border-accent/40 hover:-translate-y-0.5
+                         focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+            >
+              <p className="text-[10px] uppercase tracking-[0.16em] text-dark">{p.client}</p>
+              <p className="mt-2 font-heading text-[26px] font-medium leading-none text-white tabular-nums">{p.metric}</p>
+              <p className="mt-1.5 text-[11px] text-muted leading-snug">{p.label}</p>
+              <span className="mt-3 inline-flex items-center gap-1 text-[11px] text-accent">
+                Ver caso
+                <span className="transition-transform group-hover:translate-x-0.5" aria-hidden>→</span>
+              </span>
+            </Link>
+          </motion.div>
+        ))}
 
         {/* Central content — kept narrow so it never sits under the cards */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: [0.44, 0, 0.56, 1] }}
-          className="relative flex flex-col items-center max-w-2xl"
+          className="relative flex flex-col items-center max-w-[760px]"
         >
           <p className="inline-flex items-center gap-2 rounded-pill border border-white/10 bg-white/[0.04] px-4 py-1.5 backdrop-blur-sm">
             <span className="text-accent text-xs" aria-hidden>★</span>
@@ -149,21 +156,21 @@ export default function Hero({ projectCount }: { projectCount: number }) {
             </span>
           </p>
 
-          <h1 className="mt-7 text-white font-semibold tracking-[-0.04em] leading-[1.04]">
-            Websites e marketing digital que fazem o teu negócio crescer
+          <h1 className="mt-7 text-white font-semibold tracking-[-0.04em] leading-[1.04] text-balance">
+            Sites que carregam num segundo, aparecem no Google e trazem clientes
           </h1>
 
-          <p className="mt-6 text-white/80 text-base md:text-lg max-w-xl leading-relaxed">
-            Criamos <strong className="font-bold text-white/90">websites à medida, lojas online, SEO e marketing
-            digital para PMEs em Portugal</strong> — ultra-rápidos (PageSpeed 95+) e por um terço do preço
-            de uma agência. A partir de 297€. De Seia para todo o país.
+          <p className="mt-6 text-white/80 text-base md:text-lg max-w-[620px] leading-relaxed text-pretty">
+            Para PMEs em Portugal: <strong className="font-semibold text-white">websites, lojas online, reservas
+            diretas, SEO e automação com IA</strong> — construídos à medida, com preço fixo fechado depois do
+            diagnóstico.
           </p>
 
-          <div className="mt-10 flex flex-col sm:flex-row items-center gap-4">
-            <GlowButton href="/contacto">Pedir orçamento grátis</GlowButton>
+          <div className="mt-10 flex flex-col sm:flex-row items-center gap-5">
+            <GlowButton href="/contacto" variant="solid">Pedir orçamento grátis</GlowButton>
             <Link
               href="/portfolio"
-              className="group inline-flex items-center gap-1.5 text-sm text-white/60 hover:text-white transition-colors"
+              className="group inline-flex items-center gap-1.5 text-sm text-white/70 hover:text-white transition-colors"
             >
               Ver trabalhos
               <span className="transition-transform group-hover:translate-x-0.5" aria-hidden>→</span>
@@ -174,6 +181,16 @@ export default function Hero({ projectCount }: { projectCount: number }) {
           <p className="mt-4 text-[12px] text-muted">
             Resposta em &lt; 2h · sem compromisso · preço fixo à cabeça
           </p>
+
+          {/* Prova condensada onde os cartões flutuantes não cabem (até xl) */}
+          <dl className="xl:hidden mt-10 grid grid-cols-3 gap-x-4 gap-y-2 w-full max-w-lg border-t border-white/10 pt-6">
+            {PROOF_STRIP.map((s) => (
+              <div key={s.label}>
+                <dt className="font-heading text-lg sm:text-xl font-medium text-white tabular-nums leading-none">{s.metric}</dt>
+                <dd className="mt-1.5 text-[11px] text-muted leading-snug">{s.label}</dd>
+              </div>
+            ))}
+          </dl>
         </motion.div>
       </div>
     </section>

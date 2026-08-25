@@ -20,14 +20,14 @@ export const dynamic = 'force-static'
 export const metadata: Metadata = {
   title: 'Manutenção de Sites e Planos Mensais — Element Group',
   description:
-    'Planos mensais para empresas: manutenção, backups, SEO contínuo, conteúdo e relatórios mensais. Site sempre seguro e a crescer — sem fidelização. Desde 97€/mês.',
+    'Planos mensais para empresas: monitorização, SEO contínuo, citações em motores de IA e conteúdo. Site sempre seguro e a crescer — sem fidelização. Desde 149 €/mês.',
   keywords: ['manutenção website mensal', 'plano digital PME', 'SEO mensal Portugal', 'suporte website', 'manutenção loja online', 'Element Group planos'],
   alternates: { canonical: '/servicos/planos-mensais' },
   robots: { index: true, follow: true },
   openGraph: {
     type: 'website',
     title: 'Manutenção de Sites e Planos Mensais — Element Group',
-    description: 'Planos mensais para empresas: manutenção, backups, SEO contínuo e relatórios. Site sempre seguro — sem fidelização. Desde 97€/mês.',
+    description: 'Planos mensais para empresas: monitorização, SEO contínuo, citações em IA e conteúdo. Site sempre seguro — sem fidelização. Desde 149 €/mês.',
     url: '/servicos/planos-mensais',
     locale: 'pt_PT',
     siteName: 'Element Group',
@@ -59,7 +59,7 @@ export default function PlanosMensaisPage() {
             name: 'Planos Mensais de Manutenção e Marketing Digital',
             serviceType: 'Manutenção de sites e marketing digital mensal',
             description:
-              'Planos mensais para empresas em Portugal: manutenção de sites, backups, SEO contínuo, conteúdo e relatórios. Sem fidelização, desde 97€/mês.',
+              'Planos mensais para empresas em Portugal: monitorização de sites, SEO contínuo, medição de citações em motores de IA e conteúdo. Sem fidelização, desde 149 €/mês.',
             path: '/servicos/planos-mensais',
           }),
           breadcrumbSchema([
@@ -85,7 +85,7 @@ export default function PlanosMensaisPage() {
             </p>
 
             <div className="mt-10 flex flex-col sm:flex-row items-center gap-4">
-              <GlowButton href={CTA}>Quero um parceiro contínuo</GlowButton>
+              <GlowButton href={CTA} variant="solid">Quero um parceiro contínuo</GlowButton>
               <Link href="#preco" className="group inline-flex items-center gap-1.5 text-sm text-white/90 hover:text-white transition-colors">
                 Ver planos
                 <span className="transition-transform group-hover:translate-x-0.5" aria-hidden>→</span>
@@ -252,6 +252,30 @@ export default function PlanosMensaisPage() {
           </AnimateOnScroll>
 
           <p className="mt-8 text-center text-[11px] text-dark">Cada plano inclui tudo o que está no anterior. Podes mudar de plano a qualquer momento.</p>
+
+          {/* Módulos avulso — separados de propósito, para não parecerem somáveis ao plano */}
+          <AnimateOnScroll className="mt-20">
+            <div className="text-center mb-10">
+              <p className="text-[11px] uppercase tracking-[0.22em] text-dark mb-4">Só para quem não leva plano</p>
+              <h3 className="text-white font-heading text-2xl font-medium tracking-[-0.01em]">Módulos avulso</h3>
+              <p className="mt-4 text-muted text-sm max-w-lg mx-auto leading-relaxed">
+                Se preferires contratar só um serviço, existem em separado. Mas nunca se somam a um plano
+                que já os inclui — isso seria cobrar-te duas vezes a mesma coisa.
+              </p>
+            </div>
+
+            <div className="grid sm:grid-cols-3 gap-4">
+              {MODULES.map((m) => (
+                <div key={m.name} className="rounded-2xl border border-white/10 bg-bg-card p-6 flex flex-col">
+                  <h4 className="text-white font-heading text-[15px] font-medium leading-snug">{m.name}</h4>
+                  <p className="mt-2 text-[13px] text-muted leading-snug">{m.desc}</p>
+                  <p className="mt-4 text-white font-heading text-lg font-medium tabular-nums">{m.price}</p>
+                  <p className="mt-auto pt-4 text-[11px] text-dark">{m.includedIn}</p>
+                </div>
+              ))}
+            </div>
+            <p className="mt-6 text-center text-[11px] text-dark">Valores sem IVA.</p>
+          </AnimateOnScroll>
         </div>
       </section>
 
@@ -281,7 +305,7 @@ export default function PlanosMensaisPage() {
               Respondo pessoalmente em menos de 2 horas.
             </p>
             <div className="mt-10 flex flex-col items-center gap-5">
-              <GlowButton href={CTA}>Quero um parceiro contínuo</GlowButton>
+              <GlowButton href={CTA} variant="solid">Quero um parceiro contínuo</GlowButton>
               <span className="text-sm text-white/70">
                 ou escreve-me para{' '}
                 <Link href="mailto:info@elementgroup.pt" className="text-white/90 underline underline-offset-4 hover:text-white transition-colors">info@elementgroup.pt</Link>
@@ -324,33 +348,49 @@ const STEPS = [
     metric: 'Flexível', metricLabel: 'sobes ou desces quando quiseres', icon: (<><path d="M3 17l6-6 4 4 7-7" /><path d="M16 7h5v5" /></>) },
 ]
 
-// Planos em camadas (preços reais, recorrentes). “Tudo do anterior +”.
+// Catálogo 2026-08 (E1/E2/E3). A mudança não é o preço — é o eixo. Saiu
+// "manutenção", que é uma lista de tarefas e se compara por preço, e entrou
+// "sistema", que é resultado composto. As horas/mês são publicadas de propósito:
+// é o que impede a comparação por lista.
 const PLANS = [
   {
-    name: 'Manutenção',
-    tag: 'Essencial',
-    desc: 'Site seguro, atualizado e sempre no ar — sem te preocupares.',
-    price: '97€',
-    type: 'por mês · sem fidelização',
-    features: ['Manutenção técnica & atualizações', 'Backups regulares', 'Monitorização de uptime', 'Relatório Google mensal'],
+    name: 'Base',
+    tag: 'O piso',
+    desc: 'Site seguro, atualizado e sempre no ar — sem teres de pensar nisso.',
+    price: '149 €/mês',
+    type: '1-2h por mês · sem fidelização',
+    priceNote: 'Sem IVA · sem fidelização',
+    features: ['Monitorização 24/7', 'Backups regulares', 'Atualizações e correções', 'Relatório mensal'],
   },
   {
     name: 'Crescimento',
-    tag: 'Recomendado',
-    desc: 'Manutenção + SEO e conteúdo para continuares a subir.',
-    price: '197€',
-    type: 'por mês · sem fidelização',
+    tag: 'Mais escolhido',
+    desc: 'A base, mais o trabalho contínuo que faz o negócio aparecer e crescer.',
+    price: '349 €/mês',
+    type: '4-5h por mês · sem fidelização',
+    priceNote: 'Sem IVA · sem fidelização',
     highlight: true,
-    features: ['Tudo do Essencial', 'SEO técnico mensal', 'Analytics & acompanhamento', 'Alguns posts de conteúdo'],
+    features: ['Tudo o do Base', 'SEO contínuo', 'Citações em motores de IA, medidas', '4 peças de conteúdo por mês'],
   },
   {
-    name: 'Performance',
-    tag: 'Completo',
-    desc: 'Tudo a crescer: mais social, email marketing e prioridade.',
-    price: '297€',
-    type: 'por mês · sem fidelização',
-    features: ['Tudo do Crescimento', 'Mais conteúdo social', 'Campanha de email marketing', 'Suporte prioritário'],
+    name: 'Sistema',
+    tag: 'Com software',
+    desc: 'Para quem tem motor de reservas, painel ou software à medida a funcionar.',
+    price: '649 €/mês',
+    type: '8-10h por mês · sem fidelização',
+    priceNote: 'Sem IVA · sem fidelização',
+    features: ['Tudo o do Crescimento', 'Operação do motor de reservas e pagamentos', 'Suporte do painel de gestão', 'Automação de um fluxo', 'Revisão trimestral contigo'],
   },
+]
+
+// Módulos avulso — existem só para quem quer um serviço e recusa plano.
+// Regra R5 do catálogo: nunca somar um módulo a um plano que já o inclui.
+// O Crescimento já contém a medição de citações; o Sistema já contém a operação
+// do motor. Cobrar os dois é cobrar duas vezes a mesma coisa, e o cliente descobre.
+const MODULES = [
+  { name: 'Operação do motor de reservas e pagamentos', price: '149-249 €/mês', desc: 'Operação e suporte do checkout, da agenda e do painel.', includedIn: 'Já incluído no plano Sistema' },
+  { name: 'Monitorização de citações em IA',            price: '199-349 €/mês', desc: 'Medição de citações e ajustes contínuos.',                   includedIn: 'Já incluído no plano Crescimento' },
+  { name: 'Manutenção e evolução de software à medida', price: '249-449 €/mês', desc: 'Correções, evolução e suporte de painéis e aplicações.',     includedIn: 'Só para quem tem software à medida entregue' },
 ]
 
 // Objeções específicas dos planos mensais.
@@ -359,7 +399,7 @@ const PLAN_FAQS = [
   { q: 'Posso mudar de plano?', a: 'Sim, a qualquer momento. Subimos ou descemos de plano conforme a fase e as necessidades do teu negócio.' },
   { q: 'Preciso de ter um site feito por ti?', a: 'Não obrigatoriamente. Posso assumir a manutenção de um site existente — faço primeiro uma avaliação para garantir que está em condições.' },
   { q: 'As alterações ao site estão incluídas?', a: 'Pequenas alterações e atualizações regulares estão incluídas. Mudanças grandes (novas secções, funcionalidades) levam orçamento à parte, sempre transparente e aprovado por ti.' },
-  { q: 'Qual a diferença entre os planos?', a: 'Sobem em camadas: Essencial = manutenção e segurança; Crescimento = + SEO e conteúdo; Performance = + social e email marketing. Cada plano inclui tudo o que está no anterior.' },
+  { q: 'Qual a diferença entre os planos?', a: 'Sobem em camadas. O Base (149 € por mês) cobre monitorização, backups, atualizações e relatório. O Crescimento (349 € por mês) acrescenta SEO contínuo, medição de citações em motores de IA e quatro peças de conteúdo por mês. O Sistema (649 € por mês) acrescenta a operação do motor de reservas e pagamentos, o suporte do painel, a automação de um fluxo e uma revisão trimestral. Cada plano inclui tudo o que está no anterior. Valores sem IVA.' },
   { q: 'O que acontece ao meu site se eu cancelar?', a: 'Fica teu e continua no ar — o site e o domínio estão no teu nome, não no meu. O que termina é a manutenção: atualizações, backups, monitorização e o trabalho contínuo de SEO e conteúdo. Não há taxa de saída nem site refém. Se não souberes qual o plano certo, escolho contigo no formulário e respondo em menos de 2 horas.' },
 ]
 

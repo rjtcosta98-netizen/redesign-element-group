@@ -89,7 +89,7 @@ export default function SeoPage() {
             </p>
 
             <div className="mt-10 flex flex-col sm:flex-row items-center gap-4">
-              <GlowButton href={CTA}>Quero aparecer no Google</GlowButton>
+              <GlowButton href={CTA} variant="solid">Quero aparecer no Google</GlowButton>
               <Link href="/portfolio" className="group inline-flex items-center gap-1.5 text-sm text-white/90 hover:text-white transition-colors">
                 Ver portefólio
                 <span className="transition-transform group-hover:translate-x-0.5" aria-hidden>→</span>
@@ -291,7 +291,7 @@ export default function SeoPage() {
               pessoalmente em menos de 2 horas, sem compromisso.
             </p>
             <div className="mt-10 flex flex-col items-center gap-5">
-              <GlowButton href={CTA}>Quero o meu diagnóstico grátis</GlowButton>
+              <GlowButton href={CTA} variant="solid">Quero o meu diagnóstico grátis</GlowButton>
               <span className="text-sm text-white/70">
                 ou escreve-me para{' '}
                 <Link href="mailto:info@elementgroup.pt" className="text-white/90 underline underline-offset-4 hover:text-white transition-colors">info@elementgroup.pt</Link>
@@ -300,6 +300,38 @@ export default function SeoPage() {
           </AnimateOnScroll>
         </div>
       </section>
+      {/* O GEO saiu do seletor de pacotes para página própria — aqui fica a ponte */}
+      <section className="bg-bg border-t border-white/10 py-24 px-6" aria-labelledby="geo">
+        <div className="max-w-[880px] mx-auto">
+          <AnimateOnScroll>
+            <div className="relative overflow-hidden rounded-[26px] border border-white/10 bg-bg-card p-7 sm:p-9">
+              <span
+                aria-hidden
+                className="absolute -top-24 -right-16 w-72 h-72 pointer-events-none"
+                style={{ background: 'radial-gradient(circle at 60% 40%, rgba(111,179,154,0.16), transparent 65%)' }}
+              />
+              <div className="relative">
+                <p className="text-[11px] uppercase tracking-[0.22em] text-dark mb-4">E depois do Google?</p>
+                <h2 id="geo" className="text-white font-heading text-2xl font-medium tracking-[-0.01em]">
+                  Cada vez mais gente pergunta ao ChatGPT em vez de pesquisar
+                </h2>
+                <p className="mt-5 text-muted leading-relaxed">
+                  O SEO desta página trabalha a lista de resultados, que continua a trazer clientes. Mas
+                  quando alguém faz a pergunta a um assistente de IA, o que decide é quem é citado na
+                  resposta — e isso é trabalho diferente, com medição própria.
+                </p>
+                <div className="mt-7">
+                  <Link href="/servicos/visibilidade-ia" className="group inline-flex items-center gap-1.5 text-sm text-white hover:text-accent transition-colors">
+                    Ver Visibilidade em IA (GEO)
+                    <span className="transition-transform group-hover:translate-x-0.5" aria-hidden>→</span>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </AnimateOnScroll>
+        </div>
+      </section>
+
       <RelatedServices current="seo" />
     </main>
   )
@@ -334,16 +366,12 @@ const STEPS = [
     metric: 'Mensal', metricLabel: 'relatórios transparentes', icon: (<><path d="M3 3v18h18" /><path d="m19 9-5 5-4-4-3 3" /></>) },
 ]
 
-// Preços reais (one-off / projeto / add-on).
+// Catálogo 2026-08 (B1). Os quatro pacotes anteriores viraram um só: o setup a
+// 297 € não cobria a auditoria real que já se executava. O GEO saiu daqui para
+// página própria — era um serviço que se vendia e que ninguém conseguia encontrar.
 const PRICES = [
-  { name: 'Setup Google + Perfis', desc: 'Google Business Profile + Instagram/Facebook criados e otimizados.',  price: '297€',       type: 'Pagamento único', highlight: true,
-    features: ['Google Business Profile otimizado', 'Instagram + Facebook configurados', 'Categorias, fotos e contactos', 'Base pronta para SEO local'] },
-  { name: 'Setup SEO Técnico',     desc: 'Auditoria, correções on-page e indexação para arrancar bem no Google.', price: '390€',       type: 'Pagamento único',
-    features: ['Auditoria SEO completa', 'Correções on-page', 'Indexação nos motores de busca', 'Estrutura e velocidade otimizadas'] },
-  { name: 'Copywriting',           desc: 'Textos de venda para páginas, campanhas ou perfis.',                    price: 'desde 190€', type: 'Por projeto',
-    features: ['Textos de venda à medida', 'Otimizados para SEO', 'Para páginas, campanhas ou perfis', 'Na linguagem do teu cliente'] },
-  { name: 'SEO para IAs (GEO)',    desc: 'Otimização para apareceres no Google AI, ChatGPT e Perplexity.',        price: '290€',       type: 'Add-on', tag: 'Diferenciador',
-    features: ['Otimização para o Google AI', 'Apareces no ChatGPT e Perplexity', 'Conteúdo pronto para IAs', 'Vantagem face à concorrência'] },
+  { name: 'SEO — Setup Técnico + Local', desc: 'O trabalho de base para o negócio aparecer nas pesquisas certas.', price: '890-1.200 €', type: 'Pagamento único', highlight: true,
+    features: ['Auditoria SEO completa', 'SEO técnico, com JSON-LD e dados estruturados', 'SEO local — Google Maps e Perfil de Empresa', 'Pesquisa de palavras-chave', 'Conteúdo otimizado', 'Indexação e verificação nos motores'] },
 ]
 
 // Objeções específicas de SEO.

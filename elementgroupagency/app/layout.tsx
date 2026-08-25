@@ -7,6 +7,8 @@ import Footer from '@/components/Footer'
 import CookieConsent from '@/components/CookieConsent'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
 import WhatsAppFab from '@/components/WhatsAppFab'
+import MobileCtaBar from '@/components/ui/MobileCtaBar'
+import ServiceSubNav from '@/components/servicos/ServiceSubNav'
 import JsonLd from '@/components/JsonLd'
 import { SITE, organizationGraph } from '@/lib/seo'
 
@@ -22,8 +24,11 @@ const instrumentSans = Instrument_Sans({
 })
 
 const DEFAULT_TITLE = 'Element Group — Websites & Marketing Digital para PMEs'
+// Descrição herdada por todas as páginas sem metadata própria — por isso as duas
+// âncoras que o catálogo mandou remover ("um terço do preço" e "a partir de 297 €")
+// estavam a ser servidas em todo o site, e não só na home.
 const DEFAULT_DESC =
-  'Websites à medida, lojas online, SEO e marketing para PMEs em Portugal. Ultra-rápidos (PageSpeed 95+) e por um terço do preço de uma agência. A partir de 297€.'
+  'Websites à medida, lojas online, SEO e sistemas com IA para PMEs em Portugal. Sites que carregam em menos de 1 segundo e aparecem no Google — e no ChatGPT.'
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
@@ -112,6 +117,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {children}
         <Footer />
         <WhatsAppFab />
+        <MobileCtaBar />
+        <ServiceSubNav />
         <CookieConsent />
       </body>
     </html>

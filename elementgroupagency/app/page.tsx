@@ -6,6 +6,7 @@ import LogoTicker     from '@/components/sections/LogoTicker'
 import FeatureStack   from '@/components/sections/FeatureStack'
 import HowItWorks     from '@/components/sections/HowItWorks'
 import Portfolio      from '@/components/sections/Portfolio'
+import MidCTA         from '@/components/sections/MidCTA'
 import WhyUs          from '@/components/sections/WhyUs'
 import Testimonials   from '@/components/sections/Testimonials'
 import FAQ            from '@/components/sections/FAQ'
@@ -14,8 +15,8 @@ import FinalCTA       from '@/components/sections/FinalCTA'
 export const metadata: Metadata = {
   title: 'Agência de Marketing Digital para PMEs — Element Group',
   description:
-    'Agência de marketing digital em Portugal para PMEs: websites, lojas online, SEO e redes sociais. Resultados reais, preços transparentes. Seia, Serra da Estrela.',
-  keywords: ['agência de marketing digital Portugal', 'criação de websites PME', 'SEO Portugal', 'gestão redes sociais PME', 'lojas online Portugal', 'Element Group'],
+    'Agência digital em Portugal para PMEs: websites, lojas online, reservas e pagamentos, SEO, visibilidade em motores de IA e automação. Seia, Serra da Estrela.',
+  keywords: ['agência de marketing digital Portugal', 'criação de websites PME', 'SEO Portugal', 'visibilidade em IA GEO', 'automação IA empresas', 'motor de reservas website', 'lojas online Portugal', 'Element Group'],
   alternates: { canonical: '/' },
   openGraph: {
     type: 'website',
@@ -44,6 +45,7 @@ export default async function Home() {
       <FeatureStack />
       <HowItWorks />
       <Portfolio />
+      <MidCTA />
       <WhyUs />
       <Testimonials reviews={reviews} />
       <FAQ />

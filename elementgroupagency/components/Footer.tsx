@@ -18,9 +18,10 @@ const COLS = [
   {
     title: 'Serviços',
     links: [
+      { label: 'Todos os serviços',       href: '/servicos' },
       { label: 'Websites & Lojas Online', href: '/servicos/web' },
       { label: 'SEO & Otimização',        href: '/servicos/seo' },
-      { label: 'Social Media',            href: '/servicos/social' },
+      { label: 'Conteúdo & Marketing',    href: '/servicos/social' },
       { label: 'Planos Mensais',          href: '/servicos/planos-mensais' },
     ],
   },

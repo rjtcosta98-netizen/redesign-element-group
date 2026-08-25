@@ -4,7 +4,6 @@ import Link from 'next/link'
 import AnimateOnScroll from '@/components/ui/AnimateOnScroll'
 import GlowButton from '@/components/ui/GlowButton'
 import FaqAccordion from '@/components/ui/FaqAccordion'
-import PackageSelector from '@/components/servicos/PackageSelector'
 import PainPoints from '@/components/servicos/PainPoints'
 import IncludesGlobe from '@/components/servicos/IncludesGlobe'
 import ProcessTimeline from '@/components/servicos/ProcessTimeline'
@@ -84,7 +83,7 @@ export default function SocialMediaPage() {
             </p>
 
             <div className="mt-10 flex flex-col sm:flex-row items-center gap-4">
-              <GlowButton href={CTA}>Quero as minhas redes ativas</GlowButton>
+              <GlowButton href={CTA} variant="solid">Quero as minhas redes ativas</GlowButton>
               <Link href="/portfolio" className="group inline-flex items-center gap-1.5 text-sm text-white/90 hover:text-white transition-colors">
                 Ver portefólio
                 <span className="transition-transform group-hover:translate-x-0.5" aria-hidden>→</span>
@@ -243,19 +242,39 @@ export default function SocialMediaPage() {
         />
       </section>
 
-      {/* 7 · Preço — tabela real */}
+      {/* 7 · O conteúdo deixou de se vender à peça — vive dentro dos planos */}
       <section className="bg-bg border-t border-white/10 py-24 px-6" aria-labelledby="preco">
-        <div className="max-w-[1100px] mx-auto">
-          <AnimateOnScroll className="text-center mb-14">
+        <div className="max-w-[860px] mx-auto">
+          <AnimateOnScroll className="text-center mb-12">
             <p className="text-[11px] uppercase tracking-[0.22em] text-dark mb-4">Investimento</p>
-            <h2 id="preco" className="text-white">Preços claros, sem surpresas</h2>
-            <p className="mt-5 text-muted max-w-xl mx-auto leading-relaxed">
-              Avença mensal para presença contínua, ou packs pontuais quando precisares de um empurrão.
+            <h2 id="preco" className="text-white">O conteúdo faz parte do plano, não é vendido à parte</h2>
+            <p className="mt-5 text-muted leading-relaxed">
+              Deixei de vender packs de posts avulso, e a razão é honesta: conteúdo solto não move um
+              negócio. Conteúdo ligado ao site, ao SEO e a um objetivo move. Por isso passou a ser uma
+              componente dos planos mensais, onde serve o resultado em vez de ser o resultado.
             </p>
           </AnimateOnScroll>
 
           <AnimateOnScroll>
-            <PackageSelector includes={INCLUDES} packages={PRICES} ctaHref={CTA} />
+            <div className="rounded-[26px] border border-white/10 bg-bg-card p-7 sm:p-9">
+              <ul role="list" className="space-y-5">
+                {PLAN_CONTENT.map((row) => (
+                  <li key={row.plan} className="flex flex-col sm:flex-row sm:items-baseline gap-1.5 sm:gap-5">
+                    <span className="shrink-0 font-heading text-white font-medium sm:w-52">{row.plan}</span>
+                    <span className="text-sm text-muted leading-relaxed">{row.content}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <p className="mt-8 text-[12px] text-dark leading-relaxed">
+                Valores sem IVA, sem fidelização. A estratégia, a revisão e a identidade da marca
+                continuam humanas — a IA acelera o trabalho, não o assina.
+              </p>
+
+              <div className="mt-7">
+                <GlowButton href="/servicos/planos-mensais" className="w-full sm:w-auto">Ver os planos mensais</GlowButton>
+              </div>
+            </div>
           </AnimateOnScroll>
         </div>
       </section>
@@ -286,7 +305,7 @@ export default function SocialMediaPage() {
               sem compromisso.
             </p>
             <div className="mt-10 flex flex-col items-center gap-5">
-              <GlowButton href={CTA}>Quero as minhas redes ativas</GlowButton>
+              <GlowButton href={CTA} variant="solid">Quero as minhas redes ativas</GlowButton>
               <span className="text-sm text-white/70">
                 ou escreve-me para{' '}
                 <Link href="mailto:info@elementgroup.pt" className="text-white/90 underline underline-offset-4 hover:text-white transition-colors">info@elementgroup.pt</Link>
@@ -329,24 +348,23 @@ const STEPS = [
     metric: 'Mensal', metricLabel: 'relatório simples', icon: (<><path d="M3 3v18h18" /><path d="m19 9-5 5-4-4-3 3" /></>) },
 ]
 
-// Preços reais (recorrente / avulso / one-off).
-const PRICES = [
-  { name: 'Gestão de Social Media', desc: 'Criação e gestão de conteúdo com escopo definido (volume controlado).', price: '197€', type: 'por mês · recorrente', highlight: true,
-    features: ['Conteúdo planeado e publicado', 'Design + copy com a tua identidade', 'Calendário mensal de conteúdo', 'Relatório simples todos os meses'] },
-  { name: 'Pack de Posts',          desc: 'Conjunto de posts com design e copy, para venda rápida e pontual.',     price: '190€', type: 'por pack · avulso',
-    features: ['Conjunto de posts profissionais', 'Design + copy incluídos', 'Prontos a publicar', 'Sem avença mensal'] },
-  { name: 'Pack Vídeo Vertical',    desc: '6 vídeos verticais (Reels/TikTok/Shorts) com legendas e hook + CTA.',    price: '397€', type: 'pagamento único',
-    features: ['6 vídeos verticais (Reels/TikTok)', 'Legendas, hook e CTA', 'O formato que mais alcança', 'Pagamento único, sem avença'] },
+// Catálogo 2026-08: a gestão de redes deixa de ser produto próprio e passa a
+// componente dos planos. Era o único serviço com cancelamento registado por
+// cliente e o maior consumo de horas por euro do portfólio.
+const PLAN_CONTENT = [
+  { plan: 'Base · 149 €/mês',        content: 'Sem conteúdo. Cobre monitorização, backups, atualizações, correções e relatório.' },
+  { plan: 'Crescimento · 349 €/mês', content: 'Quatro peças de conteúdo por mês, além de SEO contínuo e da medição de citações em motores de IA.' },
+  { plan: 'Sistema · 649 €/mês',     content: 'Tudo o do Crescimento, mais a operação do motor de reservas, painel, automação de um fluxo e revisão trimestral.' },
 ]
 
 // Objeções específicas de redes sociais.
 const SOCIAL_FAQS = [
   { q: 'Em que redes trabalham?', a: 'Instagram, Facebook e TikTok — conforme onde estão os teus clientes. Foco onde faz sentido para o teu negócio, em vez de estar em todas ao mesmo tempo.' },
   { q: 'Tenho de aparecer ou gravar vídeos?', a: 'Não é obrigatório. Trabalho com o que tiveres (fotos, vídeos do dia a dia) e crio conteúdo à volta disso. Para Reels, oriento-te se quiseres gravar tu mesmo.' },
-  { q: 'Quantos posts por mês?', a: 'Depende do plano — definimos um volume controlado à cabeça, para garantir qualidade e não saturar nem o teu feed nem o teu tempo.' },
+  { q: 'Quantos posts por mês?', a: 'Quatro peças por mês no plano Crescimento, mais no plano Sistema. É um volume controlado de propósito, para garantir qualidade e não saturar nem o teu feed nem o teu tempo.' },
   { q: 'As redes vão fazer o meu negócio explodir?', a: 'Sinceramente, não sozinhas. As redes são um complemento — o motor do crescimento é o teu site e o SEO. O que fazem é manter-te presente, credível e na memória de quem te segue.' },
-  { q: 'Posso pedir só um pack pontual?', a: 'Sim. Tens o Pack de Posts (avulso) e o Pack Vídeo Vertical (pagamento único), sem teres de assinar uma avença mensal.' },
-  { q: 'Quanto custa a gestão de redes sociais?', a: 'A gestão contínua fica em 197€ por mês, com volume de conteúdo definido à cabeça. Se preferires sem avença, tens o Pack de Posts em 190€ e o Pack Vídeo Vertical (6 vídeos com legendas) em 397€, ambos pagamento único. Pedes orçamento no formulário e respondo em menos de 2 horas.' },
+  { q: 'Posso pedir só um pack pontual de posts?', a: 'Já não. Deixei de vender packs avulso porque conteúdo solto, sem estar ligado ao site e ao SEO, não muda os resultados de um negócio — e eu prefiro dizer-te isso do que vender-te uma coisa que não funciona. O conteúdo passou a fazer parte dos planos mensais.' },
+  { q: 'Quanto custa a gestão de redes sociais?', a: 'Já não se vende à parte. A criação de conteúdo faz parte dos planos mensais: o plano Crescimento (349 € por mês) inclui quatro peças por mês, além de SEO contínuo e da medição de citações em motores de IA; o plano Sistema (649 € por mês) inclui mais. Valores sem IVA, sem fidelização.' },
 ]
 
 const FAQ_SCHEMA = {

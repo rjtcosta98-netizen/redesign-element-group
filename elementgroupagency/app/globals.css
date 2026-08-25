@@ -313,3 +313,67 @@ h4, .text-h4 { font-family: var(--font-inter-tight), sans-serif; font-size: clam
 @media (prefers-reduced-motion: reduce) {
   .glow-drift, .glow-drift-2 { animation: none; }
 }
+
+/* ── Variante sólida do botão nova ────────────────────────────────────────
+   O CTA primário do hero era uma pílula escura sobre fundo escuro, com menos
+   contraste do que o botão do nav — o elemento mais importante da página não
+   era o mais visível. Esta variante mantém o anel e o halo animados, mas o
+   corpo passa a branco: o ponto de maior contraste do ecrã. */
+.nova-btn--solid {
+  background: #ffffff;
+  color: #0a0e16;
+  padding: 16px 34px;
+  font-size: 16px;
+  font-weight: 600;
+}
+.nova-btn--solid .nova-btn__shine {
+  background: linear-gradient(110deg, transparent 0%, rgba(10,14,22,0.04) 45%, rgba(10,14,22,0.10) 50%, rgba(10,14,22,0.04) 55%, transparent 100%);
+  opacity: 0;
+}
+.nova-btn--solid:hover .nova-btn__shine { opacity: 1; }
+.nova-btn--solid .nova-btn__glow { opacity: 0.65; }
+.nova-btn--solid:hover .nova-btn__glow { opacity: 1; }
+.nova-btn--solid:focus-visible { outline-color: #ffffff; }
+
+/* ── Spotlight: a borda do cartão acende por baixo do cursor ──────────────
+   Um cartão estático em dark UI não dá sinal de ser clicável. O gradiente segue
+   --mx/--my, escritos pelo próprio cartão em pointermove (ver SpotlightCard). */
+.spotlight { position: relative; isolation: isolate; }
+.spotlight::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: radial-gradient(220px circle at var(--mx, 50%) var(--my, 0%),
+    rgb(var(--accent-rgb) / 0.75), transparent 70%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+.spotlight:hover::before { opacity: 1; }
+.spotlight::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(300px circle at var(--mx, 50%) var(--my, 0%),
+    rgb(var(--accent-rgb) / 0.07), transparent 65%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+.spotlight:hover::after { opacity: 1; }
+@media (hover: none) {
+  .spotlight::before, .spotlight::after { display: none; }
+}
+
+/* Barra de secções: as âncoras deslizam na horizontal em ecrã estreito, sem a
+   barra de scroll do sistema por cima do texto. */
+.no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }

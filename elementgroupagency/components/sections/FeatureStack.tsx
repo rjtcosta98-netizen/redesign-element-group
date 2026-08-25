@@ -16,12 +16,20 @@ const ACCENTS = {
   plans:  { '--accent-rgb': '215 176 116', '--accent': '#D7B074', '--accent-deep': '#7a5a2e', '--accent-mid': '#b08a4f', '--accent-light': '#f0ddbf' },
 } as Record<Kind, CSSProperties>
 
+// A cor e a ilustração deixaram de ser o mesmo campo. Os cartões passaram a ser
+// as quatro famílias do catálogo, e a família cuja cor faz sentido nem sempre é
+// aquela cuja ilustração faz sentido — IA & Automação é roxa, mas quem a ilustra
+// bem é o painel de passos; Marca & Conteúdo é dourada, e ilustra-se com o post.
 type Service = {
+  key: string
   eyebrow: string
   title: string
   body: string
+  /** Os serviços desta família, tal como aparecem no hub. */
+  items: string[]
   href: string
-  kind: Kind
+  accent: Kind
+  visual: Kind
   ctaLabel: string
 }
 
@@ -29,36 +37,48 @@ type Service = {
 // Top 3 Google Maps, inclusões dos planos mensais) — nada inventado.
 const SERVICES: Service[] = [
   {
-    eyebrow: 'Categoria 01 · Websites & Lojas Online',
-    title: 'Criação de Websites e Lojas Online à medida',
-    body: 'Sites institucionais e lojas online (e-commerce) desenhados à medida do teu negócio — ultra-rápidos (PageSpeed 95+), responsivos e pensados para converter visitas em clientes. Do design ao alojamento, tratamos de tudo.',
+    key: 'web',
+    eyebrow: 'Família 01 · Web & Software',
+    title: 'Websites, lojas e software feitos à medida',
+    body: 'Sites institucionais, lojas online, motores de reservas com pagamentos, e aplicações à medida quando a folha de cálculo já não chega. Ultra-rápidos, sem templates, e pensados para o cliente conseguir comprar ou marcar.',
+    items: ['Websites & Lojas Online', 'Reservas & Pagamentos', 'Software à Medida'],
     href: '/servicos/web',
-    kind: 'web',
-    ctaLabel: 'Saber mais sobre Websites',
+    accent: 'web',
+    visual: 'web',
+    ctaLabel: 'Ver Web & Software',
   },
   {
-    eyebrow: 'Categoria 02 · Visibilidade & SEO',
-    title: 'SEO e Otimização para apareceres no Google',
-    body: 'Colocamos o teu negócio à frente de quem procura: SEO técnico, SEO local (Top 3 no Google Maps) e conteúdo otimizado para as pesquisas certas. Em média, os nossos projetos de SEO geram 3,2× mais tráfego orgânico.',
+    key: 'visibilidade',
+    eyebrow: 'Família 02 · SEO & Visibilidade em IA',
+    title: 'Aparecer no Google — e dentro das respostas do ChatGPT',
+    body: 'SEO técnico e local para quem pesquisa, e trabalho de visibilidade em motores de IA para quem já pergunta em vez de pesquisar. São duas compras diferentes porque são dois comportamentos diferentes.',
+    items: ['SEO & Otimização', 'Visibilidade em IA (GEO)'],
     href: '/servicos/seo',
-    kind: 'seo',
-    ctaLabel: 'Saber mais sobre SEO',
+    accent: 'seo',
+    visual: 'seo',
+    ctaLabel: 'Ver SEO & Visibilidade em IA',
   },
   {
-    eyebrow: 'Categoria 03 · Social Media',
-    title: 'Gestão de Redes Sociais e Campanhas que vendem',
-    body: 'Gerimos as tuas redes sociais com conteúdo e design profissional e campanhas pagas (Meta e Google Ads) que atraem os clientes certos — não só seguidores. Presença consistente, todos os dias, sem te tirar tempo.',
-    href: '/servicos/social',
-    kind: 'social',
-    ctaLabel: 'Saber mais sobre Social Media',
+    key: 'ia',
+    eyebrow: 'Família 03 · IA & Automação',
+    title: 'Devolver-te as horas que se perdem em tarefas repetidas',
+    body: 'Começa por um diagnóstico que mapeia o que dá para automatizar e quanto tempo isso devolve por mês. Depois, se fizer sentido, um assistente que responde e qualifica pedidos no site e no WhatsApp.',
+    items: ['Diagnóstico Digital & IA', 'Assistente de IA'],
+    href: '/servicos/diagnostico-ia',
+    accent: 'social',
+    visual: 'plans',
+    ctaLabel: 'Ver IA & Automação',
   },
   {
-    eyebrow: 'Categoria 04 · Planos Mensais',
-    title: 'Planos Mensais para o teu negócio crescer todos os meses',
-    body: 'Uma parceria contínua, sem surpresas: manutenção técnica e backups, SEO mensal, gestão de redes sociais e relatórios de resultados — tudo num plano recorrente. O teu marketing digital sempre a trabalhar por ti.',
-    href: '/servicos/planos-mensais',
-    kind: 'plans',
-    ctaLabel: 'Saber mais sobre Planos Mensais',
+    key: 'marca',
+    eyebrow: 'Família 04 · Marca & Conteúdo',
+    title: 'Uma marca coerente, e conteúdo que serve o resultado',
+    body: 'Logótipo, identidade completa e aplicação a site e redes, com ficheiros e direitos teus. O conteúdo deixou de se vender à peça: passou a fazer parte dos planos mensais, onde serve o negócio em vez de ser um fim em si.',
+    items: ['Marca & Design', 'Conteúdo & Marketing'],
+    href: '/servicos/design',
+    accent: 'plans',
+    visual: 'social',
+    ctaLabel: 'Ver Marca & Conteúdo',
   },
 ]
 
@@ -201,12 +221,12 @@ function ServiceVisual({ kind }: { kind: Kind }) {
     )
   }
 
-  // plans
+  // plans — passou a ilustrar um fluxo automatizado, não uma lista de tarefas do plano
   const items = [
-    'Manutenção técnica & backups',
-    'SEO técnico mensal + Analytics',
-    'Gestão de redes sociais',
-    'Relatório de resultados mensal',
+    'Pedido recebido no site',
+    'Analisado e classificado',
+    'Registado e encaminhado',
+    'A pessoa certa é notificada',
   ]
   return (
     <div className={panel} aria-hidden>
@@ -242,10 +262,11 @@ export default function FeatureStack({ showIntro = true }: { showIntro?: boolean
         {showIntro && (
           <AnimateOnScroll className="text-center mb-16">
             <p className="text-[11px] uppercase tracking-[0.22em] text-dark mb-4">Os nossos serviços</p>
-            <h2 id="servicos-titulo" className="text-white">Websites, SEO e redes sociais — tudo o que a tua presença online precisa</h2>
+            <h2 id="servicos-titulo" className="text-white">Quatro famílias de serviços, um só parceiro digital</h2>
             <p className="mt-5 text-muted max-w-xl mx-auto leading-relaxed">
-              Websites, SEO, redes sociais e planos mensais — um só parceiro digital
-              para a tua PME crescer e vender mais online.
+              Cada família responde a uma frase que oiço muitas vezes na primeira chamada:
+              preciso de uma coisa construída, ninguém me encontra, gasto tempo em tarefas
+              repetidas, pareço amador.
             </p>
           </AnimateOnScroll>
         )}
@@ -254,12 +275,12 @@ export default function FeatureStack({ showIntro = true }: { showIntro?: boolean
         <div className="relative">
           {SERVICES.map((s, i) => (
             <div
-              key={s.kind}
+              key={s.key}
               className="sticky pb-8"
               style={{ top: `${100 + i * 26}px` }}
             >
               <article
-                style={ACCENTS[s.kind]}
+                style={ACCENTS[s.accent]}
                 className="relative overflow-hidden rounded-[28px] border border-white/10
                                   bg-gradient-to-br from-[#1a1d24] via-[#131417] to-[#0F0F0E]
                                   shadow-[0_30px_60px_rgba(0,0,0,0.45)]">
@@ -272,16 +293,32 @@ export default function FeatureStack({ showIntro = true }: { showIntro?: boolean
                   }}
                 />
 
+                {/* Alternar o lado do visual: quatro cartões com a mesma composição
+                    seguidos leem-se como um só bloco repetido e o olho desliga. */}
                 <div className="relative grid md:grid-cols-2 gap-8 items-center p-8 md:p-12">
                   {/* Text */}
-                  <div className="max-w-md">
+                  <div className={`max-w-md ${i % 2 === 1 ? 'md:order-2' : ''}`}>
                     <p className="text-[11px] uppercase tracking-[0.18em] text-accent/90 mb-4">{s.eyebrow}</p>
                     <h3 className="text-white">{s.title}</h3>
                     <p className="mt-4 text-muted text-sm leading-relaxed">{s.body}</p>
+
+                    <ul role="list" className="mt-6 flex flex-wrap gap-2">
+                      {s.items.map((item) => (
+                        <li
+                          key={item}
+                          className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-[12px] text-white/85"
+                        >
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+
+                    {/* Ação secundária em texto: a pílula branca é a ação primária
+                        do site (orçamento) e não deve ser gasta quatro vezes aqui. */}
                     <Link
                       href={s.href}
-                      className="group mt-7 inline-flex items-center gap-1.5 rounded-pill bg-white text-black
-                                 text-sm font-medium px-5 py-2.5 transition-all hover:bg-white/90"
+                      className="group mt-7 inline-flex items-center gap-1.5 text-sm font-medium text-white
+                                 border-b border-white/25 pb-1 transition-colors hover:border-accent hover:text-accent"
                     >
                       {s.ctaLabel}
                       <span className="transition-transform group-hover:translate-x-0.5" aria-hidden>→</span>
@@ -289,12 +326,24 @@ export default function FeatureStack({ showIntro = true }: { showIntro?: boolean
                   </div>
 
                   {/* Branded visual */}
-                  <ServiceVisual kind={s.kind} />
+                  <div className={i % 2 === 1 ? 'md:order-1' : ''}>
+                    <ServiceVisual kind={s.visual} />
+                  </div>
                 </div>
               </article>
             </div>
           ))}
         </div>
+
+        <AnimateOnScroll className="text-center mt-16">
+          <Link
+            href="/servicos"
+            className="group inline-flex items-center gap-1.5 text-sm text-white hover:text-accent transition-colors"
+          >
+            Ver o catálogo completo, com preços
+            <span className="transition-transform group-hover:translate-x-0.5" aria-hidden>→</span>
+          </Link>
+        </AnimateOnScroll>
       </div>
     </section>
   )

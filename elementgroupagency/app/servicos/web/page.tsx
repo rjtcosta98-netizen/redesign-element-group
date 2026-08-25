@@ -11,6 +11,7 @@ import ResultsFlow from '@/components/servicos/ResultsFlow'
 import JsonLd from '@/components/JsonLd'
 import { serviceSchema, breadcrumbSchema } from '@/lib/seo'
 import RelatedServices from '@/components/servicos/RelatedServices'
+import CorporateBlock from '@/components/servicos/CorporateBlock'
 
 const CTA = `/contacto?servico=${encodeURIComponent('Websites & Lojas Online')}`
 
@@ -19,7 +20,7 @@ export const dynamic = 'force-static'
 export const metadata: Metadata = {
   title: 'Criação de Websites e Lojas Online — Element Group',
   description:
-    'Sites e lojas online à medida: ultra-rápidos (PageSpeed 95+), responsivos e prontos para vender. Do design ao alojamento, tratamos de tudo. A partir de 297€.',
+    'Sites e lojas online à medida que carregam em menos de 1 segundo e aparecem no Google — e no ChatGPT. Do design ao alojamento, tratamos de tudo.',
   keywords: ['criação de websites Portugal', 'lojas online PME', 'website profissional', 'e-commerce Portugal', 'agência web Seia', 'Element Group websites'],
   alternates: { canonical: '/servicos/web' },
   robots: { index: true, follow: true },
@@ -80,7 +81,7 @@ export default function WebsitesPage() {
             </p>
 
             <div className="mt-10 flex flex-col sm:flex-row items-center gap-4">
-              <GlowButton href={CTA}>Quero o meu website</GlowButton>
+              <GlowButton href={CTA} variant="solid">Quero o meu website</GlowButton>
               <Link
                 href="/portfolio"
                 className="group inline-flex items-center gap-1.5 text-sm text-white/90 hover:text-white transition-colors"
@@ -281,6 +282,15 @@ export default function WebsitesPage() {
         </div>
       </section>
 
+      <CorporateBlock
+        rules={[
+          'Âmbito e mapa de páginas escritos e aprovados antes de desenhar.',
+          'Entregas por fases, com aprovação em cada uma.',
+          'Faturação com IVA e NIF regularizados, e recibo para contabilidade.',
+          'O site, o domínio e os conteúdos são teus, no teu nome.',
+        ]}
+      />
+
       <RelatedServices current="web" />
 
       {/* CTA final */}
@@ -298,7 +308,7 @@ export default function WebsitesPage() {
               Conta-me o que precisas — respondo pessoalmente em menos de 2 horas, sem compromisso.
             </p>
             <div className="mt-10 flex flex-col items-center gap-5">
-              <GlowButton href={CTA}>Quero o meu website</GlowButton>
+              <GlowButton href={CTA} variant="solid">Quero o meu website</GlowButton>
               <span className="text-sm text-white/70">
                 ou escreve-me para{' '}
                 <Link href="mailto:info@elementgroup.pt" className="text-white/90 underline underline-offset-4 hover:text-white transition-colors">
@@ -332,18 +342,18 @@ const STEPS = [
     metric: 'Incluído', metricLabel: 'domínio + alojamento', icon: (<><path d="M5 13c-1.5 1.5-2 5-2 5s3.5-.5 5-2" /><path d="M14.5 4.5C17 2 21 2 21 2s0 4-2.5 6.5L12 15l-3-3 5.5-7.5Z" /><circle cx="15" cy="9" r="1" /></>) },
 ]
 
-// Preços reais (one-off). Loja online sob consulta.
+// Catálogo 2026-08 (A1, A2, A4, A5). Intervalos, não valores fechados: o preço
+// fixa-se depois do diagnóstico (regra R2). Landing Page e Website Essencial
+// saíram do catálogo — competiam com geradores de IA e perdiam sempre.
 const PRICES = [
-  { name: 'Landing Page',         desc: 'Página única focada em converter visitantes — copy, CTA e formulário/WhatsApp.', price: '297€',         type: 'Pagamento único',
-    features: ['1 página pensada para converter', 'Copy + CTA + formulário/WhatsApp', 'Design à medida e responsivo', 'PageSpeed 95+ e SEO base'] },
-  { name: 'Website Essencial',    desc: 'Site de 3 a 5 páginas, design à medida, responsivo e otimizado.',                price: '790€',         type: 'Pagamento único', highlight: true,
-    features: ['3 a 5 páginas à medida', 'Design exclusivo, sem templates', 'SEO técnico incluído', 'Domínio + alojamento tratados'] },
-  { name: 'Website Profissional', desc: 'Até 8 páginas, com mais personalização e secções avançadas.',                   price: '1.290€',       type: 'Pagamento único',
-    features: ['Até 8 páginas à medida', 'Secções avançadas e personalização', 'SEO técnico + conteúdo otimizado', 'Domínio + alojamento tratados'] },
-  { name: 'Redesign de Site',     desc: 'Reformulação de um site existente — visual, conteúdo e performance.',            price: 'desde 590€',   type: 'Pagamento único',
-    features: ['Reformulação visual completa', 'Mais velocidade (PageSpeed 95+)', 'Estrutura e conteúdo otimizados', 'Migração sem perder o SEO'] },
-  { name: 'Loja Online',          desc: 'E-commerce completo, à medida do teu negócio.',                                 price: 'desde 1.500€', type: 'Sob consulta',
-    features: ['E-commerce à medida', 'Carrinho + checkout simples', 'Gestão de produtos e stock', 'Sem comissões de marketplace'] },
+  { name: 'Site Institucional',   desc: 'O produto central da casa: 5 a 8 páginas desenhadas à medida, sem templates.',   price: '2.500-3.500 €', type: 'Pagamento único', highlight: true,
+    features: ['5 a 8 páginas à medida, sem templates', 'Estrutura desenhada pela jornada do cliente', 'Copywriting orientado a conversão', 'SEO técnico e local incluídos', 'PageSpeed 95+ e 100% responsivo', 'Domínio e alojamento tratados'] },
+  { name: 'Site com Reservas',    desc: 'Um site institucional com motor de marcações e pagamentos por baixo.',           price: '4.500-7.500 €', type: 'Pagamento único',
+    features: ['Tudo o do Site Institucional', 'Motor de marcações com agenda em base de dados', 'Checkout Stripe — sinal ou pagamento integral', 'Painel de gestão para ti', 'Confirmações automáticas', 'Autenticação e regras de acesso'] },
+  { name: 'Loja Online',          desc: 'Comércio eletrónico completo, sem comissões de marketplace.',                    price: '3.500-6.000 €', type: 'Pagamento único',
+    features: ['Tudo o do Site Institucional', 'Catálogo de produtos e gestão de stock', 'Carrinho e checkout', 'Gestão de encomendas', 'Sem comissões de marketplace'] },
+  { name: 'Redesign & CRO',       desc: 'Refazer um site que já existe, orientado a conversão — não só ao aspeto.',       price: '1.500-2.500 €', type: 'Pagamento único',
+    features: ['Estrutura e hierarquia repensadas', 'Percursos orientados a conversão', 'Mais velocidade (PageSpeed 95+)', 'Chamadas à ação reescritas', 'Migração sem perder o SEO'] },
 ]
 
 // Objeções específicas deste serviço.
@@ -352,8 +362,8 @@ const WEB_FAQS = [
   { q: 'O site fica meu?', a: 'Sim. O site e o domínio são teus, no teu nome, sem ficares preso a mim.' },
   { q: 'E a manutenção e o alojamento?', a: 'Trato do domínio e do alojamento por ti e deixo o site a funcionar. Para evoluções contínuas (alterações, SEO, conteúdo) há planos mensais — mas sem obrigação.' },
   { q: 'Tenho de escrever os textos?', a: 'Não precisas. Ajudo-te com os textos e o conteúdo, escritos para SEO e para converter — só validas.' },
-  { q: 'Já tenho um site. Aproveitas ou fazes de novo?', a: 'Depende do que tens. Posso fazer um redesign (a partir de 590€) ou criar um novo de raiz — digo-te com honestidade o que faz mais sentido para os teus objetivos e orçamento.' },
-  { q: 'Quanto custa um site?', a: 'Uma landing page fica em 297€, um site institucional de 3 a 5 páginas em 790€ e um site profissional até 8 páginas em 1.290€ — pagamento único. Um redesign começa nos 590€ e uma loja online nos 1.500€. Domínio e alojamento são à parte (cerca de 60€ a 180€ por ano). Pedes orçamento no formulário e respondo em menos de 2 horas, sem compromisso.' },
+  { q: 'Já tenho um site. Aproveitas ou fazes de novo?', a: 'Depende do que tens. Posso fazer um redesign orientado a conversão (1.500 € a 2.500 €) ou criar um novo de raiz — digo-te com honestidade o que faz mais sentido para os teus objetivos e orçamento.' },
+  { q: 'Quanto custa um site?', a: 'Um site institucional de 5 a 8 páginas fica entre 2.500 € e 3.500 €. Um site com reservas, pagamentos e painel de gestão entre 4.500 € e 7.500 €; uma loja online entre 3.500 € e 6.000 €; um redesign orientado a conversão entre 1.500 € e 2.500 €. Valores sem IVA, pagamento único. O valor exato fecha-se depois do diagnóstico e a partir daí é fixo, sem surpresas. Domínio e alojamento são à parte, cerca de 60 € a 180 € por ano.' },
 ]
 
 const FAQ_SCHEMA = {

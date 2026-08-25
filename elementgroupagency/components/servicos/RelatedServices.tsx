@@ -1,21 +1,56 @@
 import Link from 'next/link'
 import AnimateOnScroll from '@/components/ui/AnimateOnScroll'
+import { FAMILIES, PLANS_LINK, familyOf, type Service } from '@/lib/servicos'
 
-type Key = 'web' | 'seo' | 'social' | 'plans'
+// A chave do serviço em lib/servicos.ts, ou 'plans' para a página de planos,
+// que não pertence a nenhuma família.
+type Key = string
 
-const ALL: Record<Key, { label: string; sub: string; href: string; rgb: string }> = {
-  web:    { label: 'Websites & Lojas Online', sub: 'Sites e lojas que convertem',     href: '/servicos/web',            rgb: '127 168 217' },
-  seo:    { label: 'SEO & Otimização',        sub: 'Aparecer no Google',              href: '/servicos/seo',            rgb: '111 179 154' },
-  social: { label: 'Gestão de Redes Sociais', sub: 'Conteúdo e campanhas',            href: '/servicos/social',         rgb: '169 138 212' },
-  plans:  { label: 'Planos Mensais',          sub: 'Manutenção e crescimento',        href: '/servicos/planos-mensais', rgb: '215 176 116' },
+type Card = { key: string; label: string; sub: string; href: string; rgb: string }
+
+const HUB_CARD: Card = {
+  key: 'hub',
+  label: 'Todos os serviços',
+  sub: 'O catálogo completo, numa página',
+  href: '/servicos',
+  rgb: '127 168 217',
 }
 
-const ORDER: Key[] = ['web', 'seo', 'social', 'plans']
+const PLANS_CARD: Card = { ...PLANS_LINK, rgb: '215 176 116' }
+
+const toCard = (s: Service, rgb: string): Card => ({ key: s.key, label: s.label, sub: s.sub, href: s.href, rgb })
+
+// Escolhe até três destinos: primeiro os irmãos da mesma família (o passo mais
+// natural para quem está a ler esta página), depois os planos, e por fim o hub.
+// Antes, este componente tinha a sua própria lista de quatro serviços e mostrava
+// sempre os outros três — o que deixa de funcionar assim que o catálogo cresce.
+function related(current: Key): Card[] {
+  const cards: Card[] = []
+
+  if (current === 'plans') {
+    // Na página de planos não há irmãos: mostra-se uma porta de cada família.
+    for (const family of FAMILIES) {
+      const first = family.services.find((s) => s.status === 'live')
+      if (first) cards.push(toCard(first, family.rgb))
+    }
+    return [...cards.slice(0, 2), HUB_CARD]
+  }
+
+  const family = familyOf(current)
+  if (family) {
+    for (const s of family.services) {
+      if (s.key !== current && s.status === 'live') cards.push(toCard(s, family.rgb))
+    }
+  }
+
+  cards.push(PLANS_CARD, HUB_CARD)
+  return cards.slice(0, 3)
+}
 
 // Liga cada página de serviço às restantes — reforça o internal linking e
 // mantém o utilizador a explorar a oferta.
 export default function RelatedServices({ current }: { current: Key }) {
-  const others = ORDER.filter((k) => k !== current).map((k) => ALL[k])
+  const others = related(current)
 
   return (
     <section className="bg-bg border-t border-white/10 py-20 px-6" aria-labelledby="outros-servicos">
